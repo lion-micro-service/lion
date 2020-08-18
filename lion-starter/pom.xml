@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.lion</groupId>
+		<artifactId>lion</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>lion-starter</artifactId>
+	<packaging>pom</packaging>
+
+	<properties>
+		<lion-dependencies.version>1.0.0-SNAPSHOT</lion-dependencies.version>
+	</properties>
+
+	<modules>
+		<module>lion-business-starter</module>
+		<module>lion-restful-starter</module>
+		<module>lion-expose-starter</module>
+		<module>lion-expose-run-starter</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.lion</groupId>
+				<artifactId>lion-dependencies</artifactId>
+				<version>${lion-dependencies.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.lion</groupId>
+			<artifactId>lion-core</artifactId>
+		</dependency>
+	</dependencies>
+</project>

@@ -1,0 +1,6 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.lion.configuration.PasswordConfiguration,\
+com.lion.configuration.RestTemplateConfiguration,\
+com.lion.configuration.AuthorizationIgnoreConfiguration,\
+com.lion.configuration.UrlBlockHandlerConfigurer,\
+com.lion.configuration.EntityAuditorConfiguration

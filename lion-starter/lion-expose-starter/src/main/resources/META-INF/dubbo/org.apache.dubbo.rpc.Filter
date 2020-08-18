@@ -1,0 +1,3 @@
+lionException=com.lion.dubbo.filter.LionExceptionFilter
+currentUserConsumer=com.lion.dubbo.filter.CurrentUserConsumerFilter
+currentUserProvide=com.lion.dubbo.filter.CurrentUserProvideFilter
