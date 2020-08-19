@@ -72,4 +72,14 @@ public class SystemLogData implements Serializable {
      */
     private LocalDateTime dateTime = LocalDateTime.now();
 
+    /**
+     * 请求url
+     */
+    private String uri;
+
+    /**
+     * 请求客户端地址
+     */
+    private String ip;
+
 }

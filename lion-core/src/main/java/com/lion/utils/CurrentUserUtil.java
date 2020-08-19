@@ -67,7 +67,7 @@ public class CurrentUserUtil {
      * 获取当前登陆用户登陆账号
      * @return
      */
-    private static String getCurrentUserUsername(){
+    public synchronized static String getCurrentUserUsername(){
         if(isHttpWebRequest()){
             return getUsername();
         }else if (isDubooRequest()){

@@ -62,6 +62,8 @@ public class SystemLog {
         systemLogData.setTarget(method.toGenericString());
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
+        systemLogData.setUri(request.getRequestURI());
+        systemLogData.setIp(request.getRemoteAddr());
         Map<String, String[]> parameter = request.getParameterMap();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
@@ -69,7 +71,7 @@ public class SystemLog {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        if(Objects.nonNull(request.getContentType()) && request.getContentType().indexOf("application/json")>-1){
+        if(Objects.nonNull(request.getContentType()) && (request.getContentType().indexOf("application/x-www-form-urlencoded")>-1 || request.getContentType().indexOf("application/json")>-1)){
             try {
                String body = IOUtils.toString(request.getInputStream());
                systemLogData.setBody(body);
@@ -83,13 +85,11 @@ public class SystemLog {
             Duration duration = Duration.between(startDateTime,endDateTime );
             systemLogData.setExecuteTime(duration.toMillis());
             systemLogData.setResponseData(objectMapper.writeValueAsString(object));
-            logger.debug(objectMapper.writeValueAsString(systemLogData));
+            logger.info(objectMapper.writeValueAsString(systemLogData));
             return object;
         } catch (Throwable throwable) {
             return ExceptionData.instance(throwable);
         }
     }
-
-
 }
 
