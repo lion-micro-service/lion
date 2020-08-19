@@ -1,11 +1,11 @@
 package com.lion.aop.exception;
 
+import com.lion.aop.log.SystemLogData;
+import com.lion.aop.log.SystemLogDataUtil;
 import com.lion.exception.BusinessException;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
@@ -13,7 +13,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindingResult;
 
-import java.lang.reflect.Method;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 
 /**
@@ -22,7 +23,7 @@ import java.util.Arrays;
 
 @Aspect
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.HIGHEST_PRECEDENCE+1)
 public class RestulException {
 
     private static Logger logger = LoggerFactory.getLogger(RestulException.class);
@@ -37,10 +38,6 @@ public class RestulException {
     public Object around(ProceedingJoinPoint pjp) {
         Object invokeResult = null;
         Object[] args = pjp.getArgs();
-        Object controllerClass = pjp.getTarget();
-        Signature signature = pjp.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
         try {
             Arrays.stream(args).forEach(arg ->{
                 if(arg instanceof BindingResult){
@@ -52,6 +49,12 @@ public class RestulException {
             });
             invokeResult = pjp.proceed();
         } catch (Throwable e) {
+            SystemLogData systemLogData = SystemLogDataUtil.get();
+            systemLogData.setIsException(true);
+            StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            systemLogData.setException(sw.toString());
             return ExceptionData.instance(e);
         }
         return invokeResult;

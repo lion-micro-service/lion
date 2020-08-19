@@ -23,53 +23,11 @@ public class LionPage extends PageRequest  {
     private JpqlParameter jpqlParameter;
 
     public LionPage() {
-        this(getPage(),getSize(), Sort.unsorted());
-        jpqlParameter = new JpqlParameter();
+        this(1,30, Sort.unsorted());
     }
 
     public LionPage(int page, int size, Sort sort){
         super(page,size,sort);
-    }
-
-    /**
-     * 获取当前页码
-     * @return
-     */
-    private synchronized static Integer getPage(){
-        HttpServletRequest request = getHttpServletRequest();
-        if (Objects.isNull(request)){
-            return 0;
-        }
-        String pageNumber = request.getParameter(GlobalConstant.PAGE_NUMBER);
-        if (NumberUtils.isDigits(pageNumber)) {
-            return Integer.valueOf(pageNumber)-1;
-        }
-        return 0;
-    }
-
-    /**
-     * 获取分页大小
-     * @return
-     */
-    private synchronized static Integer getSize(){
-        HttpServletRequest request = getHttpServletRequest();
-        if (Objects.isNull(request)){
-            return 30;
-        }
-        String pageSize = request.getParameter(GlobalConstant.PAGE_SIZE);
-        if (NumberUtils.isDigits(pageSize)) {
-            return Integer.valueOf(pageSize);
-        }
-        return 30;
-    }
-
-    private synchronized static HttpServletRequest getHttpServletRequest(){
-        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        if(requestAttributes == null){
-            return null;
-        }
-        HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
-        return request;
     }
 
     public JpqlParameter getJpqlParameter() {

@@ -22,7 +22,7 @@ public class ExceptionData {
         e.printStackTrace();
         ResultData resultData = new ResultData();
         resultData.setMessage(e.getMessage());
-        resultData.setStatus(ResultDataState.LOGIC_ERROR.getKey());
+        resultData.setStatus(ResultDataState.ERROR.getKey());
         handle(e, resultData);
         return resultData;
     }

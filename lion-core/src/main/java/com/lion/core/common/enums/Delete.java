@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public enum Delete implements IEnum {
 
-    FALSE(0, "禁用"), TRUE(1, "正常");
+    FALSE(0, "未删除"), TRUE(1, "已删除");
 
     private final int key;
 

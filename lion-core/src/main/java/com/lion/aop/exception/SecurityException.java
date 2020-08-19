@@ -38,7 +38,7 @@ public class SecurityException implements ErrorController {
         Map<String, Object> errorMap = errorAttributes.getErrorAttributes(requestAttributes, ErrorAttributeOptions.defaults());
         ResultData resultData = new ResultData();
         resultData.setData(errorMap);
-        resultData.setStatus(ResultDataState.LOGIC_ERROR.getKey());
+        resultData.setStatus(ResultDataState.ERROR.getKey());
 //        resultData.setMessage();
         response.setStatus(HttpServletResponse.SC_OK);
         return resultData;

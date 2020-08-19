@@ -18,7 +18,7 @@ public class SnowflakeUtil {
      * 获取ID
      * @return
      */
-    public static long getId(){
+    public static synchronized long getId(){
         return SnowflakeHolder.snowflake.nextId();
     }
 

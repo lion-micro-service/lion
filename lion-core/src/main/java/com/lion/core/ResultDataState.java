@@ -15,7 +15,7 @@ public enum ResultDataState implements IEnum {
     URI_INVALID(-100, "uri无效"),
                 LOGIN_FAIL(403, "登录失败"),
                 NOT_FOUND_SERVER(404, "找不到服务"),
-                LOGIC_ERROR(-200, "逻辑错误"),
+                ERROR(-200, "错误"),
                 BLOCK_REQUEST(-300, "请求拒绝"),
                 SUCCESS(200, "成功"),
                 NO_PERMISSION(401, "无权限");
@@ -45,7 +45,6 @@ public enum ResultDataState implements IEnum {
         return desc;
     }
 
-    @JsonValue
     public Map<String, Object> jsonValue() {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("key", key);

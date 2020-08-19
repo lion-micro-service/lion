@@ -1,0 +1,75 @@
+package com.lion.aop.log;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.Map;
+
+/**
+ * @author mr.liu
+ * @title: SystemLogData
+ * @description: 系统日志
+ * @date 2020/8/19上午11:30
+ */
+@Data
+public class SystemLogData implements Serializable {
+
+    private static final long serialVersionUID = -299436691466759722L;
+
+    /**
+     * 当前登陆用户ID
+     */
+    private Long currentUserId;
+
+    /**
+     * track id(调用链ID 用于服务调用追踪)
+     */
+    private Long trackId;
+
+    /**
+     * 请求参数(spring mvc && dubbo)
+     */
+    private String parameter;
+
+    /**
+     * 请求体，一般指json传值(spring mvc)
+     */
+    private String body;
+
+    /**
+     * 返回值
+     */
+    private String responseData;
+
+    /**
+     * 异常信息
+     */
+    private String exception;
+
+    /**
+     *执行序号
+     */
+    private int sequenceNumber;
+
+    /**
+     * 执行目标
+     */
+    private String target;
+
+    /**
+     * 是否发生异常
+     */
+    private Boolean isException = false;
+
+    /**
+     * 执行时长
+     */
+    private long executeTime;
+
+    /**
+     * 请求时间
+     */
+    private LocalDateTime dateTime = LocalDateTime.now();
+
+}

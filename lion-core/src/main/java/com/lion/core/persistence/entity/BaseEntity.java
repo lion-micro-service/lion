@@ -1,5 +1,6 @@
 package com.lion.core.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.common.enums.Delete;
 import com.lion.core.common.enums.DeleteConverter;
 import com.lion.core.common.enums.StateConverter;
@@ -17,6 +18,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -27,6 +29,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId"})
 public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
@@ -44,14 +47,12 @@ public abstract class BaseEntity implements Serializable {
     private Delete isDelete;
 
     @CreatedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_date_time", updatable = false)
-    private Date createDateTime;
+    private LocalDateTime createDateTime;
 
     @LastModifiedDate
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "update_date_time", insertable = false)
-    private Date updateDateTime;
+    private LocalDateTime updateDateTime;
 
     @CreatedBy
     @Column(name = "create_user_id", updatable = false)

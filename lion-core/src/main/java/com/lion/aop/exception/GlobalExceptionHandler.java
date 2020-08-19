@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public ResultData exception(MethodArgumentNotValidException e) {
         ResultData resultData = new ResultData();
-        resultData.setStatus(ResultDataState.LOGIC_ERROR.getKey());
+        resultData.setStatus(ResultDataState.ERROR.getKey());
         BindingResult bindingResult = e.getBindingResult();
         for(FieldError fieldError : bindingResult.getFieldErrors()){
             resultData.setMessage(fieldError.getDefaultMessage());

@@ -23,14 +23,14 @@ public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
 
-    public static Object getCurrentUser(){
+    public synchronized static Object getCurrentUser(){
         return getCurrentUser(true);
     }
     /**
      * 获取当前登陆用户
      * @return
      */
-    public static Object getCurrentUser(Boolean isMustLogin){
+    public synchronized static Object getCurrentUser(Boolean isMustLogin){
         Object user = null;
         if(isHttpWebRequest()){
             String username = getUsername();
@@ -55,7 +55,7 @@ public class CurrentUserUtil {
      * 获取当前用户姓名
      * @return
      */
-    public static String getCurrentUserName(){
+    private static String getCurrentUserName(){
         Map<String,Object> currentUser = getCurrentUserToMap();
         if(currentUser.containsKey("name")){
             return String.valueOf(currentUser.get("name"));
@@ -67,7 +67,7 @@ public class CurrentUserUtil {
      * 获取当前登陆用户登陆账号
      * @return
      */
-    public static String getCurrentUserUsername(){
+    private static String getCurrentUserUsername(){
         if(isHttpWebRequest()){
             return getUsername();
         }else if (isDubooRequest()){
@@ -83,7 +83,7 @@ public class CurrentUserUtil {
      * 获取token username
      * @return
      */
-    private synchronized static String getUsername(){
+    private static String getUsername(){
         String username = null;
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(Objects.nonNull(authentication)){
@@ -99,7 +99,7 @@ public class CurrentUserUtil {
      * 获取当前用户ID
      * @return
      */
-    public static Long getCurrentUserId(){
+    public synchronized static Long getCurrentUserId(){
         Map<String,Object> currentUser = getCurrentUserToMap();
         if(currentUser.containsKey("id")){
             return Long.valueOf(String.valueOf(currentUser.get("id")));
@@ -111,7 +111,7 @@ public class CurrentUserUtil {
      * 获取当前用户
      * @return
      */
-    public static Map<String,Object> getCurrentUserToMap(){
+    private static Map<String,Object> getCurrentUserToMap(){
         Object currentUser = getCurrentUser();
         return BeanToMapUtil.transBeanToMap(currentUser);
     }
