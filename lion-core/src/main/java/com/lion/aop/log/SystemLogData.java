@@ -30,17 +30,17 @@ public class SystemLogData implements Serializable {
     /**
      * 请求参数(spring mvc && dubbo)
      */
-    private String parameter;
+    private Object parameter;
 
     /**
      * 请求体，一般指json传值(spring mvc)
      */
-    private String body;
+    private Object body;
 
     /**
      * 返回值
      */
-    private String responseData;
+    private Object responseData;
 
     /**
      * 异常信息

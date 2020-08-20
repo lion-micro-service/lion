@@ -66,17 +66,14 @@ public class SystemLog {
         systemLogData.setIp(request.getRemoteAddr());
         Map<String, String[]> parameter = request.getParameterMap();
         ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            systemLogData.setParameter(objectMapper.writeValueAsString(parameter));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        systemLogData.setParameter(parameter);
         if(Objects.nonNull(request.getContentType()) && (request.getContentType().indexOf("application/x-www-form-urlencoded")>-1 || request.getContentType().indexOf("application/json")>-1)){
+            String body="";
             try {
-               String body = IOUtils.toString(request.getInputStream());
-               systemLogData.setBody(body);
+               body = IOUtils.toString(request.getInputStream());
+               systemLogData.setBody(objectMapper.readValue(body,Map.class));
             } catch (IOException e) {
-                e.printStackTrace();
+                systemLogData.setBody(body);
             }
         }
         try {
@@ -84,8 +81,8 @@ public class SystemLog {
             LocalDateTime endDateTime = LocalDateTime.now();
             Duration duration = Duration.between(startDateTime,endDateTime );
             systemLogData.setExecuteTime(duration.toMillis());
-            systemLogData.setResponseData(objectMapper.writeValueAsString(object));
-            logger.info(objectMapper.writeValueAsString(systemLogData));
+            systemLogData.setResponseData(object);
+            logger.debug(objectMapper.writeValueAsString(systemLogData));
             return object;
         } catch (Throwable throwable) {
             return ExceptionData.instance(throwable);
