@@ -40,12 +40,13 @@ public class SystemLog {
 
     private static Logger logger = LoggerFactory.getLogger(SystemLog.class);
 
-    @Around(value = "@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
+    @Around(value = "(@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.GetMapping)" +
             "|| @annotation(org.springframework.web.bind.annotation.PostMapping)" +
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
-            "|| @annotation(org.springframework.web.bind.annotation.PatchMapping)")
+            "|| @annotation(org.springframework.web.bind.annotation.PatchMapping) )" +
+            "&& execution(* com.lion..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) {
         LocalDateTime startDateTime = LocalDateTime.now();
         SystemLogData systemLogData = new SystemLogData();
