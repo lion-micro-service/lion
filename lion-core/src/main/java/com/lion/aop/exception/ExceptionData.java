@@ -18,7 +18,7 @@ import org.springframework.security.oauth2.common.exceptions.InvalidGrantExcepti
  */
 public class ExceptionData {
 
-    public static synchronized ResultData instance(final Throwable e){
+    public static ResultData instance(final Throwable e){
         e.printStackTrace();
         ResultData resultData = new ResultData();
         resultData.setMessage(e.getMessage());

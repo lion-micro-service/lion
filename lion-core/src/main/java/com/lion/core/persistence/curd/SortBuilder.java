@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * 
+ *
  * @author mrliu
  *
  */
@@ -22,7 +22,7 @@ public class SortBuilder {
 	 * @param sortParameter
 	 * @return
 	 */
-	public synchronized static Sort builder(final Map<String, Object> sortParameter){
+	public static Sort builder(final Map<String, Object> sortParameter){
 		if(sortParameter==null){
 			return Sort.unsorted();
 		}
@@ -42,7 +42,7 @@ public class SortBuilder {
 			Order order = new Order(direction, key);
 			orders.add(order);
 		}
-		
+
 		Sort sort = Sort.by(orders);
 		return sort;
 	}

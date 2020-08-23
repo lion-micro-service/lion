@@ -23,14 +23,14 @@ public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
 
-    public synchronized static Object getCurrentUser(){
+    public static Object getCurrentUser(){
         return getCurrentUser(true);
     }
     /**
      * 获取当前登陆用户
      * @return
      */
-    public synchronized static Object getCurrentUser(Boolean isMustLogin){
+    public static Object getCurrentUser(Boolean isMustLogin){
         Object user = null;
         if(isHttpWebRequest()){
             String username = getUsername();
@@ -67,7 +67,7 @@ public class CurrentUserUtil {
      * 获取当前登陆用户登陆账号
      * @return
      */
-    public synchronized static String getCurrentUserUsername(){
+    public static String getCurrentUserUsername(){
         if(isHttpWebRequest()){
             return getUsername();
         }else if (isDubooRequest()){
@@ -99,7 +99,7 @@ public class CurrentUserUtil {
      * 获取当前用户ID
      * @return
      */
-    public synchronized static Long getCurrentUserId(){
+    public static Long getCurrentUserId(){
         Map<String,Object> currentUser = getCurrentUserToMap();
         if(currentUser.containsKey("id")){
             return Long.valueOf(String.valueOf(currentUser.get("id")));

@@ -16,7 +16,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * 
+ *
  * @author liufang
  *
  */
@@ -26,7 +26,7 @@ public class MapToBeanUtil {
 		super();
 	}
 
-	public static synchronized Object convert(Object obj, final Map<String, Object> map) {
+	public static Object convert(Object obj, final Map<String, Object> map) {
 		try {
 			ConvertUtils.deregister(Date.class);
 			DateTimeConverter dtConverter = new DateTimeConverter();

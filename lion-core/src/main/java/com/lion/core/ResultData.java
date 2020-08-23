@@ -49,7 +49,7 @@ public class ResultData implements Serializable, IResultData {
 	 * 结果集
 	 */
 	private Map<String, Object> data = new HashMap<String, Object>();
-	
+
 
 	public IResultData setData(Map<String, Object> data) {
 		this.data.putAll(data);
@@ -76,7 +76,7 @@ public class ResultData implements Serializable, IResultData {
 		return this;
 	}
 
-	public static synchronized ResultData instance(){
+	public static ResultData instance(){
 		return new ResultData();
 	}
 
