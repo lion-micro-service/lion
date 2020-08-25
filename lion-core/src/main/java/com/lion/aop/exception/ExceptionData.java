@@ -11,6 +11,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 
+import javax.validation.ConstraintViolationException;
+
 /**
  * @description: 统一异常处理数据返回
  * @author: Mr.Liu
@@ -41,6 +43,9 @@ public class ExceptionData {
         }else if (e instanceof AccessDeniedException){
             resultData.setMessage( "权限不足，不允许访问");
             resultData.setStatus(ResultDataState.NO_PERMISSION.getKey());
+        }else if (e instanceof ConstraintViolationException){
+            resultData.setMessage(e.getMessage().split(":")[1].trim());
+            resultData.setStatus(ResultDataState.ERROR.getKey());
         }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException){
             String message = e.getMessage();
             resultData.setMessage("登陆异常，请重新登陆");
