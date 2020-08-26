@@ -1,5 +1,6 @@
 package com.lion.aop.exception;
 
+import com.lion.core.IResultData;
 import com.lion.core.ResultData;
 import com.lion.core.ResultDataState;
 import org.springframework.validation.BindingResult;
@@ -19,20 +20,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public ResultData exception(Exception e) {
+    public IResultData exception(Exception e) {
         return ExceptionData.instance(e);
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseBody
-    public ResultData exception(MethodArgumentNotValidException e) {
-        ResultData resultData = new ResultData();
-        resultData.setStatus(ResultDataState.ERROR.getKey());
-        BindingResult bindingResult = e.getBindingResult();
-        for(FieldError fieldError : bindingResult.getFieldErrors()){
-            resultData.setMessage(fieldError.getDefaultMessage());
-            return resultData;
-        }
-        return resultData;
-    }
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    @ResponseBody
+//    public IResultData exception(MethodArgumentNotValidException e) {
+//        return ExceptionData.instance(e);
+//    }
 }

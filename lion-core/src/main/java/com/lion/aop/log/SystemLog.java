@@ -17,14 +17,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.security.web.firewall.FirewalledRequest;
+import org.springframework.security.web.header.HeaderWriter;
+import org.springframework.security.web.header.HeaderWriterFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Map;
@@ -46,7 +54,7 @@ public class SystemLog {
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping) )" +
-            "&& execution(* com.lion..*.*(..))")
+            "&& execution(public * com.lion..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) {
         LocalDateTime startDateTime = LocalDateTime.now();
         SystemLogData systemLogData = new SystemLogData();
@@ -71,8 +79,8 @@ public class SystemLog {
         if(Objects.nonNull(request.getContentType()) && (request.getContentType().indexOf("application/x-www-form-urlencoded")>-1 || request.getContentType().indexOf("application/json")>-1)){
             String body="";
             try {
-               body = IOUtils.toString(request.getInputStream());
-               systemLogData.setBody(objectMapper.readValue(body,Map.class));
+                body = new String (((ContentCachingRequestWrapper)request).getContentAsByteArray() , "UTF-8");
+                systemLogData.setBody(objectMapper.readValue(body,Map.class));
             } catch (IOException e) {
                 systemLogData.setBody(body);
             }

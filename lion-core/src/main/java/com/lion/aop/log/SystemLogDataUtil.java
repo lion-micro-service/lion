@@ -1,5 +1,10 @@
 package com.lion.aop.log;
 
+import com.lion.core.persistence.entity.BaseEntity;
+import com.lion.utils.CurrentUserUtil;
+
+import java.util.Objects;
+
 /**
  * @author mr.liu
  * @title: SystemLogDataUtil
@@ -10,11 +15,27 @@ public class SystemLogDataUtil {
     private static final ThreadLocal<SystemLogData> systemLogDataThreadLocal = new ThreadLocal<SystemLogData>();
 
     public static SystemLogData get(){
-        return systemLogDataThreadLocal.get();
+        SystemLogData systemLogData = systemLogDataThreadLocal.get();
+        if (Objects.isNull(systemLogData)) {
+            synchronized (SystemLogDataUtil.class) {
+                systemLogData = systemLogDataThreadLocal.get();
+                if (Objects.isNull(systemLogData)) {
+                    CurrentUserUtil.getCurrentUser(false);
+                    BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
+                    if(Objects.nonNull(user)){
+                        systemLogData.setCurrentUserId(user.getId());
+                    }
+                    SystemLogDataUtil.set(systemLogData);
+                }
+            }
+        }
+        return systemLogData;
     }
 
     public static void set(SystemLogData systemLogData){
         systemLogDataThreadLocal.set(systemLogData);
     }
+
+
 
 }

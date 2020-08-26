@@ -34,7 +34,7 @@ public class RestulException {
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping))" +
-            "&& execution(* com.lion..*.*(..))")
+            "&& execution(public * com.lion..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) {
         Object invokeResult = null;
         Object[] args = pjp.getArgs();

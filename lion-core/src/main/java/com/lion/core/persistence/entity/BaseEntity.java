@@ -7,6 +7,7 @@ import com.lion.core.common.enums.StateConverter;
 import com.lion.core.persistence.Validator;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -39,7 +40,6 @@ public abstract class BaseEntity implements Serializable {
     @GenericGenerator(name = "snow_flake_id", strategy = "com.lion.utils.id.LionIdGenerator")
     @Column(name = "id")
     @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
-    @Size(min=18,max=18,message="ID为{max}位数字",groups= {Validator.Update.class, Validator.Delete.class})
     private Long id;
 
     @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")

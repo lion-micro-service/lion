@@ -10,6 +10,10 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.ConstraintViolationException;
 
@@ -45,15 +49,26 @@ public class ExceptionData {
             resultData.setStatus(ResultDataState.NO_PERMISSION.getKey());
         }else if (e instanceof ConstraintViolationException){
             resultData.setMessage(e.getMessage().split(":")[1].trim());
-            resultData.setStatus(ResultDataState.ERROR.getKey());
+        }else if (e instanceof BindException){
+            BindException bindException = (BindException)e;
+            analysisBindingResult(bindException.getBindingResult(),resultData);
+        }else if (e instanceof MethodArgumentNotValidException){
+            MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException)e;
+            analysisBindingResult(methodArgumentNotValidException.getBindingResult(),resultData);
         }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException){
-            String message = e.getMessage();
             resultData.setMessage("登陆异常，请重新登陆");
             resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
         }else {
             resultData.setMessage("程序开小差了！请与管理员联系！");
         }
         resultData.setExceptionMessage(e.getMessage());
+    }
+
+    private static void analysisBindingResult(final BindingResult bindingResult, final ResultData resultData){
+        for(FieldError fieldError : bindingResult.getFieldErrors()){
+            resultData.setMessage(fieldError.getDefaultMessage());
+            break;
+        }
     }
 
 
