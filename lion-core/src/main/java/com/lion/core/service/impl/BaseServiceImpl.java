@@ -93,8 +93,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     @Override
     public Page<T> findAll(Pageable pageable) {
         Page<T> page = baseDao.findAll(pageable);
-        PageResultData pageResultData = new PageResultData(page.getContent(),page.getPageable(),page.getTotalElements());
-        return pageResultData;
+        return page;
     }
 
     @Override

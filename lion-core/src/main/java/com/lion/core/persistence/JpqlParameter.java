@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 构建查询参数
@@ -43,13 +44,22 @@ public class JpqlParameter implements Serializable {
 	public void setSortParameter(Map<String, Object> sortParameter) {
 		this.sortParameter = sortParameter;
 	}
-	
+
+	/**
+	 * jpqlParameter.setSearchParameter(SearchConstant.LIKE+"_name",name);
+	 * @param key
+	 * @param value
+	 */
 	public void setSearchParameter(String key, Object value) {
-		this.searchParameter.put(key, value);
+		if (Objects.nonNull(value)) {
+			this.searchParameter.put(key, value);
+		}
 	}
 
 	public void setSortParameter(String key, Direction value) {
-		this.sortParameter.put(key, value.name());
+		if (Objects.nonNull(key)) {
+			this.sortParameter.put(key, value.name());
+		}
 	}
 	
 	
