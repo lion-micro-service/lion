@@ -10,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -34,9 +35,7 @@ public class ExceptionData {
     }
 
     private static void handle(final Throwable e,final ResultData resultData){
-        if (e instanceof BlockException || e.getCause() instanceof BlockException ) {
-            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");
-        }else if (e instanceof InvalidGrantException){
+        if (e instanceof InvalidGrantException){
             resultData.setMessage( "用户名/密码错误");
         }else if (e instanceof HttpMessageNotReadableException){
             resultData.setMessage( "数据格式错误(请出入正确的json数据)");
@@ -55,9 +54,11 @@ public class ExceptionData {
         }else if (e instanceof MethodArgumentNotValidException){
             MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException)e;
             analysisBindingResult(methodArgumentNotValidException.getBindingResult(),resultData);
-        }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException){
+        }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException || e instanceof InvalidTokenException){
             resultData.setMessage("登陆异常，请重新登陆");
             resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
+        }else if (e instanceof BlockException || e.getCause() instanceof BlockException) {
+            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");
         }else {
             resultData.setMessage("程序开小差了！请与管理员联系！");
         }

@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguratio
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.Filter;
@@ -16,18 +17,17 @@ import java.util.List;
 
 /**
  * @author mr.liu
- * @Description: jackson LongToString 待优化
+ * @Description: jackson LongToString
  * @date 2020/8/27下午5:19
  */
 @Configuration
 @ConditionalOnClass({WebMvcAutoConfiguration.class, Filter.class})
-public class LongToString extends WebMvcConfigurerAdapter {
+public class JsonLongToString implements WebMvcConfigurer {
     @Override
     public void extendMessageConverters(List<HttpMessageConverter<?>> converters) {
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         ObjectMapper objectMapper = jackson2HttpMessageConverter.getObjectMapper();
-        //不显示为null的字段
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(Long.class, ToStringSerializer.instance);
         simpleModule.addSerializer(Long.TYPE, ToStringSerializer.instance);
