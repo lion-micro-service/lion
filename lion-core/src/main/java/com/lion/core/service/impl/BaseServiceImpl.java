@@ -3,6 +3,7 @@ package com.lion.core.service.impl;
 import com.lion.core.LionPage;
 import com.lion.core.PageResultData;
 import com.lion.core.persistence.curd.BaseDao;
+import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.core.service.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Sort;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -98,6 +100,13 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public <S extends T> S save(S entity) {
+        if (Objects.isNull(entity)){
+            return entity;
+        }
+        if (Objects.nonNull( ((BaseEntity)entity).getId())){
+            this.update(entity);
+            return entity;
+        }
         return baseDao.save(entity);
     }
 
@@ -161,9 +170,8 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable) {
-        Page<T> page = baseDao.findAll((Example<T>) example,pageable);
-        PageResultData pageResultData = new PageResultData(page.getContent(),page.getPageable(),page.getTotalElements());
-        return pageResultData;
+        Page<S> page = (Page<S>) baseDao.findAll((Example<T>) example,pageable);
+        return page;
     }
 
     @Override

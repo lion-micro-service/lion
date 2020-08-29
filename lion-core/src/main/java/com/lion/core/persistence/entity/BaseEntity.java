@@ -30,7 +30,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId"})
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime"})
 public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
@@ -42,9 +42,9 @@ public abstract class BaseEntity implements Serializable {
     @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     private Long id;
 
-    @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")
-    @Convert(converter = DeleteConverter.class)
-    private Delete isDelete;
+//    @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")
+//    @Convert(converter = DeleteConverter.class)
+//    private Delete isDelete;
 
     @CreatedDate
     @Column(name = "create_date_time", updatable = false)
@@ -62,7 +62,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "update_user_id", insertable = false)
     private Long updateUserId;
 
-    @Column(name = "version")
+    @Column(name = "version",nullable = false,columnDefinition = "BIGINT(20) default 1 comment '版本号'")
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     private Long version;
 }

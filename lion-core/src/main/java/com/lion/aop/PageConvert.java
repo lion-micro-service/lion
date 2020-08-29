@@ -20,9 +20,7 @@ import org.springframework.stereotype.Component;
 public class PageConvert {
 
     @Around(value = "execution(org.springframework.data.domain.Page com.lion..*.expose..*.*(..)) " +
-            "|| execution(org.springframework.data.domain.Page com.lion..*.service..*.*(..))" +
-            "|| execution(com.lion.core.PageResultData com.lion..*.expose..*.*(..))" +
-            "|| execution(com.lion.core.PageResultData com.lion..*.service..*.*(..))" )
+            "|| execution(org.springframework.data.domain.Page com.lion..*.service..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object obj = pjp.proceed();
         if (obj instanceof Page){
