@@ -51,9 +51,9 @@ public class JpqlParameter implements Serializable {
 	 * @param value
 	 */
 	public void setSearchParameter(String key, Object value) {
-		if (Objects.nonNull(value)) {
+//		if (Objects.nonNull(value)) {
 			this.searchParameter.put(key, value);
-		}
+//		}
 	}
 
 	public void setSortParameter(String key, Direction value) {
