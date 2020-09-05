@@ -30,7 +30,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime"})
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId"})
 public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
