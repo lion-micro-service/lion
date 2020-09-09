@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
 import org.springframework.validation.BindException;
@@ -35,7 +36,7 @@ public class ExceptionData {
     }
 
     private static void handle(final Throwable e,final ResultData resultData){
-        if (e instanceof InvalidGrantException){
+        if (e instanceof InvalidGrantException || e instanceof InternalAuthenticationServiceException){
             resultData.setMessage( "用户名/密码错误");
         }else if (e instanceof HttpMessageNotReadableException){
             resultData.setMessage( "数据格式错误(请出入正确的json数据)");

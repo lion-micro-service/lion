@@ -16,8 +16,6 @@ public class LionUserDetails extends User {
 
     private static final long serialVersionUID = -883666601L;
 
-    private Long userId;
-
     public LionUserDetails() {
         this(UUID.randomUUID().toString(),UUID.randomUUID().toString(), getGrantedAuthority());
     }
@@ -35,13 +33,5 @@ public class LionUserDetails extends User {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         list.add(grantedAuthority);
         return list;
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
     }
 }
