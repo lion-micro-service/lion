@@ -32,7 +32,7 @@ public class RestTemplateConfiguration {
         return restTemplate;
     }
 
-    @Bean
+    @Bean(name = REST_TAMPLATE_LOAD_BALANCED_BEAN_NAME)
     @ConditionalOnClass({LoadBalanced.class})
     @LoadBalanced
     public RestTemplate restTemplateLoadBalanced() {
