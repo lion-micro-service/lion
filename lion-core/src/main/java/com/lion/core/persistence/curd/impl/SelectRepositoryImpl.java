@@ -178,7 +178,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	}
 
 	private PageResultData<?> convertPageResultData(List<?> list,Pageable pageable,Long total){
-		PageResultData<T> pageResultData = new PageResultData(list,pageable,total);
+		PageResultData<?> pageResultData = new PageResultData(list,pageable,total);
 		return pageResultData;
 	}
 

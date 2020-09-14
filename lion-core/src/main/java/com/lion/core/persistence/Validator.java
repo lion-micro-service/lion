@@ -7,35 +7,35 @@ package com.lion.core.persistence;
  */
 public class Validator {
 
-	public interface Update {
+	public static interface Update {
 
 	}
 	
-	public interface Select {
+	public static interface Select {
 
 	}
 	
-	public interface Insert {
+	public static interface Insert {
 
 	}
 
-	public interface Delete {
+	public static interface Delete {
 
 	}
 	
-	public interface OtherOne{
+	public static interface OtherOne{
 		
 	}
 
-	public interface OtherTwo{
+	public static interface OtherTwo{
 
 	}
 
-	public interface OtherThree{
+	public static interface OtherThree{
 
 	}
 
-	public interface OtherFour{
+	public static interface OtherFour{
 
 	}
 

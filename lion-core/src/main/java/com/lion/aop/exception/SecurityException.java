@@ -1,5 +1,6 @@
 package com.lion.aop.exception;
 
+import com.lion.core.IResultData;
 import com.lion.core.ResultData;
 import com.lion.core.ResultDataState;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class SecurityException implements ErrorController {
     private ErrorAttributes errorAttributes;
 
     @RequestMapping(value = PATH)
-    public ResultData error(HttpServletRequest request, HttpServletResponse response) {
+    public IResultData error(HttpServletRequest request, HttpServletResponse response) {
         WebRequest requestAttributes = new ServletWebRequest(request);
         Map<String, Object> errorMap = errorAttributes.getErrorAttributes(requestAttributes, ErrorAttributeOptions.defaults());
         ResultData resultData = new ResultData();
