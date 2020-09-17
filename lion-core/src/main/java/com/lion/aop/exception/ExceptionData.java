@@ -1,8 +1,7 @@
 package com.lion.aop.exception;
 
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.lion.core.ResultData;
-import com.lion.core.ResultDataState;
+import com.lion.core.common.enums.ResultDataState;
 import com.lion.exception.AuthorizationException;
 import com.lion.exception.BusinessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -58,9 +57,11 @@ public class ExceptionData {
         }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException || e instanceof InvalidTokenException){
             resultData.setMessage("登陆异常，请重新登陆");
             resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
-        }else if (e instanceof BlockException || e.getCause() instanceof BlockException) {
-            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");
-        }else {
+        }
+//        else if (e instanceof BlockException || e.getCause() instanceof BlockException) {
+//            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");
+//        }
+        else {
             resultData.setMessage("程序开小差了！请与管理员联系！");
         }
         resultData.setExceptionMessage(e.getMessage());

@@ -3,6 +3,7 @@ package com.lion.core;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.lion.constant.ResultDataConstant;
+import com.lion.core.common.enums.ResultDataState;
 import lombok.Data;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,7 @@
-package com.lion.core;
+package com.lion.core.common.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.lion.core.IEnum;
 
 import java.util.HashMap;
 import java.util.Map;

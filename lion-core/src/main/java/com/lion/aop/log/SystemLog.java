@@ -57,6 +57,23 @@ public class SystemLog {
             "&& execution(public * com.lion..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) {
         LocalDateTime startDateTime = LocalDateTime.now();
+        Signature signature = pjp.getSignature();
+        MethodSignature methodSignature = (MethodSignature) signature;
+        Method method = methodSignature.getMethod();
+        com.lion.annotation.SystemLog systemLog = method.getAnnotation(com.lion.annotation.SystemLog.class);
+        try {
+            Object object = pjp.proceed();
+            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
+                systemLog(method,startDateTime,object);
+            }
+            return object;
+        } catch (Throwable throwable) {
+            return ExceptionData.instance(throwable);
+        }
+
+    }
+
+    private void systemLog(Method method,LocalDateTime startDateTime,Object object) throws JsonProcessingException {
         SystemLogData systemLogData = new SystemLogData();
         SystemLogDataUtil.set(systemLogData);
         systemLogData.setTrackId(SnowflakeUtil.getId());
@@ -65,9 +82,6 @@ public class SystemLog {
             systemLogData.setCurrentUserId(user.getId());
         }
         systemLogData.setSequenceNumber(1);
-        Signature signature = pjp.getSignature();
-        MethodSignature methodSignature = (MethodSignature) signature;
-        Method method = methodSignature.getMethod();
         systemLogData.setTarget(method.toGenericString());
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         HttpServletRequest request = ((ServletRequestAttributes)requestAttributes).getRequest();
@@ -85,17 +99,12 @@ public class SystemLog {
                 systemLogData.setBody(body);
             }
         }
-        try {
-            Object object = pjp.proceed();
-            LocalDateTime endDateTime = LocalDateTime.now();
-            Duration duration = Duration.between(startDateTime,endDateTime );
-            systemLogData.setExecuteTime(duration.toMillis());
-            systemLogData.setResponseData(object);
-            logger.debug(objectMapper.writeValueAsString(systemLogData));
-            return object;
-        } catch (Throwable throwable) {
-            return ExceptionData.instance(throwable);
-        }
+        LocalDateTime endDateTime = LocalDateTime.now();
+        Duration duration = Duration.between(startDateTime,endDateTime );
+        systemLogData.setExecuteTime(duration.toMillis());
+        systemLogData.setResponseData(object);
+        logger.debug(objectMapper.writeValueAsString(systemLogData));
+
     }
 }
 

@@ -30,6 +30,7 @@
         <springfox.version>3.0.0</springfox.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <arthas.version>3.4.1</arthas.version>
+        <reflections.version>0.9.12</reflections.version>
     </properties>
 
     <modules>
@@ -241,6 +242,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
             </dependency>
 
             <dependency>

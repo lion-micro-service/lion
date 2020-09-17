@@ -1,0 +1,4 @@
+lion:
+  enums:
+    - com.lion.core.common.enums.Delete
+    - com.lion.core.common.enums.State

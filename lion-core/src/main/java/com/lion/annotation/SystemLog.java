@@ -3,10 +3,13 @@ package com.lion.annotation;
 import java.lang.annotation.*;
 
 /**
- * 排除授权认证
+ * @author mr.liu
+ * @Description:
+ * @date 2020/9/17下午1:51
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface AuthorizationIgnore {
+public @interface SystemLog {
+    boolean log() default true;
 }

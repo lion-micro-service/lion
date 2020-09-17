@@ -19,6 +19,11 @@ public class CurrentUser implements ICurrentUser {
 
     @Override
     public Object findUser(String username) {
-        return iCurrentUser.findUser(username);
+        try {
+            return iCurrentUser.findUser(username);
+        }catch (Exception ex){
+            return null;
+        }
+
     }
 }

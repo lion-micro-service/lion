@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lion.constant.ResultDataConstant;
+import com.lion.core.common.enums.ResultDataState;
 import com.lion.utils.BeanToMapUtil;
 import lombok.Data;
 
