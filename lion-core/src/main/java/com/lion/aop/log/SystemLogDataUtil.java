@@ -20,7 +20,7 @@ public class SystemLogDataUtil {
             synchronized (SystemLogDataUtil.class) {
                 systemLogData = systemLogDataThreadLocal.get();
                 if (Objects.isNull(systemLogData)) {
-                    CurrentUserUtil.getCurrentUser(false);
+                    systemLogData = new SystemLogData();
                     BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
                     if(Objects.nonNull(user)){
                         systemLogData.setCurrentUserId(user.getId());

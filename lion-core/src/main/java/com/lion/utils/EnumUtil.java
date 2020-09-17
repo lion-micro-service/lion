@@ -1,7 +1,11 @@
 package com.lion.utils;
 
-import org.reflections.Reflections;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lion.core.IEnum;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.*;
 
 /**
@@ -21,27 +25,25 @@ public class EnumUtil {
             return result;
         }
         listEnum.forEach(e->{
-            Map<String, Object> value = new HashMap<String, Object>();
             try {
-                Class t = Class.forName(e);
-                Arrays.asList(t.getEnumConstants()).forEach(c -> {
-                    Map<String, Object> fieldValue = new HashMap<String, Object>();
-                    Arrays.asList(c.getClass().getDeclaredFields()).stream()
-                            .filter(field -> (!field.isEnumConstant()) && !"$VALUES".equals(field.getName()))
-                            .forEach(field -> {
-                                field.setAccessible(true);
-                                try {
-                                    fieldValue.put(field.getName(), field.get(c));
-                                } catch (IllegalAccessException illegalAccessException) {
-                                    illegalAccessException.printStackTrace();
-                                }
-                            });
-                    value.put(c.toString(), fieldValue);
-                });
-                result.put(t.getCanonicalName(), value);
+                Class c = Class.forName(e);
+                List<String> list = new ArrayList<String>();
+                Method method = c.getMethod("values");
+                IEnum inter[] = (IEnum[]) method.invoke(null);
+                for (IEnum ienum : inter) {
+                    ObjectMapper objectMapper = new ObjectMapper();
+                    list.add(objectMapper.writeValueAsString(ienum.jsonValue()));
+                }
+                result.put(c.getName(),list);
             }
-            catch (ClassNotFoundException classNotFoundException) {
-                classNotFoundException.printStackTrace();
+            catch (ClassNotFoundException | NoSuchMethodException classNotFoundException ) {
+//                classNotFoundException.printStackTrace();
+            } catch (IllegalAccessException illegalAccessException) {
+//                illegalAccessException.printStackTrace();
+            } catch (InvocationTargetException invocationTargetException) {
+//                invocationTargetException.printStackTrace();
+            } catch (JsonProcessingException jsonProcessingException) {
+//                jsonProcessingException.printStackTrace();
             }
         });
 
@@ -51,6 +53,7 @@ public class EnumUtil {
     public static void main(String[] args) {
         List<String> list = new ArrayList<String>();
         list.add("com.lion.core.common.enums.Delete");
+        list.add("com.lion.core.common.enums.State");
         EnumUtil.getAllEnumsInPackage(list).forEach((k, v) -> System.out.println(k + "=" + v));
     }
 }

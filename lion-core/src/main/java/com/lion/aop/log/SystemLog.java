@@ -62,9 +62,15 @@ public class SystemLog {
         Method method = methodSignature.getMethod();
         com.lion.annotation.SystemLog systemLog = method.getAnnotation(com.lion.annotation.SystemLog.class);
         try {
+            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
+                systemLog(method,startDateTime);
+            }
             Object object = pjp.proceed();
             if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
-                systemLog(method,startDateTime,object);
+                SystemLogData systemLogData = SystemLogDataUtil.get();
+                systemLogData.setResponseData(object);
+                ObjectMapper objectMapper = new ObjectMapper();
+                logger.debug(objectMapper.writeValueAsString(systemLogData));
             }
             return object;
         } catch (Throwable throwable) {
@@ -73,7 +79,7 @@ public class SystemLog {
 
     }
 
-    private void systemLog(Method method,LocalDateTime startDateTime,Object object) throws JsonProcessingException {
+    private void systemLog(Method method,LocalDateTime startDateTime) throws JsonProcessingException {
         SystemLogData systemLogData = new SystemLogData();
         SystemLogDataUtil.set(systemLogData);
         systemLogData.setTrackId(SnowflakeUtil.getId());
@@ -102,9 +108,6 @@ public class SystemLog {
         LocalDateTime endDateTime = LocalDateTime.now();
         Duration duration = Duration.between(startDateTime,endDateTime );
         systemLogData.setExecuteTime(duration.toMillis());
-        systemLogData.setResponseData(object);
-        logger.debug(objectMapper.writeValueAsString(systemLogData));
-
     }
 }
 
