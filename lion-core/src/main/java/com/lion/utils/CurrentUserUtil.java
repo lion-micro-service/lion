@@ -30,18 +30,18 @@ public class CurrentUserUtil {
      * 获取当前登陆用户
      * @return
      */
-    public static Object getCurrentUser(Boolean isMustLogin){
-        Object user = null;
+    public static Map<String,Object> getCurrentUser(Boolean isMustLogin){
+        Map<String,Object> user = null;
         if(isHttpWebRequest()){
             String username = getUsername();
             if(StringUtils.hasText(username)) {
-                user = getICurrentUser().findUser(username);
+                user = getICurrentUser().findUserToMap(username);
             }
         }else if (isDubooRequest()){
             RpcContext rpcContext = RpcContext.getContext();
             Object username = rpcContext.get(DubboConstant.USERNAME);
             if( Objects.nonNull(username) ) {
-                user = getICurrentUser().findUser(String.valueOf(username));
+                user = getICurrentUser().findUserToMap(String.valueOf(username));
             }
             return user;
         }

@@ -1,5 +1,7 @@
 package com.lion.core;
 
+import java.util.Map;
+
 /**
  * @description:
  * @author: Mr.Liu
@@ -12,5 +14,5 @@ public interface ICurrentUser<T> {
      * @param username
      * @return
      */
-    T findUser(String username);
+    Map<String,Object> findUserToMap(String username);
 }

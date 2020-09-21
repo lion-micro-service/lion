@@ -83,9 +83,9 @@ public class SystemLog {
         SystemLogData systemLogData = new SystemLogData();
         SystemLogDataUtil.set(systemLogData);
         systemLogData.setTrackId(SnowflakeUtil.getId());
-        BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
-        if(Objects.nonNull(user)){
-            systemLogData.setCurrentUserId(user.getId());
+        Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
+        if(Objects.nonNull(user) && user.containsKey("id")){
+            systemLogData.setCurrentUserId(Long.valueOf(String.valueOf(user.get("id"))));
         }
         systemLogData.setSequenceNumber(1);
         systemLogData.setTarget(method.toGenericString());

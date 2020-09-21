@@ -5,6 +5,8 @@ import com.lion.core.ICurrentUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 /**
  * @description: 获取当前登陆用户信息
  * @author: Mr.Liu
@@ -17,13 +19,13 @@ public class CurrentUser implements ICurrentUser {
     private ICurrentUser iCurrentUser;
 
 
+
     @Override
-    public Object findUser(String username) {
+    public Map<String, Object> findUserToMap(String username) {
         try {
-            return iCurrentUser.findUser(username);
+            return iCurrentUser.findUserToMap(username);
         }catch (Exception ex){
             return null;
         }
-
     }
 }

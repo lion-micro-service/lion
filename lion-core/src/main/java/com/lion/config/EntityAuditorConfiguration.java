@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -29,8 +30,8 @@ public class EntityAuditorConfiguration  {
     class UserAuditor implements AuditorAware<Long> {
         @Override
         public Optional<Long> getCurrentAuditor() {
-            BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
-            return Optional.ofNullable(Objects.isNull(user)?null:user.getId());
+            Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
+            return Optional.ofNullable(Objects.nonNull(user)&&user.containsKey("id")?Long.valueOf(String.valueOf(user.get("id"))):null);
         }
     }
 }
