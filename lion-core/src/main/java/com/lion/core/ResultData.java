@@ -7,6 +7,7 @@ import com.lion.constant.ResultDataConstant;
 import com.lion.core.common.enums.ResultDataState;
 import com.lion.utils.BeanToMapUtil;
 import lombok.Data;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -34,7 +35,7 @@ public class ResultData implements Serializable, IResultData {
 	/**
 	 * 消息
 	 */
-	private String message = ResultDataConstant.MESSAGE;
+	private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
 	/**
 	 * 异常信息
@@ -75,6 +76,25 @@ public class ResultData implements Serializable, IResultData {
 	public IResultData setData(String key, Collection<Object> collection) {
 		data.put(key, collection);
 		return this;
+	}
+
+	public IResultData succeed(String message){
+		if (StringUtils.hasText(message)){
+			this.message = message;
+		}
+		return this;
+	}
+
+	public IResultData failed(String message){
+		this.status = ResultDataState.ERROR.getKey();
+		if (StringUtils.hasText(message)){
+			this.message = message;
+		}
+		return this;
+	}
+
+	public IResultData failed(){
+		return failed(ResultDataConstant.FAILED_MESSAGE);
 	}
 
 	public static ResultData instance(){

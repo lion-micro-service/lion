@@ -1,5 +1,7 @@
 package com.lion.constant;
 
+import org.omg.PortableInterceptor.SUCCESSFUL;
+
 /**
  * @description: 返回结果集常量定义
  * @author: Mr.Liu
@@ -7,5 +9,7 @@ package com.lion.constant;
  */
 public class ResultDataConstant {
 
-    public static final String MESSAGE = "操作成功";
+    public static final String SUCCEED_MESSAGE = "操作成功";
+
+    public static final String FAILED_MESSAGE = "操作失败";
 }

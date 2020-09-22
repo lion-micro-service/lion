@@ -30,7 +30,7 @@ public class PageResultData<T> extends PageImpl<T> implements IResultData, Seria
     /**
      * 消息
      */
-    private String message = ResultDataConstant.MESSAGE;
+    private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
     /**
      * 异常信息
