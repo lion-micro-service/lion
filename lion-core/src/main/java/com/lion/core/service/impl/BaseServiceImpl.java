@@ -140,12 +140,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
     @Override
     public void deleteById(Serializable id) {
-        try {
-            if (existsById(id)) {
-                baseDao.deleteById(id);
-            }
-        } catch (Exception e) {
-        }
+        baseDao.deleteById(id);
     }
 
     @Override
