@@ -21,7 +21,7 @@ import java.util.Map;
  * @author mr.liu
  * @title: SecurityException
  * @projectName lion
- * @description: TODO
+ * @description: SecurityException
  * @date 2020/7/29下午3:58
  */
 @RestController
