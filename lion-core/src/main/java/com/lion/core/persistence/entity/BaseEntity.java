@@ -62,7 +62,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "update_user_id", insertable = false)
     private Long updateUserId;
 
-    @Column(name = "version",nullable = false,columnDefinition = "BIGINT(20) default 1 comment '版本号'")
+    @Column(name = "version",nullable = false,columnDefinition = "BIGINT(18) default 1 comment '版本号'")
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     private Long version;
 }
