@@ -180,7 +180,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
-    public PageResultData<T> findNavigator(LionPage lionPage) {
+    public Page<T> findNavigator(LionPage lionPage) {
         return baseDao.findNavigator(lionPage);
     }
 

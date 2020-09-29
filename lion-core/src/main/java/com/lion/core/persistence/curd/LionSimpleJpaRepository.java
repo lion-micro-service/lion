@@ -7,6 +7,8 @@ import com.lion.core.persistence.curd.impl.SaveRepositoryImpl;
 import com.lion.core.persistence.curd.impl.SelectRepositoryImpl;
 import com.lion.core.persistence.curd.impl.UpdateRepositoryImpl;
 import org.hibernate.Session;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -91,19 +93,19 @@ public abstract class LionSimpleJpaRepository<T> extends SimpleJpaRepository<T, 
 
 	@Override
 	@Transactional(readOnly=true)
-	public PageResultData<?> findNavigator(LionPage lionPage, String jpql) {
-		return selectRepository.findNavigator(lionPage, jpql);
+	public Page<?> findNavigator(Pageable pageable, String jpql) {
+		return selectRepository.findNavigator(pageable, jpql);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public PageResultData<?> findNavigator(LionPage lionPage, String jpql, Map<String, Object> parameter) {
-		return selectRepository.findNavigator(lionPage, jpql, parameter);
+	public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> parameter) {
+		return selectRepository.findNavigator(pageable, jpql, parameter);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public PageResultData<T> findNavigator(LionPage lionPage) {
+	public Page<T> findNavigator(LionPage lionPage) {
 		return selectRepository.findNavigator(lionPage);
 	}
 

@@ -79,7 +79,7 @@ public interface BaseService<T>{
 	 * @param lionPage
 	 * @return PageResultData<T>
 	 */
-	PageResultData<T> findNavigator(LionPage lionPage);
+	Page<T> findNavigator(LionPage lionPage);
 	
 	
 }

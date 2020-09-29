@@ -12,9 +12,7 @@ import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.hql.internal.ast.QueryTranslatorImpl;
 import org.hibernate.param.NamedParameterSpecification;
 import org.hibernate.param.ParameterSpecification;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
@@ -75,19 +73,21 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	}
 
 	@Override
-	public PageResultData<?> findNavigator(LionPage lionPage, String jpql) {
-		return findNavigator(lionPage, jpql, null);
+	public Page<?> findNavigator(Pageable pageable, String jpql) {
+		return findNavigator(pageable, jpql, null);
 	}
 
 	@Override
-	public PageResultData<?> findNavigator(LionPage lionPage, String jpql, Map<String, Object> searchParameter) {
-		List<T> list = (List<T>) executeJpql(lionPage, jpql, searchParameter);
-		return convertPageResultData(list, lionPage,getCount(jpql, searchParameter));
+	public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter) {
+		List<?> list = (List<?>) executeJpql(pageable, jpql, searchParameter);
+		Long total = getCount(jpql, searchParameter);
+		Page page = new PageImpl(list,pageable,total);
+		return page;
 	}
 
 	@Override
-	public PageResultData<T> findNavigator(LionPage lionPage) {
-		return (PageResultData<T>) find(lionPage.getPageSize(), lionPage.getPageNumber(), lionPage.getJpqlParameter().getSearchParameter(),
+	public Page<T> findNavigator(LionPage lionPage) {
+		return (Page<T>) find(lionPage.getPageSize(), lionPage.getPageNumber(), lionPage.getJpqlParameter().getSearchParameter(),
 				lionPage.getJpqlParameter().getSortParameter());
 	}
 
@@ -99,7 +99,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	 * @param searchParameter
 	 * @return
 	 */
-	private List<?> executeJpql(LionPage lionPage, String jpql, Map<String, Object> searchParameter) {
+	private List<?> executeJpql(Pageable lionPage, String jpql, Map<String, Object> searchParameter) {
 		Query query = entityManager.createQuery(jpql);
 		RepositoryParameter.setParameter(query, searchParameter);
 		query.setFirstResult(lionPage.getPageNumber() * lionPage.getPageSize());
@@ -177,13 +177,13 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		return (List<T>) find(Integer.MAX_VALUE, 1, searchParameter, sortParameter).getContent();
 	}
 
-	private PageResultData<?> convertPageResultData(List<?> list,Pageable pageable,Long total){
-		PageResultData<?> pageResultData = new PageResultData(list,pageable,total);
-		return pageResultData;
-	}
+//	private PageResultData<?> convertPageResultData(List<?> list,Pageable pageable,Long total){
+//		PageResultData<?> pageResultData = new PageResultData(list,pageable,total);
+//		return pageResultData;
+//	}
 
-	private PageResultData<?> find(Integer pageSize, Integer pageNumber, Map<String, Object> searchParameter,
-									  Map<String, Object> sortParameter) {
+	private Page<?> find(Integer pageSize, Integer pageNumber, Map<String, Object> searchParameter,
+						 Map<String, Object> sortParameter) {
 		Specification<T> specification = new Specification<T>() {
 			private static final long serialVersionUID = 1L;
 			@Override
@@ -197,7 +197,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		Sort sort = SortBuilder.builder(sortParameter);
 		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 		org.springframework.data.domain.Page<T> page = simpleJpaRepository.findAll(specification, pageable);
-		return convertPageResultData(page.getContent(),pageable,page.getTotalElements());
+		return page;
 	}
 
 }

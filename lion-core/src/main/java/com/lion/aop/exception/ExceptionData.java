@@ -37,6 +37,8 @@ public class ExceptionData {
     private static void handle(final Throwable e,final ResultData resultData){
         if (e instanceof InvalidGrantException || e instanceof InternalAuthenticationServiceException){
             resultData.setMessage( "用户名/密码错误");
+        }else if (e instanceof IllegalArgumentException){
+            resultData.setMessage( "参数错误");
         }else if (e instanceof HttpMessageNotReadableException){
             resultData.setMessage( "数据格式错误(请出入正确的json数据)");
         }else if (e instanceof DataIntegrityViolationException){

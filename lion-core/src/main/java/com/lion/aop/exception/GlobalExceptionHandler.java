@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
+    @ExceptionHandler(Throwable.class)
     @ResponseBody
-    public IResultData exception(Exception e) {
+    public IResultData exception(Throwable e) {
         return ExceptionData.instance(e);
     }
 

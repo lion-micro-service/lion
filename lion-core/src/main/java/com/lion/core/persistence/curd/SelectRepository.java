@@ -1,7 +1,8 @@
 package com.lion.core.persistence.curd;
 
 import com.lion.core.LionPage;
-import com.lion.core.PageResultData;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Map;
@@ -42,18 +43,20 @@ public interface SelectRepository<T> {
 
 	/**
 	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
+	 * @param pageable
 	 * @param jpql
 	 * @return
 	 */
-	PageResultData<?> findNavigator(LionPage LionPage, String jpql);
+	Page<?> findNavigator(Pageable pageable, String jpql);
 
 	/**
 	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
 	 * @param jpql
+	 * @param pageable
 	 * @param searchParameter
 	 * @return
 	 */
-	PageResultData<?> findNavigator(LionPage LionPage, String jpql, Map<String, Object> searchParameter);
+	Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter);
 
 
 	/**
@@ -61,7 +64,7 @@ public interface SelectRepository<T> {
 	 * @param LionPage
 	 * @return
 	 */
-	PageResultData<T> findNavigator(LionPage LionPage);
+	Page<T> findNavigator(LionPage LionPage);
 	/**
 	 *
 	 * @param searchParameter
