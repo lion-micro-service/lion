@@ -34,8 +34,6 @@
     </properties>
 
     <modules>
-        <module>lion-starter</module>
-        <module>lion-dependencies</module>
         <module>lion-core</module>
     </modules>
 

@@ -22,7 +22,8 @@ public class PageConvert {
     @Around(value = "execution(org.springframework.data.domain.Page com.lion..*.expose..*.*(..)) " +
             "|| execution(org.springframework.data.domain.PageImpl com.lion..*.expose..*.*(..)) " +
             "|| execution(org.springframework.data.domain.Page com.lion..*.service..*.*(..))" +
-            "|| execution(org.springframework.data.domain.PageImpl com.lion..*.service..*.*(..))")
+            "|| execution(org.springframework.data.domain.PageImpl com.lion..*.service..*.*(..))" +
+            "&& execution(public * com.lion..*.*(..))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object obj = pjp.proceed();
         if (obj instanceof Page){
