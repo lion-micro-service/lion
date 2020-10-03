@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -40,6 +41,7 @@ import java.util.*;
 @ConditionalOnClass({Reflections.class})
 @Order(Ordered.LOWEST_PRECEDENCE)
 //@AutoConfigureAfter({JpaRepositoriesAutoConfiguration.class,RestTemplateConfiguration.class})
+@ConditionalOnExpression("!'${lion.enums}'.isEmpty()")
 @ConfigurationProperties(prefix = "lion")
 @Data
 public class EnumToSelcetConfiguration implements CommandLineRunner {
