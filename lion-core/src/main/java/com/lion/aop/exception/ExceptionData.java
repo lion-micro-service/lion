@@ -41,8 +41,6 @@ public class ExceptionData {
             resultData.setMessage( "参数错误");
         }else if (e instanceof HttpMessageNotReadableException){
             resultData.setMessage( "数据格式错误(请出入正确的json数据)");
-        }else if (e instanceof DataIntegrityViolationException){
-            resultData.setMessage( "数据可能违反唯一约束或者其它数据完整性");
         }else if (e instanceof BusinessException){
             resultData.setMessage(e.getMessage());
         }else if (e instanceof AccessDeniedException){
