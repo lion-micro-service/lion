@@ -46,7 +46,7 @@ public class FilterConfiguration {
 
 @Component
 @ConditionalOnClass({WebMvcAutoConfiguration.class,Filter.class})
-@Order(Ordered.HIGHEST_PRECEDENCE)
+@Order(Ordered.LOWEST_PRECEDENCE)
 class RequestBodyFilter implements Filter {
 
     @Override
