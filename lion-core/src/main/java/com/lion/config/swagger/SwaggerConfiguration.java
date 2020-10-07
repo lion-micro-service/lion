@@ -4,7 +4,7 @@ import com.fasterxml.classmate.TypeResolver;
 import com.lion.core.LionPage;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
@@ -12,16 +12,16 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplicat
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.data.domain.Pageable;
-import springfox.documentation.builders.AlternateTypeBuilder;
-import springfox.documentation.builders.AlternateTypePropertyBuilder;
+import springfox.documentation.builders.PathSelectors;
+import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRuleConvention;
+import springfox.documentation.spi.DocumentationType;
+import springfox.documentation.spi.service.OperationModelsProviderPlugin;
+import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.configuration.Swagger2WebMvcConfiguration;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static springfox.documentation.schema.AlternateTypeRules.newRule;
@@ -37,8 +37,20 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @ConditionalOnWebApplication
 public class SwaggerConfiguration {
 
+
+
     @Bean
-    @ApiResponses
+    public Docket docket(){
+        return new Docket(DocumentationType.OAS_30)
+                .select()
+                //设置basePackage会将包下的所有被@Api标记类的所有方法作为api
+                .apis(RequestHandlerSelectors.basePackage("com.lion"))
+                //只有标记了@ApiOperation的方法才会暴露出给swagger
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
+                .paths(PathSelectors.any()).build();
+    }
+
+    @Bean
     public AlternateTypeRuleConvention pageableConvention(final TypeResolver resolver) {
         return new AlternateTypeRuleConvention() {
             @Override
