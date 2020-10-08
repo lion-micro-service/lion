@@ -31,6 +31,7 @@
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <arthas.version>3.4.1</arthas.version>
         <reflections.version>0.9.12</reflections.version>
+        <minio.version>7.1.4</minio.version>
     </properties>
 
     <modules>
@@ -246,6 +247,12 @@
                 <groupId>org.reflections</groupId>
                 <artifactId>reflections</artifactId>
                 <version>${reflections.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.minio</groupId>
+                <artifactId>minio</artifactId>
+                <version>${minio.version}</version>
             </dependency>
 
             <dependency>

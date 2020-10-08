@@ -102,7 +102,6 @@ public class SystemLog {
                 body = new String (((ContentCachingRequestWrapper)request).getContentAsByteArray() , "UTF-8");
                 systemLogData.setBody(objectMapper.readValue(body,Map.class));
             } catch (IOException e) {
-                systemLogData.setBody(body);
             }
         }
         LocalDateTime endDateTime = LocalDateTime.now();

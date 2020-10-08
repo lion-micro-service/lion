@@ -11,6 +11,7 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -55,8 +56,20 @@ public class ExceptionData {
             MethodArgumentNotValidException methodArgumentNotValidException = (MethodArgumentNotValidException)e;
             analysisBindingResult(methodArgumentNotValidException.getBindingResult(),resultData);
         }else if (e instanceof AuthorizationException || e instanceof InsufficientAuthenticationException || e instanceof InvalidTokenException){
-            resultData.setMessage("登陆异常，请重新登陆");
-            resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
+            if (e instanceof OAuth2Exception){
+                OAuth2Exception oAuth2Exception = (OAuth2Exception) e;
+                if (oAuth2Exception.getHttpErrorCode()==403) {
+                    resultData.setMessage("权限不足：" + e.getMessage());
+                    resultData.setStatus(ResultDataState.ERROR.getKey());
+
+                }else if (oAuth2Exception.getHttpErrorCode()==401||oAuth2Exception.getHttpErrorCode()==400){
+                    resultData.setMessage("登陆异常，请重新登陆");
+                    resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
+                }
+            }else if (e instanceof InsufficientAuthenticationException){
+                resultData.setMessage("登陆异常，请重新登陆");
+                resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
+            }
         }
 //        else if (e instanceof BlockException || e.getCause() instanceof BlockException) {
 //            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");
