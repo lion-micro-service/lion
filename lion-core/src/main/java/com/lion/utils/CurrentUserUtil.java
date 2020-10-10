@@ -88,7 +88,7 @@ public class CurrentUserUtil {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(Objects.nonNull(authentication)){
             Object principal = authentication.getPrincipal();
-            if(Objects.nonNull(principal)){
+            if(Objects.nonNull(principal) && principal instanceof String){
                 username = String.valueOf(principal);
             }
         }

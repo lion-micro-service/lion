@@ -43,7 +43,12 @@ public class DubboConstant {
     public static final int RETRIES = 3;
 
     /**
-     *
+     * 当前登陆用户登陆账号
      */
     public static final String USERNAME = "username";
+
+    /**
+     * 客户端远程IP地址
+     */
+    public static final String CLIENT_REMOTE_ADDRESS="client_remote_address";
 }
