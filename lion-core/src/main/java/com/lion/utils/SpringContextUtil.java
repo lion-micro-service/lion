@@ -39,6 +39,10 @@ public class SpringContextUtil implements ApplicationContextAware, ApplicationLi
 		return applicationContext.getBean(name);
 	}
 
+	public static Object getBean(Class classz) throws BeansException {
+		return applicationContext.getBean(classz);
+	}
+
 	/**
 	 * 获取类型为requiredType的对象
 	 * 如果bean不能被类型转换，相应的异常将会被抛出（BeanNotOfRequiredTypeException）

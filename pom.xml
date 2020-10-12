@@ -32,6 +32,7 @@
         <arthas.version>3.4.1</arthas.version>
         <reflections.version>0.9.12</reflections.version>
         <minio.version>7.1.4</minio.version>
+        <druid.version>1.2.1</druid.version>
     </properties>
 
     <modules>
@@ -200,6 +201,12 @@
                 <groupId>io.seata</groupId>
                 <artifactId>seata-spring-boot-starter</artifactId>
                 <version>${seata.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
             </dependency>
 
             <dependency>

@@ -31,10 +31,6 @@ public class LionOperationModelsProvider implements OperationModelsProviderPlugi
         Optional<LionApiResponses> lionApiResponses = context.findAnnotation(LionApiResponses.class);
         if (lionApiResponses.isPresent()){
 
-            IResultData iResultData = lionApiResponses.get().returType().newInstance();
-            iResultData.getData().put("test","test");
-            ResolvedType modelType = context.getReturnType();
-            ObjectMapper objectMapper = new ObjectMapper();
         }
 
     }

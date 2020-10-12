@@ -32,18 +32,15 @@ public class CurrentUserUtil {
      */
     public static Map<String,Object> getCurrentUser(Boolean isMustLogin){
         Map<String,Object> user = null;
+        String username = null;
         if(isHttpWebRequest()){
-            String username = getUsername();
-            if(StringUtils.hasText(username)) {
-                user = getICurrentUser().findUserToMap(username);
-            }
+            username = getUsername();
         }else if (isDubooRequest()){
             RpcContext rpcContext = RpcContext.getContext();
-            Object username = rpcContext.get(DubboConstant.USERNAME);
-            if( Objects.nonNull(username) ) {
-                user = getICurrentUser().findUserToMap(String.valueOf(username));
-            }
-            return user;
+            username = String.valueOf(rpcContext.get(DubboConstant.USERNAME));
+        }
+        if(StringUtils.hasText(username)) {
+            user = getICurrentUser().findUserToMap(username);
         }
         if(Objects.isNull(user) && isMustLogin){
             AuthorizationException.throwException("登陆异常，请重新登陆");
@@ -134,8 +131,7 @@ public class CurrentUserUtil {
      */
     private static boolean isDubooRequest(){
         RpcContext rpcContext = RpcContext.getContext();
-        Invocation invocation = rpcContext.getInvocation();
-        if(Objects.nonNull(invocation) && invocation instanceof DecodeableRpcInvocation){
+        if(Objects.nonNull(rpcContext)){
             return true;
         }
         return false;
