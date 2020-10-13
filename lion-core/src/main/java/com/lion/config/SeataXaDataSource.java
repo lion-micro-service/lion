@@ -30,7 +30,6 @@ public class SeataXaDataSource {
 //    @Bean("dataSource")
 //    @Primary
 //    public DataSourceProxyXA dataSource(DataSource druidDataSource) {
-//        DruidDataSource dataSource = (DruidDataSource) druidDataSource;
 //        return new DataSourceProxyXA(druidDataSource);
 //    }
 }
