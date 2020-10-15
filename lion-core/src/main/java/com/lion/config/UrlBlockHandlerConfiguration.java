@@ -24,7 +24,7 @@ import java.io.PrintWriter;
  */
 @Configuration
 @ConditionalOnClass( {UrlBlockHandler.class} )
-public class UrlBlockHandlerConfigurer {
+public class UrlBlockHandlerConfiguration {
 
     @PostConstruct
     public void init(){
