@@ -7,5 +7,6 @@ com.lion.config.PasswordConfiguration,\
 com.lion.config.RestTemplateConfiguration,\
 com.lion.config.UrlBlockHandlerConfiguration,\
 com.lion.config.EnumToSelcetConfiguration,\
-com.lion.config.MinioConfiguration,\ 
+com.lion.config.MinioConfiguration,\
+com.lion.config.ZookeeperConfiguration,\
 com.lion.config.SeataXaDataSource
