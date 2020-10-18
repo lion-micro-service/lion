@@ -1,12 +1,17 @@
 package com.lion.core;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.lion.constant.ResultDataConstant;
 import com.lion.core.common.enums.ResultDataState;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -22,7 +27,8 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"content","pageable","sort","numberOfElements","empty","number","size"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-public class PageResultData<T> extends PageImpl<T> implements IResultData, Serializable {
+@ApiModel()
+public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>, Serializable {
 
 
     private static final long serialVersionUID = 8078379219201834984L;
@@ -30,18 +36,23 @@ public class PageResultData<T> extends PageImpl<T> implements IResultData, Seria
     /**
      * 消息
      */
+    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
     private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
     /**
      * 异常信息
      */
+    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
     private String exceptionMessage;
 
     /**
      * 状态编码
      */
+    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
     private Integer status = ResultDataState.SUCCESS.getKey();
 
+    @ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
+    private T data;
 
     public PageResultData(List content, Pageable pageable, long total) {
         super(content, pageable, total);
@@ -55,12 +66,14 @@ public class PageResultData<T> extends PageImpl<T> implements IResultData, Seria
         super(Collections.EMPTY_LIST);
     }
 
+    @JsonGetter
+    public T getData() {
+        return (T) this.getContent();
+    }
 
-    @Override
-    public Map<String, Object> getData() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("list",this.getContent());
-        return map;
+    public PageResultData<T> setData(T data) {
+        this.data = data;
+        return this;
     }
 
     public Integer getPageNumber(){
@@ -70,4 +83,6 @@ public class PageResultData<T> extends PageImpl<T> implements IResultData, Seria
     public Integer getPageSize(){
         return this.getSize();
     }
+
+
 }

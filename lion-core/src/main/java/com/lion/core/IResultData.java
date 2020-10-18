@@ -7,7 +7,7 @@ import java.util.Map;
  * @author: Mr.Liu
  * @create: 2020-02-16 15:10
  */
-public interface IResultData {
+public interface IResultData<T> {
 
     public String getMessage();
 
@@ -15,5 +15,5 @@ public interface IResultData {
 
     public String getExceptionMessage();
 
-    public Map<String, Object> getData();
+    public T getData();
 }

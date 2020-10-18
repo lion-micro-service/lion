@@ -6,12 +6,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lion.constant.ResultDataConstant;
 import com.lion.core.common.enums.ResultDataState;
 import com.lion.utils.BeanToMapUtil;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
@@ -24,7 +25,8 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
 @Data
-public class ResultData implements Serializable, IResultData {
+@ApiModel()
+public class ResultData<T> implements Serializable, IResultData<T> {
 
 	/**
 	 *
@@ -35,46 +37,30 @@ public class ResultData implements Serializable, IResultData {
 	/**
 	 * 消息
 	 */
+	@ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
 	private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
 	/**
 	 * 异常信息
 	 */
+	@ApiModelProperty(name = "异常消息",notes = "异常消息", dataType="string")
 	private String exceptionMessage;
 
 	/**
 	 * 状态编码
 	 */
+	@ApiModelProperty(name = "状态编码",notes = "状态编码", dataType="integer")
 	private Integer status = ResultDataState.SUCCESS.getKey();
 
 	/**
 	 * 结果集
 	 */
-	private Map<String, Object> data = new HashMap<String, Object>();
+	@ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
+	private T data;
 
 
-	public IResultData setData(Map<String, Object> data) {
-		this.data.putAll(data);
-		return this;
-	}
-
-	/**
-	 * @param javaBean
-	 */
-	public IResultData setData(Object javaBean) {
-		if (Objects.nonNull(javaBean)) {
-			BeanToMapUtil.transBeanToMap(data, javaBean);
-		}
-		return this;
-	}
-
-	public IResultData setData(String key, Object object) {
-		data.put(key, object);
-		return this;
-	}
-
-	public IResultData setData(String key, Collection<Object> collection) {
-		data.put(key, collection);
+	public IResultData<T> setData(T data) {
+		this.data = data;
 		return this;
 	}
 
