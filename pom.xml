@@ -36,6 +36,7 @@
         <rocketmq.version>2.1.1</rocketmq.version>
         <curator.version>5.1.0</curator.version>
         <zookeeper.version>3.6.2</zookeeper.version>
+        <knife4j.version>2.0.5</knife4j.version>
     </properties>
 
     <modules>
@@ -100,6 +101,12 @@
                 <groupId>org.apache.rocketmq</groupId>
                 <artifactId>rocketmq-spring-boot-starter</artifactId>
                 <version>${rocketmq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
             </dependency>
 
             <dependency>
