@@ -16,10 +16,13 @@ import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.plugin.core.PluginRegistrySupport;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRuleConvention;
+import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
@@ -52,6 +55,7 @@ public class SwaggerConfiguration {
         List<Response> responses = new ArrayList<Response>();
         Response response = new Response("200","",true, Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST);
         Docket docket = new Docket(DocumentationType.OAS_30)
+                .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .globalResponses(HttpMethod.POST,responses)
                 .globalResponses(HttpMethod.GET,responses)
@@ -84,6 +88,10 @@ public class SwaggerConfiguration {
                 return list;
             }
         };
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().build();
     }
 
     private void removeDefaultPlugin(ApplicationContext applicationContext) {
