@@ -38,6 +38,7 @@
         <zookeeper.version>3.6.2</zookeeper.version>
         <knife4j.version>2.0.5</knife4j.version>
         <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+        <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
     </properties>
 
     <modules>
@@ -243,8 +244,6 @@
                 <artifactId>sentinel-spring-webmvc-adapter</artifactId>
                 <version>${sentinel.version}</version>
             </dependency>
-
-
 
             <dependency>
                 <groupId>org.springframework.retry</groupId>
