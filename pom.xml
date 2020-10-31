@@ -39,6 +39,7 @@
         <knife4j.version>2.0.5</knife4j.version>
         <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
+        <docker.repository>192.168.1.108:8085</docker.repository>
     </properties>
 
     <modules>
