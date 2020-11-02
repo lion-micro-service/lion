@@ -41,7 +41,6 @@
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <docker.repository>www.nexusdocker.com:8085</docker.repository>
     </properties>
-
     <modules>
         <module>lion-core</module>
     </modules>
