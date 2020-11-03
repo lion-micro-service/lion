@@ -8,4 +8,4 @@ build:
   only:
     - master
   script:
-    - echo "test ci/cd"
+    - mvn clean install deploy
