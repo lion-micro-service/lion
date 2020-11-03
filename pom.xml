@@ -14,7 +14,6 @@
     <packaging>pom</packaging>
 
     <properties>
-<!--        <java.version>13</java.version>-->
         <lombok.version>1.18.12</lombok.version>
         <hutool-all.version>5.4.0</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
