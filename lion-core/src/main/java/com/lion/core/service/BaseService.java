@@ -19,7 +19,6 @@ import java.util.Optional;
  *
  * @param <T>
  */
-@Transactional
 public interface BaseService<T>{
 
 	public List<T> findAll();

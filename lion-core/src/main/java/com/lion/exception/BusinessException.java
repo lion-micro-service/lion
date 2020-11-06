@@ -10,6 +10,9 @@ public class BusinessException extends  RuntimeException {
 
 	private static final long serialVersionUID = 7670720348542447804L;
 
+	public BusinessException() {
+	}
+
 	public BusinessException(Exception e) {
 		super(e);
 		throw this;
@@ -34,7 +37,7 @@ public class BusinessException extends  RuntimeException {
 	 * 抛自定义异常
 	 * @param message
 	 */
-	public static void throwException(final String message){
+	public static void throwException(String message){
 		new BusinessException(message);
 	}
 }
