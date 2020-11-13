@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 /**
  * @description: zookeeper
@@ -19,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
  **/
 @Configuration
 @ConditionalOnClass( {CuratorZookeeperClient.class} )
-@ConditionalOnProperty(prefix = "zookeeper",name = "server")
+@ConditionalOnProperty(prefix = "zookeeper",name = "enable",havingValue = "true")
 @ConditionalOnExpression("'${zookeeper.server}'!=''")
 public class ZookeeperConfiguration {
 
