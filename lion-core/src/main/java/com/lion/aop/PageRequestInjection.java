@@ -24,7 +24,7 @@ import java.util.Objects;
 
 /**
  * @author mr.liu
- * @title: JpaQueryParameterInjection
+ * @title: PageRequestInjection
  * @description: LionPage查询参数注入
  * @date 2020/8/19上午11:01
  */
