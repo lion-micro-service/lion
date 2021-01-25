@@ -34,7 +34,7 @@
         <rocketmq.version>2.1.1</rocketmq.version>
         <curator.version>5.1.0</curator.version>
         <zookeeper.version>3.6.2</zookeeper.version>
-        <knife4j.version>2.0.5</knife4j.version>
+        <knife4j.version>3.0.2</knife4j.version>
         <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <docker.repository>www.nexusdocker.com:8085</docker.repository>
