@@ -49,7 +49,7 @@ public enum State implements IEnum {
     }
 
     @JsonCreator
-    public static State getScope(String name){
+    public static State instance(String name){
         for(State item : values()){
             if(Objects.equals(item.getName(),name)){
                 return item;

@@ -51,7 +51,7 @@ public enum Delete implements IEnum {
     }
 
     @JsonCreator
-    public static Delete getScope(String name){
+    public static Delete instance(String name){
         for(Delete item : values()){
             if(Objects.equals(item.getName(),name)){
                 return item;
