@@ -51,4 +51,9 @@ public class DubboConstant {
      * 客户端远程IP地址
      */
     public static final String CLIENT_REMOTE_ADDRESS="client_remote_address";
+
+    /**
+     * duboo 调用调用链追踪id
+     */
+    public static final String TRACE_ID = "trace_id";
 }

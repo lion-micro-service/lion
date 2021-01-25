@@ -81,7 +81,6 @@ public class SystemLog {
 
     private void systemLog(Method method,LocalDateTime startDateTime) throws JsonProcessingException {
         SystemLogData systemLogData = new SystemLogData();
-        SystemLogDataUtil.set(systemLogData);
         systemLogData.setTrackId(SnowflakeUtil.getId());
         Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
         if(Objects.nonNull(user) && user.containsKey("id")){
@@ -107,6 +106,7 @@ public class SystemLog {
         LocalDateTime endDateTime = LocalDateTime.now();
         Duration duration = Duration.between(startDateTime,endDateTime );
         systemLogData.setExecuteTime(duration.toMillis());
+        SystemLogDataUtil.set(systemLogData);
     }
 }
 
