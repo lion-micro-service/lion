@@ -49,12 +49,31 @@ public enum State implements IEnum {
     }
 
     @JsonCreator
-    public static State instance(String name){
+    public static State instance(Object value){
+        if (value instanceof Integer) {
+            return instance((Integer) value);
+        }
+        return instance(String.valueOf(value));
+    }
+
+    private static State instance(Integer key){
+        for(State item : values()){
+            if (item.getKey()==key){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private static State instance(String name){
         for(State item : values()){
             if(Objects.equals(item.getName(),name)){
                 return item;
             }
         }
         return null;
+    }
+
+    public class StateConverter extends EnumConverter<State,Integer> {
     }
 }

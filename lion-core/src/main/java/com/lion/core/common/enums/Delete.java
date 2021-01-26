@@ -51,12 +51,31 @@ public enum Delete implements IEnum {
     }
 
     @JsonCreator
-    public static Delete instance(String name){
+    public static Delete instance(Object value){
+        if (value instanceof Integer) {
+            return instance((Integer) value);
+        }
+        return instance(String.valueOf(value));
+    }
+
+    private static Delete instance(Integer key){
+        for(Delete item : values()){
+            if (item.getKey()==key){
+                return item;
+            }
+        }
+        return null;
+    }
+
+    private static Delete instance(String name){
         for(Delete item : values()){
             if(Objects.equals(item.getName(),name)){
                 return item;
             }
         }
         return null;
+    }
+
+    public class DeleteConverter extends EnumConverter<Delete,Integer> {
     }
 }
