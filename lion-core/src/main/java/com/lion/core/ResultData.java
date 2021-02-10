@@ -28,33 +28,17 @@ import java.util.Objects;
 @ApiModel()
 public class ResultData<T> implements Serializable, IResultData<T> {
 
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 981792735336739260L;
 
-
-	/**
-	 * 消息
-	 */
 	@ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
 	private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-	/**
-	 * 异常信息
-	 */
 	@ApiModelProperty(name = "异常消息",notes = "异常消息", dataType="string")
 	private String exceptionMessage;
 
-	/**
-	 * 状态编码
-	 */
 	@ApiModelProperty(name = "状态编码",notes = "状态编码", dataType="integer")
 	private Integer status = ResultDataState.SUCCESS.getKey();
 
-	/**
-	 * 结果集
-	 */
 	@ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
 	private T data;
 

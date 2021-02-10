@@ -74,6 +74,6 @@ public enum State implements IEnum {
         return null;
     }
 
-    public class StateConverter extends EnumConverter<State,Integer> {
+    public static class StateConverter extends EnumConverter<State,Integer> {
     }
 }

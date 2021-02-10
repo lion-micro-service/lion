@@ -76,6 +76,6 @@ public enum Delete implements IEnum {
         return null;
     }
 
-    public class DeleteConverter extends EnumConverter<Delete,Integer> {
+    public static class DeleteConverter extends EnumConverter<Delete,Integer> {
     }
 }

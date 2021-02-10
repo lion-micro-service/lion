@@ -30,25 +30,15 @@ import java.util.Map;
 @ApiModel()
 public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>, Serializable {
 
-
     private static final long serialVersionUID = 8078379219201834984L;
 
-    /**
-     * 消息
-     */
     @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
     private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-    /**
-     * 异常信息
-     */
-    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
+    @ApiModelProperty(name = "异常信息",notes = "异常信息", dataType="string")
     private String exceptionMessage;
 
-    /**
-     * 状态编码
-     */
-    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
+    @ApiModelProperty(name = "状态编码",notes = "状态编码", dataType="integer")
     private Integer status = ResultDataState.SUCCESS.getKey();
 
     @ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
