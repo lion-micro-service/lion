@@ -40,13 +40,13 @@ import java.util.*;
 @ConditionalOnWebApplication
 @ConditionalOnClass({Reflections.class})
 @Order(Ordered.LOWEST_PRECEDENCE)
-//@AutoConfigureAfter({JpaRepositoriesAutoConfiguration.class,RestTemplateConfiguration.class})
 @ConditionalOnExpression("!'${lion.enums}'.isEmpty()")
 @ConfigurationProperties(prefix = "lion")
 @Data
 public class EnumToSelcetConfiguration implements CommandLineRunner {
 
-    private static final String LB_URL = "http://lion-common-console-restful/";
+    @Value("${lion.enums.url:http://lion-common-console-restful/}")
+    private String LB_URL ;
 
     private List enums;
 

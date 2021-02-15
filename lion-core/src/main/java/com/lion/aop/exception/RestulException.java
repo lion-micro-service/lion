@@ -39,34 +39,43 @@ public class RestulException {
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping))" +
             "&& execution(public * com.lion..*.*(..))")
-    public Object around(ProceedingJoinPoint pjp) {
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object invokeResult = null;
         Object[] args = pjp.getArgs();
         Signature signature = pjp.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
         com.lion.annotation.SystemLog systemLog = method.getAnnotation(com.lion.annotation.SystemLog.class);
-        try {
-            Arrays.stream(args).forEach(arg ->{
-                if(arg instanceof BindingResult){
-                    BindingResult bindingResult = (BindingResult) arg;
-                    bindingResult.getFieldErrors().forEach(error ->{
-                        BusinessException.throwException(error.getDefaultMessage());
-                    });
-                }
-            });
-            invokeResult = pjp.proceed();
-        } catch (Throwable e) {
-            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)) {
-                SystemLogData systemLogData = SystemLogDataUtil.get();
-                systemLogData.setIsException(true);
-                StringWriter sw = new StringWriter();
-                PrintWriter pw = new PrintWriter(sw);
-                e.printStackTrace(pw);
-                systemLogData.setException(sw.toString());
+//        try {
+//            Arrays.stream(args).forEach(arg ->{
+//                if(arg instanceof BindingResult){
+//                    BindingResult bindingResult = (BindingResult) arg;
+//                    bindingResult.getFieldErrors().forEach(error ->{
+//                        BusinessException.throwException(error.getDefaultMessage());
+//                    });
+//                }
+//            });
+//            invokeResult = pjp.proceed();
+//        } catch (Throwable e) {
+////            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)) {
+////                SystemLogData systemLogData = SystemLogDataUtil.get();
+////                systemLogData.setIsException(true);
+////                StringWriter sw = new StringWriter();
+////                PrintWriter pw = new PrintWriter(sw);
+////                e.printStackTrace(pw);
+////                systemLogData.setException(sw.toString());
+////            }
+//            return ExceptionData.instance(e);
+//        }
+        Arrays.stream(args).forEach(arg ->{
+            if(arg instanceof BindingResult){
+                BindingResult bindingResult = (BindingResult) arg;
+                bindingResult.getFieldErrors().forEach(error ->{
+                    BusinessException.throwException(error.getDefaultMessage());
+                });
             }
-            return ExceptionData.instance(e);
-        }
+        });
+        invokeResult = pjp.proceed();
         return invokeResult;
     }
 }

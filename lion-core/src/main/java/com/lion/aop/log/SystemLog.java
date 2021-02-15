@@ -55,27 +55,23 @@ public class SystemLog {
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping) )" +
             "&& execution(public * com.lion..*.*(..))")
-    public Object around(ProceedingJoinPoint pjp) {
+    public Object around(ProceedingJoinPoint pjp) throws Throwable {
         LocalDateTime startDateTime = LocalDateTime.now();
         Signature signature = pjp.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
         Method method = methodSignature.getMethod();
         com.lion.annotation.SystemLog systemLog = method.getAnnotation(com.lion.annotation.SystemLog.class);
-        try {
-            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
-                systemLog(method,startDateTime);
-            }
-            Object object = pjp.proceed();
-            if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
-                SystemLogData systemLogData = SystemLogDataUtil.get();
-                systemLogData.setResponseData(object);
-                ObjectMapper objectMapper = new ObjectMapper();
-                logger.debug(objectMapper.writeValueAsString(systemLogData));
-            }
-            return object;
-        } catch (Throwable throwable) {
-            return ExceptionData.instance(throwable);
-        }
+//        if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
+//            systemLog(method,startDateTime);
+//        }
+        Object object = pjp.proceed();
+//        if ((Objects.nonNull(systemLog) && systemLog.log()) || Objects.isNull(systemLog)){
+//            SystemLogData systemLogData = SystemLogDataUtil.get();
+//            systemLogData.setResponseData(object);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            logger.debug(objectMapper.writeValueAsString(systemLogData));
+//        }
+        return object;
 
     }
 
