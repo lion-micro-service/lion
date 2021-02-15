@@ -57,7 +57,7 @@ public class EnumToSelcetConfiguration implements CommandLineRunner {
     @Override
     public void run(String... args) {
         try {
-            Map<String, Object> map = EnumUtil.getAllEnumsInPackage(enums);
+            Map<String, Object> map = EnumUtil.getAllEnumsInPackage("com.lion");
             List<Map<String, String>> list = new ArrayList<Map<String, String>>();
             map.forEach((k, v) ->{
                 Map<String, String> temp = new HashMap<String, String>();
