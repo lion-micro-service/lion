@@ -5,6 +5,7 @@ import com.lion.core.PageResultData;
 import com.lion.core.persistence.curd.BaseDao;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.core.service.BaseService;
+import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -124,8 +125,10 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
                 return null;
             }
         } catch (Exception e) {
-            return null;
+            e.printStackTrace();
+            BusinessException.throwException("findById Exception");
         }
+        return null;
     }
 
     @Override
