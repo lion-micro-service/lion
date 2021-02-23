@@ -35,8 +35,9 @@
         <curator.version>5.1.0</curator.version>
         <zookeeper.version>3.6.2</zookeeper.version>
         <knife4j.version>3.0.2</knife4j.version>
-        <spring-boot-admin.version>2.3.0</spring-boot-admin.version>
+        <spring-boot-admin.version>2.3.1</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
+        <mariadb.verwsion>2.7.2</mariadb.verwsion>
         <docker.repository>www.nexusdocker.com:8085</docker.repository>
     </properties>
     <modules>
@@ -315,6 +316,11 @@
                         <groupId>org.slf4j</groupId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.mariadb.jdbc</groupId>
+                <artifactId>mariadb-java-client</artifactId>
+                <version>${mariadb.verwsion}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
