@@ -54,7 +54,7 @@ public class SwaggerConfiguration {
     public Docket docket(ApplicationContext applicationContext){
         List<Response> responses = new ArrayList<Response>();
         Response response = new Response("200","",true, Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST);
-        Docket docket = new Docket(DocumentationType.OAS_30)
+        Docket docket = new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .globalResponses(HttpMethod.POST,responses)

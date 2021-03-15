@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.lion.core.IEnum;
 import org.reflections.Reflections;
+import org.reflections.scanners.SubTypesScanner;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

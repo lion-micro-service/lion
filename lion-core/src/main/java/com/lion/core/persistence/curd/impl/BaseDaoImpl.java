@@ -21,6 +21,7 @@ public class BaseDaoImpl<T> extends LionSimpleJpaRepository<T> {
 		super(entityInformation, entityManager);
 	}
 
+
 	
 	/**
 	 * 执行JDBC操作（DEMO） --非特殊情况不要使用JDBC直接操作方式，避免兼容性问题

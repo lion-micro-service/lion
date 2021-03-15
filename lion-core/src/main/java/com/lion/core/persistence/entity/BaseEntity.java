@@ -29,9 +29,12 @@ public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "snow_flake_id")
-    @GenericGenerator(name = "snow_flake_id", strategy = "com.lion.utils.id.LionIdGenerator")
+    @Id()
+//    @GeneratedValue(generator = "snow_flake_id")
+//    @GenericGenerator(name = "snow_flake_id", strategy = "com.lion.utils.id.LionIdGenerator")
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GenericGenerator(name="assigned", strategy="assigned")
+    @GeneratedValue(generator="assigned")
     @Column(name = "id")
     @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     @ApiModelProperty(value = "ID")
@@ -61,8 +64,8 @@ public abstract class BaseEntity implements Serializable {
     @ApiModelProperty(hidden = true)
     private Long updateUserId;
 
-    @Column(name = "version",nullable = false,columnDefinition = "BIGINT(18) default 1 comment '版本号'")
+    @Column(name = "version",nullable = false)
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     @ApiModelProperty(notes = "版本号（修改需要传version,新增不需要传）")
-    private Long version;
+    private Long version = 0L;
 }

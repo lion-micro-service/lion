@@ -23,7 +23,7 @@ public class SystemLogDataUtil {
                     systemLogData = new SystemLogData();
                     BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
                     if(Objects.nonNull(user)){
-                        systemLogData.setCurrentUserId(user.getId());
+                        systemLogData.setCurrentUserId(Long.valueOf(user.getId()));
                     }
                     SystemLogDataUtil.set(systemLogData);
                 }

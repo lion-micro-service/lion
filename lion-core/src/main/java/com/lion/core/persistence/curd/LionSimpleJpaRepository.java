@@ -6,6 +6,9 @@ import com.lion.core.persistence.curd.impl.DeleteRepositoryImpl;
 import com.lion.core.persistence.curd.impl.SaveRepositoryImpl;
 import com.lion.core.persistence.curd.impl.SelectRepositoryImpl;
 import com.lion.core.persistence.curd.impl.UpdateRepositoryImpl;
+import com.lion.core.persistence.entity.BaseEntity;
+import com.lion.utils.id.LionIdGenerator;
+import com.lion.utils.id.SnowflakeUtil;
 import org.hibernate.Session;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -149,5 +152,12 @@ public abstract class LionSimpleJpaRepository<T> extends SimpleJpaRepository<T, 
 	@Transactional(propagation= Propagation.REQUIRED)
 	public int delete(String jpql, Map<String, Object> parameter) {
 		return deleteRepository.delete(jpql, parameter);
+	}
+
+	@Override
+	@Transactional(propagation= Propagation.REQUIRED)
+	public <S extends T> S save(S entity) {
+		((BaseEntity)entity).setId(SnowflakeUtil.getId());
+		return super.save(entity);
 	}
 }
