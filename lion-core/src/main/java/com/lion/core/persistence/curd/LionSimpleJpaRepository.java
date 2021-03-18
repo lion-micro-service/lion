@@ -22,6 +22,7 @@ import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * 
@@ -157,7 +158,10 @@ public abstract class LionSimpleJpaRepository<T> extends SimpleJpaRepository<T, 
 	@Override
 	@Transactional(propagation= Propagation.REQUIRED)
 	public <S extends T> S save(S entity) {
-		((BaseEntity)entity).setId(SnowflakeUtil.getId());
+		BaseEntity baseEntity = (BaseEntity)entity;
+		if (Objects.isNull(baseEntity.getId())){
+			baseEntity.setId(SnowflakeUtil.getId());
+		}
 		return super.save(entity);
 	}
 }
