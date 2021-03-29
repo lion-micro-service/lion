@@ -41,12 +41,12 @@ import java.util.*;
 @ConditionalOnWebApplication
 @ConditionalOnClass({Reflections.class})
 @Order(Ordered.LOWEST_PRECEDENCE)
-@ConditionalOnExpression("!'${lion.enums}'.isEmpty()")
+//@ConditionalOnExpression("!'${lion.enums}'.isEmpty()")
 @ConfigurationProperties(prefix = "lion")
 @Data
 public class EnumToSelcetConfiguration implements CommandLineRunner {
 
-    @Value("${lion.enums.url:http://lion-common-console-restful/}")
+    @Value("${lion.enums.persistence.url:http://lion-common-console-restful}")
     private String LB_URL ;
 
     private List enums;
