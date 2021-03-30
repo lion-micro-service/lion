@@ -73,7 +73,7 @@ public class EnumToSelcetConfiguration implements CommandLineRunner {
             headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
             LionObjectMapper objectMapper = new LionObjectMapper();
             HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
-            ResponseEntity response = restTemplate.postForEntity(LB_URL+"/common/enum/console/persistence", request, Object.class);
+            ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/console/persistence", request, Object.class);
         }catch (Exception exception){
 
         }
