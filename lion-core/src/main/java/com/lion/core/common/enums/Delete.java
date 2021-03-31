@@ -1,5 +1,6 @@
 package com.lion.core.common.enums;
 
+import cn.hutool.core.util.NumberUtil;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.lion.core.IEnum;
 
@@ -52,8 +53,11 @@ public enum Delete implements IEnum {
 
     @JsonCreator
     public static Delete instance(Object value){
-        if (value instanceof Integer) {
-            return instance((Integer) value);
+        if (Objects.isNull(value)){
+            return null;
+        }
+        if (NumberUtil.isInteger(String.valueOf(value))) {
+            return instance(Integer.valueOf(String.valueOf(value)));
         }
         return instance(String.valueOf(value));
     }
