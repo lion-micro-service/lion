@@ -11,6 +11,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -142,6 +143,7 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
     }
 
     @Override
+    @Transactional
     public void deleteById(Serializable id) {
         baseDao.deleteById(id);
     }
