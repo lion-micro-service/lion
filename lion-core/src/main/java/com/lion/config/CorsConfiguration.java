@@ -22,10 +22,6 @@ import reactor.core.publisher.Mono;
 @AutoConfigureAfter(GatewayAutoConfiguration.class)
 public class CorsConfiguration {
 
-    private static final String ALLOWED_HEADERS = "x-requested-with, authorization, Content-Type, Authorization, credential, X-XSRF-TOKEN,token,username,client";
-    private static final String ALLOWED_METHODS = "*";
-    private static final String ALLOWED_ORIGIN = "*";
-    private static final String ALLOWED_EXPOSE = "*";
 
 
     @Bean
@@ -35,11 +31,12 @@ public class CorsConfiguration {
             if (CorsUtils.isCorsRequest(request)) {
                 ServerHttpResponse response = ctx.getResponse();
                 HttpHeaders headers = response.getHeaders();
-                headers.add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
-                headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
-                headers.add("Access-Control-Allow-Headers", ALLOWED_HEADERS);
-                headers.add("Access-Control-Expose-Headers", ALLOWED_EXPOSE);
-                headers.add("Access-Control-Allow-Credentials", "true");
+                headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, "POST, GET, PUT, OPTIONS, DELETE, PATCH");
+                headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+                headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, "Origin, No-Cache, X-Requested-With, If-Modified-Since, Pragma, Last-Modified, Cache-Control, Expires, Content-Type, X-E4M-With,userId,token");
+                headers.add(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, "*");
+                headers.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+                headers.add(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "18000");
                 if (request.getMethod() == HttpMethod.OPTIONS) {
                     response.setStatusCode(HttpStatus.OK);
                     return Mono.empty();
