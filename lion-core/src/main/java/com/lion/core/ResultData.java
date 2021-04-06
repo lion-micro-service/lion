@@ -30,16 +30,16 @@ public class ResultData<T> implements Serializable, IResultData<T> {
 
 	private static final long serialVersionUID = 981792735336739260L;
 
-	@ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
+	@ApiModelProperty(value = "返回消息", dataType="string")
 	private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-	@ApiModelProperty(name = "异常消息",notes = "异常消息", dataType="string")
+	@ApiModelProperty(value = "异常消息", dataType="string")
 	private String exceptionMessage;
 
-	@ApiModelProperty(name = "状态编码",notes = "状态编码", dataType="integer")
+	@ApiModelProperty(value = "状态编码",dataType="integer")
 	private Integer status = ResultDataState.SUCCESS.getKey();
 
-	@ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
+	@ApiModelProperty(value = "结果集", dataType="object")
 	private T data;
 
 

@@ -32,16 +32,16 @@ public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>
 
     private static final long serialVersionUID = 8078379219201834984L;
 
-    @ApiModelProperty(name = "返回消息",notes = "返回消息", dataType="string")
+    @ApiModelProperty(value = "返回消息", dataType="string")
     private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-    @ApiModelProperty(name = "异常信息",notes = "异常信息", dataType="string")
+    @ApiModelProperty(value = "异常信息", dataType="string")
     private String exceptionMessage;
 
-    @ApiModelProperty(name = "状态编码",notes = "状态编码", dataType="integer")
+    @ApiModelProperty(value = "状态编码", dataType="integer")
     private Integer status = ResultDataState.SUCCESS.getKey();
 
-    @ApiModelProperty(name = "结果集",notes = "结果集", dataType="object")
+    @ApiModelProperty(value = "结果集", dataType="object")
     private T data;
 
     public PageResultData(List content, Pageable pageable, long total) {

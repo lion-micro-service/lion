@@ -20,11 +20,10 @@ public class LionPage extends PageRequest  {
 
     private static final long serialVersionUID = -4541509938956089563L;
 
-    private JpqlParameter jpqlParameter;
+    private JpqlParameter jpqlParameter = new JpqlParameter();
 
     public LionPage() {
         this(1,30, Sort.unsorted());
-        jpqlParameter = new JpqlParameter();
     }
     public LionPage(int page, int size, Sort sort){
         super(page,size,sort);
