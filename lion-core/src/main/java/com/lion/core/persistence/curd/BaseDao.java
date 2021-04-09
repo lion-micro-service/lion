@@ -1,5 +1,6 @@
 package com.lion.core.persistence.curd;
 
+import com.lion.core.persistence.entity.BaseEntity;
 import org.hibernate.Session;
 import org.springframework.data.jpa.repository.support.JpaRepositoryImplementation;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  * @param <T>
  */
 @NoRepositoryBean
-public interface BaseDao<T> extends UpdateRepository<T>, SelectRepository<T>, SaveRepository<T>, DeleteRepository<T>, JpaRepositoryImplementation<T, Serializable> {
+public interface BaseDao<T extends BaseEntity> extends UpdateRepository<T>, SelectRepository<T>, SaveRepository<T>, DeleteRepository<T>, JpaRepositoryImplementation<T, Serializable> {
 
     /**
      *

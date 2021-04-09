@@ -23,7 +23,7 @@ import java.util.Optional;
  * @param <T>
  * @author mrliu
  */
-public abstract class BaseServiceImpl<T> implements BaseService<T> {
+public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
 
     @Autowired

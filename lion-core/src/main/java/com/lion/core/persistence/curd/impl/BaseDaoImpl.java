@@ -1,6 +1,7 @@
 package com.lion.core.persistence.curd.impl;
 
 import com.lion.core.persistence.curd.LionSimpleJpaRepository;
+import com.lion.core.persistence.entity.BaseEntity;
 import org.hibernate.jdbc.ReturningWork;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.repository.NoRepositoryBean;
@@ -15,7 +16,7 @@ import java.sql.SQLException;
  *
  */
 @NoRepositoryBean
-public class BaseDaoImpl<T> extends LionSimpleJpaRepository<T> {
+public class BaseDaoImpl<T extends BaseEntity> extends LionSimpleJpaRepository<T> {
 	
 	public BaseDaoImpl(JpaEntityInformation<T, Serializable> entityInformation, EntityManager entityManager) {
 		super(entityInformation, entityManager);

@@ -30,7 +30,7 @@ import java.util.Objects;
  *
  */
 @NoRepositoryBean
-public abstract class LionSimpleJpaRepository<T> extends SimpleJpaRepository<T, Serializable> implements BaseDao<T> {
+public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends SimpleJpaRepository<T, Serializable> implements BaseDao<T> {
 
 	private SelectRepository<T> selectRepository;
 
