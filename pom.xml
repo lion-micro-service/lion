@@ -31,7 +31,7 @@
         <reflections.version>0.9.12</reflections.version>
         <minio.version>7.1.4</minio.version>
         <druid.version>1.2.1</druid.version>
-        <rocketmq.version>2.1.1</rocketmq.version>
+        <rocketmq.version>2.2.0</rocketmq.version>
         <curator.version>5.1.0</curator.version>
         <zookeeper.version>3.6.2</zookeeper.version>
         <knife4j.version>2.0.5</knife4j.version>
