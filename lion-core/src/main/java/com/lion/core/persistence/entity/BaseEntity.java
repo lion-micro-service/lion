@@ -1,5 +1,6 @@
 package com.lion.core.persistence.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.persistence.Validator;
 import io.swagger.annotations.ApiModelProperty;
@@ -46,22 +47,20 @@ public abstract class BaseEntity implements Serializable {
 
     @CreatedDate
     @Column(name = "create_date_time", updatable = false)
-    @ApiModelProperty(hidden = true)
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime createDateTime;
 
     @LastModifiedDate
     @Column(name = "update_date_time", insertable = false)
-    @ApiModelProperty(hidden = true)
+    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
     private LocalDateTime updateDateTime;
 
     @CreatedBy
     @Column(name = "create_user_id", updatable = false)
-    @ApiModelProperty(hidden = true)
     private Long createUserId;
 
     @LastModifiedBy
     @Column(name = "update_user_id", insertable = false)
-    @ApiModelProperty(hidden = true)
     private Long updateUserId;
 
     @Column(name = "version",nullable = false)
