@@ -18,6 +18,6 @@ public interface IEnum {
 	String getDesc();
 
 	@JsonValue
-	Map<String, Object> jsonValue();
+	Object jsonValue();
 
 }
