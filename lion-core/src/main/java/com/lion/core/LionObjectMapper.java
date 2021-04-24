@@ -23,7 +23,7 @@ public class LionObjectMapper extends ObjectMapper {
 		this.configure(Feature.ALLOW_SINGLE_QUOTES, true);
 		// 字段和值都加引号
 		this.configure(Feature.ALLOW_UNQUOTED_FIELD_NAMES, true);
-		this.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//		this.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
 		// 空值处理为空串
 //		this.getSerializerProvider()
 //				.setNullValueSerializer(new com.fasterxml.jackson.databind.JsonSerializer<Object>() {
