@@ -9,6 +9,8 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.*;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -117,16 +119,40 @@ public class PredicateBuilder {
 			predicate = predicateNumber(path.get(0), searchType, value, criteriaBuilder);
 			break;
 		case SearchConstant.GREATER_THAN:
-			predicate = criteriaBuilder.greaterThan((Expression<Date>)path.get(0),(Date)value);
+			if (value instanceof Date) {
+				predicate = criteriaBuilder.greaterThan((Expression<Date>) path.get(0), (Date) value);
+			}else if (value instanceof LocalDateTime){
+				predicate = criteriaBuilder.greaterThan((Expression<LocalDateTime>)path.get(0), (LocalDateTime) value);
+			}else if (value instanceof LocalDate){
+				predicate = criteriaBuilder.greaterThan((Expression<LocalDate>) path.get(0), (LocalDate) value);
+			}
 			break;
 		case SearchConstant.GREATER_THAN_OR_EQUAL_TO:
-			predicate = criteriaBuilder.greaterThanOrEqualTo((Expression<Date>)path.get(0),(Date)value);
+			if (value instanceof Date) {
+				predicate = criteriaBuilder.greaterThanOrEqualTo((Expression<Date>) path.get(0), (Date) value);
+			}else if (value instanceof LocalDateTime){
+				predicate = criteriaBuilder.greaterThanOrEqualTo((Expression<LocalDateTime>)path.get(0), (LocalDateTime) value);
+			}else if (value instanceof LocalDate){
+				predicate = criteriaBuilder.greaterThanOrEqualTo((Expression<LocalDate>) path.get(0), (LocalDate) value);
+			}
 			break;
 		case SearchConstant.LESS_THAN:
-			predicate = criteriaBuilder.lessThan((Expression<Date>)path.get(0),(Date)value);
+			if (value instanceof Date) {
+				predicate = criteriaBuilder.lessThan((Expression<Date>) path.get(0), (Date) value);
+			}else if (value instanceof LocalDateTime){
+				predicate = criteriaBuilder.lessThan((Expression<LocalDateTime>)path.get(0), (LocalDateTime) value);
+			}else if (value instanceof LocalDate){
+				predicate = criteriaBuilder.lessThan((Expression<LocalDate>) path.get(0), (LocalDate) value);
+			}
 			break;
 		case SearchConstant.LESS_THAN_OR_EQUAL_TO:
-			predicate = criteriaBuilder.lessThanOrEqualTo((Expression<Date>)path.get(0),(Date)value);
+			if (value instanceof Date) {
+				predicate = criteriaBuilder.lessThanOrEqualTo((Expression<Date>) path.get(0), (Date) value);
+			}else if (value instanceof LocalDateTime){
+				predicate = criteriaBuilder.lessThanOrEqualTo((Expression<LocalDateTime>)path.get(0), (LocalDateTime) value);
+			}else if (value instanceof LocalDate){
+				predicate = criteriaBuilder.lessThanOrEqualTo((Expression<LocalDate>) path.get(0), (LocalDate) value);
+			}
 			break;
 		case SearchConstant.OR:
 			List<Predicate> or = new ArrayList<Predicate>();
@@ -156,6 +182,7 @@ public class PredicateBuilder {
 		}
 		return predicate;
 	}
+
 	
 	@SuppressWarnings("unchecked")
 	private static CriteriaBuilder.In<Object> predicateIn(final Path<?> path, final Class<?> classz, final Object value, final CriteriaBuilder criteriaBuilder){

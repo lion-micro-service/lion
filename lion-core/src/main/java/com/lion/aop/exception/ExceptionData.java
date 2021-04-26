@@ -48,7 +48,7 @@ public class ExceptionData {
             resultData.setMessage( "权限不足，不允许访问");
             resultData.setStatus(ResultDataState.NO_PERMISSION.getKey());
         }else if (e instanceof ConstraintViolationException){
-            resultData.setMessage(e.getMessage().split(":")[1].trim());
+            resultData.setMessage(e.getMessage().split(",")[0].split(":")[1].trim());
         }else if (e instanceof BindException){
             BindException bindException = (BindException)e;
             analysisBindingResult(bindException.getBindingResult(),resultData);
