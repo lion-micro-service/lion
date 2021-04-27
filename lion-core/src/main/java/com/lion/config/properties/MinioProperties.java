@@ -30,7 +30,7 @@ public class MinioProperties  {
     private String secretKey;
 
     /**
-     * 存储桶
+     * 存储路径
      */
-    private String bucket;
+    private String path;
 }
