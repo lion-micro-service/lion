@@ -115,7 +115,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     @Override
     public T findById(Serializable id) {
         try {
-            if (id != null) {
+            if (Objects.nonNull(id)) {
                 Optional<T> optional = baseDao.findById(id);
                 if (optional.isPresent()) {
                     return optional.get();
@@ -127,8 +127,8 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
             }
         } catch (Exception e) {
             e.printStackTrace();
-            BusinessException.throwException("findById Exception");
         }
+        BusinessException.throwException("findById Exception");
         return null;
     }
 

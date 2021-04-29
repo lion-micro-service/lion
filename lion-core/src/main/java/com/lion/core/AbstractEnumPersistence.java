@@ -1,5 +1,6 @@
-package com.lion.config;
+package com.lion.core;
 
+import com.lion.config.RestTemplateConfiguration;
 import com.lion.core.IResultData;
 import com.lion.core.LionObjectMapper;
 import com.lion.utils.EnumUtil;
@@ -37,12 +38,8 @@ import java.util.*;
  * @Description:
  * @date 2020/9/16上午9:26
  */
-@Component
-@ConditionalOnWebApplication
-@ConditionalOnClass({Reflections.class})
-@Order(Ordered.LOWEST_PRECEDENCE)
-@Data
-public class EnumToSelcetConfiguration implements CommandLineRunner {
+
+public abstract class AbstractEnumPersistence implements CommandLineRunner {
 
     @Value("${lion.enums.persistence.url:http://lion-common-console-restful}")
     private String LB_URL ;
@@ -51,15 +48,21 @@ public class EnumToSelcetConfiguration implements CommandLineRunner {
     @Qualifier(RestTemplateConfiguration.REST_TAMPLATE_LOAD_BALANCED_BEAN_NAME)
     private RestTemplate restTemplate;
 
+    private String packageName;
+
+    public AbstractEnumPersistence(String packageName) {
+        this.packageName = packageName;
+    }
+
     @Override
     public void run(String... args) {
         try {
-            Map<String, Object> map = EnumUtil.getAllEnumsInPackage("com.lion");
+            Map<String, Object> map = EnumUtil.getAllEnumsInPackage(this.packageName);
             List<Map<String, String>> list = new ArrayList<Map<String, String>>();
             map.forEach((k, v) ->{
                 Map<String, String> temp = new HashMap<String, String>();
                 temp.put("classs",k);
-                temp.put("value",v.toString());
+                temp.put("value",String.valueOf(v));
                 list.add(temp);
             });
             if (list.size()<=0){
@@ -71,7 +74,7 @@ public class EnumToSelcetConfiguration implements CommandLineRunner {
             HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
             ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/console/persistence", request, Object.class);
         }catch (Exception exception){
-
+            exception.printStackTrace();
         }
 
     }

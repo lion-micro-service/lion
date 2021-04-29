@@ -1,5 +1,6 @@
 package com.lion.config;
 
+import cn.hutool.crypto.SecureUtil;
 import com.lion.utils.SpringContextUtil;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import sun.security.provider.MD5;
 
 import javax.sql.DataSource;
 

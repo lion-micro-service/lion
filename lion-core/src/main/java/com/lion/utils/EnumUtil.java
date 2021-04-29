@@ -5,7 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Maps;
 import com.lion.core.IEnum;
 import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
+import org.reflections.scanners.*;
+import org.reflections.util.ConfigurationBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -35,7 +36,11 @@ public class EnumUtil {
                 IEnum inter[] = (IEnum[]) method.invoke(null);
                 for (IEnum ienum : inter) {
                     ObjectMapper objectMapper = new ObjectMapper();
-                    list.add(objectMapper.writeValueAsString(ienum.jsonValue()));
+                    Map<String, Object> map = new HashMap<String, Object>();
+                    map.put("key", ienum.getKey());
+                    map.put("desc", ienum.getDesc());
+                    map.put("name", ienum.getName());
+                    list.add(objectMapper.writeValueAsString(map));
                 }
                 result.put(t.getName(),list);
             }catch (Exception exception){
@@ -47,7 +52,7 @@ public class EnumUtil {
     }
 
     public static void main(String[] args) {
-        EnumUtil.getAllEnumsInPackage("com.lion")
+        EnumUtil.getAllEnumsInPackage("com.lion.core.common.enum")
                 .forEach((k, v) -> System.out.println(k + "=" + v));
     }
 }
