@@ -28,7 +28,7 @@
         <springfox.version>3.0.0</springfox.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
         <arthas.version>3.4.3</arthas.version>
-        <reflections.version>0.9.12</reflections.version>
+        <reflections.version>0.9.11</reflections.version>
         <minio.version>7.1.4</minio.version>
         <druid.version>1.2.1</druid.version>
         <rocketmq.version>2.2.0</rocketmq.version>
