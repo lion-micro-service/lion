@@ -8,6 +8,8 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.AttributeConverter;
+
 /**
  * @Author Mr.Liu
  * @Description //TODO
@@ -15,7 +17,7 @@ import org.springframework.stereotype.Component;
  **/
 @Component(value = "coreCommonEnumPersistence")
 @ConditionalOnWebApplication
-@ConditionalOnClass({Reflections.class})
+@ConditionalOnClass({Reflections.class, AttributeConverter.class})
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class EnumPersistence extends AbstractEnumPersistence {
 
