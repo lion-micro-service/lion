@@ -28,6 +28,9 @@ public class LionPage extends PageRequest  {
     public LionPage(int page, int size, Sort sort){
         super(page,size,sort);
     }
+    public LionPage(int page, int size){
+        super(page,size,Sort.unsorted());
+    }
 
     public JpqlParameter getJpqlParameter() {
         return jpqlParameter;
