@@ -115,10 +115,10 @@ public class SwaggerConfiguration {
     @ApiModel
     @Data
     static class Page {
-        @ApiModelProperty("第几页,从0开始计数")
+        @ApiModelProperty(value = "第几页,从0开始计数",example = "1")
         private Integer pageNumber;
 
-        @ApiModelProperty("每页数据数量")
+        @ApiModelProperty(value = "每页数据数量",example = "10")
         private Integer pageSize;
     }
 }
