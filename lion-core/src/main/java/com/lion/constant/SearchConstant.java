@@ -130,4 +130,16 @@ public class SearchConstant {
 	public static final String IS_NOT_MEMBER ="ISNOTMEMBER";
 	
 	public static final String IS_TRUE ="ISTRUE";
+
+	public static final String LEFT_JOIN ="LEFTJOIN";
+
+	public static final String RIGHT_JOIN ="RIGHTJOIN";
+
+	public static final String INNER_JOIN ="INNERJOIN";
+
+	/**
+	 * 未现实禁止使用
+	 */
+	@Deprecated
+	public static final String FULL_JOIN ="FULLJOIN";
 }

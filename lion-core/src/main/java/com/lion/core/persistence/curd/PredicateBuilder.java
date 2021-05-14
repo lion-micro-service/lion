@@ -2,6 +2,7 @@ package com.lion.core.persistence.curd;
 
 import com.lion.constant.SearchConstant;
 import com.lion.core.IEnum;
+import com.lion.core.persistence.entity.BaseEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
@@ -56,7 +57,7 @@ public class PredicateBuilder {
 				}catch (Exception e) {
 					e.printStackTrace();
 				}
-				Predicate predicate = criteriaBuilder(path, searchType, value, criteriaBuilder);
+				Predicate predicate = criteriaBuilder(root,path, searchType, value, criteriaBuilder);
 				if (predicate != null) {
 					predicates.add(predicate);
 				}
@@ -66,7 +67,7 @@ public class PredicateBuilder {
 	}
 
 	@SuppressWarnings("unchecked")
-	private static Predicate criteriaBuilder(final List<Path<?>> path, final String searchType,
+	private static Predicate criteriaBuilder(final Root<?> root,final List<Path<?>> path, final String searchType,
                                              final Object value, final CriteriaBuilder criteriaBuilder) {
 		if (path == null) {
 			return null;
@@ -176,6 +177,17 @@ public class PredicateBuilder {
 			break;
 		case SearchConstant.IS_TRUE:
 			predicate = criteriaBuilder.isTrue((Expression<Boolean>)path.get(0));
+			break;
+		case SearchConstant.INNER_JOIN:
+			JoinPredicate joinPredicate = (JoinPredicate) value;
+//			Join<? extends BaseEntity,? extends BaseEntity> join =root.join()
+
+			break;
+		case SearchConstant.LEFT_JOIN:
+
+			break;
+		case SearchConstant.RIGHT_JOIN:
+
 			break;
 		default:
 			break;

@@ -17,7 +17,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @description: 统一异常处理数据返回
@@ -48,7 +52,13 @@ public class ExceptionData {
             resultData.setMessage( "权限不足，不允许访问");
             resultData.setStatus(ResultDataState.NO_PERMISSION.getKey());
         }else if (e instanceof ConstraintViolationException){
-            resultData.setMessage(e.getMessage().split(",")[0].split(":")[1].trim());
+            Set<ConstraintViolation<?>> set = ((ConstraintViolationException) e).getConstraintViolations();
+            if (Objects.nonNull(set)) {
+                Iterator<ConstraintViolation<?>> iterator = set.iterator();
+                if (iterator.hasNext()){
+                    resultData.setMessage(iterator.next().getMessage());
+                }
+            }
         }else if (e instanceof BindException){
             BindException bindException = (BindException)e;
             analysisBindingResult(bindException.getBindingResult(),resultData);

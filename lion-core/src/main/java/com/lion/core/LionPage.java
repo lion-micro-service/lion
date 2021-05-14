@@ -29,7 +29,7 @@ public class LionPage extends PageRequest  {
         super(page,size,sort);
     }
     public LionPage(int page, int size){
-        super(page,size,Sort.unsorted());
+        this(page,size,Sort.unsorted());
     }
 
     public JpqlParameter getJpqlParameter() {
