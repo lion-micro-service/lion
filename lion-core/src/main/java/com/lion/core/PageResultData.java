@@ -55,7 +55,7 @@ public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>
     }
 
     public PageResultData(){
-        super(Collections.EMPTY_LIST, PageRequest.of(1,30, Sort.unsorted()),0L);
+        super(Collections.EMPTY_LIST, new LionPage(),10L);
     }
 
     @JsonGetter
