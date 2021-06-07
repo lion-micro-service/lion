@@ -10,7 +10,9 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.Serializable;
@@ -53,7 +55,7 @@ public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>
     }
 
     public PageResultData(){
-        super(Collections.EMPTY_LIST);
+        super(Collections.EMPTY_LIST, PageRequest.of(1,30, Sort.unsorted()),0L);
     }
 
     @JsonGetter
