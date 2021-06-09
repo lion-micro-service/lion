@@ -174,7 +174,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	@Override
 	public List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		return (List<T>) find(Integer.MAX_VALUE, 1, searchParameter, sortParameter).getContent();
+		return (List<T>) find(Integer.MAX_VALUE, 0, searchParameter, sortParameter).getContent();
 	}
 
 //	private PageResultData<?> convertPageResultData(List<?> list,Pageable pageable,Long total){
