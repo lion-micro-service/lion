@@ -118,7 +118,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		Session session = entityManager.unwrap(Session.class);
 		SessionFactoryImplementor sessionFactoryImplementor = (SessionFactoryImplementor)session.getSessionFactory();
 		QueryTranslatorImpl queryTranslator=new QueryTranslatorImpl(jpql,jpql,searchParameter==null?Collections.EMPTY_MAP:searchParameter,sessionFactoryImplementor);
-		queryTranslator.compile(searchParameter==null?Collections.EMPTY_MAP:searchParameter, false);
+		queryTranslator.compile(searchParameter==null?Collections.EMPTY_MAP:searchParameter, true);
 		String sql = queryTranslator.getSQLString();
 		List<ParameterSpecification> parameter = queryTranslator.getCollectedParameterSpecifications();
 		for(ParameterSpecification parameterSpecification : parameter){
@@ -132,7 +132,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		}
 		StringBuffer countSql = new StringBuffer();
 		countSql.append(" select count(1) from (");
-		countSql.append(sql);
+		countSql.append(sql.substring(0,sql.indexOf("order")) );
 		countSql.append(") tb");
 		Query query = entityManager.createNativeQuery(countSql.toString());
 		for(int i =1; i<=parameter.size(); i++){
