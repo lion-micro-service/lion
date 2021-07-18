@@ -67,11 +67,7 @@ public class UpdateRepositoryImpl<T>  implements UpdateRepository<T> {
 			new BusinessException("该数据不存在");
 		}
 		BaseEntity oldEntity = (BaseEntity) optional.get();
-		if (!newEntity.getVersion().equals(oldEntity.getVersion())){
-			new BusinessException("该数据已发生改变,重新获取最新数据");
-		}
 		BeanUtil.copyProperties(entity,oldEntity,CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
-		oldEntity.setVersion(oldEntity.getVersion()+1);
 		simpleJpaRepository.save((T)oldEntity);
 	}
 
