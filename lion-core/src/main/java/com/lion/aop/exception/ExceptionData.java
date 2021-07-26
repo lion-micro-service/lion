@@ -6,6 +6,7 @@ import com.lion.exception.AuthorizationException;
 import com.lion.exception.BusinessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -80,6 +81,8 @@ public class ExceptionData {
                 resultData.setMessage("登陆异常，请重新登陆");
                 resultData.setStatus(ResultDataState.LOGIN_FAIL.getKey());
             }
+        }else if (e instanceof ObjectOptimisticLockingFailureException){
+            resultData.setMessage( "该数据发生变化，请重新获取新数据！");
         }
 //        else if (e instanceof BlockException || e.getCause() instanceof BlockException) {
 //            resultData.setMessage("sentinel block request(可能触发熔断/降级/限流……保护)");

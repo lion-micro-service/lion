@@ -61,18 +61,7 @@ public class UpdateRepositoryImpl<T>  implements UpdateRepository<T> {
 		if (Objects.isNull(newEntity.getVersion())){
 			BusinessException.throwException("该数据版本号不能为空");
 		}
-		Long version = newEntity.getVersion();
-//		Serializable id = entityInformation.getId(entity);
-//		Optional<T> optional = simpleJpaRepository.findById(id);
-//		if(!optional.isPresent()) {
-//			new BusinessException("该数据不存在");
-//		}
-//		BaseEntity oldEntity = (BaseEntity) optional.get();
-//		BeanUtil.copyProperties(entity,oldEntity,CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
-		entity = simpleJpaRepository.save(entity);
-		if (!Objects.equals(version+1,((BaseEntity)entity).getVersion())) {
-			BusinessException.throwException("该数据已发生改变,重新获取最新数据");
-		}
+		simpleJpaRepository.save(entity);
 	}
 
 }

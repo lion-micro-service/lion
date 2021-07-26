@@ -22,7 +22,7 @@
         <spring-cloud-dependencies.version>Hoxton.SR8</spring-cloud-dependencies.version>
         <aliyun-spring-boot-dependencies.version>1.0.0</aliyun-spring-boot-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2.2.3.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <seata.version>1.4.2</seata.version>
+        <seata.version>1.4.1</seata.version>
         <nacos.version>1.4.2</nacos.version>
         <sentinel.version>1.8.1</sentinel.version>
         <fastjson.version>1.2.73</fastjson.version>
