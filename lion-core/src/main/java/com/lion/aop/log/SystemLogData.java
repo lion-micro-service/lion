@@ -33,14 +33,9 @@ public class SystemLogData implements Serializable {
     private Object parameter;
 
     /**
-     * 请求体，一般指json传值(spring mvc)
-     */
-    private Object body;
-
-    /**
      * 返回值
      */
-    private Object responseData;
+    private Object response;
 
     /**
      * 异常信息
@@ -80,6 +75,11 @@ public class SystemLogData implements Serializable {
     /**
      * 请求客户端地址
      */
-    private String ip;
+    private String clientIp;
+
+    /**
+     * 服务所在的内网ip
+     */
+    private String intranetIp;
 
 }
