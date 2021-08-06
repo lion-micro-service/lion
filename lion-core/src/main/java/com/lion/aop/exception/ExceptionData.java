@@ -50,7 +50,7 @@ public class ExceptionData {
         }else if (e instanceof BusinessException){
             resultData.setMessage(e.getMessage());
         }else if (e instanceof AccessDeniedException){
-            resultData.setMessage( "权限不足，不允许访问");
+            resultData.setMessage( "权限不足，不允许访问/登陆异常，请重新登陆");
             resultData.setStatus(ResultDataState.NO_PERMISSION.getKey());
         }else if (e instanceof ConstraintViolationException){
             Set<ConstraintViolation<?>> set = ((ConstraintViolationException) e).getConstraintViolations();
