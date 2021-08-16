@@ -51,7 +51,7 @@ public class UpdateRepositoryImpl<T>  implements UpdateRepository<T> {
 	@Override
 	public int update(String jpql,Map<String, Object> parameter) {
 		Query query = entityManager.createQuery(jpql);
-		RepositoryParameter.setParameter(query, parameter);
+		query = RepositoryParameter.setParameter(query, parameter);
 		return query.executeUpdate(); 
 	}
 

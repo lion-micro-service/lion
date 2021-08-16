@@ -7,11 +7,14 @@ import com.lion.core.persistence.curd.PredicateBuilder;
 import com.lion.core.persistence.curd.RepositoryParameter;
 import com.lion.core.persistence.curd.SelectRepository;
 import com.lion.core.persistence.curd.SortBuilder;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.hql.internal.ast.QueryTranslatorImpl;
 import org.hibernate.param.NamedParameterSpecification;
 import org.hibernate.param.ParameterSpecification;
+import org.hibernate.query.internal.NativeQueryImpl;
+import org.hibernate.transform.Transformers;
 import org.springframework.data.domain.*;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -23,10 +26,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 为兼容其它数据库所有操作均不提供本地sql封装，均采用jpql操作！
@@ -36,6 +36,8 @@ import java.util.Objects;
  * @param <T>
  */
 public class SelectRepositoryImpl<T> implements SelectRepository<T> {
+
+	private final Integer maxResults = 50000;
 
 	private EntityManager entityManager;
 
@@ -58,7 +60,9 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	@Override
 	public Object findOne(String jpql) {
-		List<?> list = find(jpql);
+		Pageable pageable = PageRequest.of(1,1);
+		Page<?> page = findNavigator(pageable,jpql);
+		List<?> list = page.getContent();
 		if (list != null && list.size() > 0) {
 			return list.get(0);
 		}
@@ -68,7 +72,8 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	@Override
 	public List<?> find(String jpql,Map<String, Object> searchParameter) {
 		Query query = entityManager.createQuery(jpql);
-		RepositoryParameter.setParameter(query, searchParameter);
+		query.setMaxResults(maxResults);
+		query = RepositoryParameter.setParameter(query, searchParameter);
 		return query.getResultList();
 	}
 
@@ -81,6 +86,19 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter) {
 		List<?> list = (List<?>) executeJpql(pageable, jpql, searchParameter);
 		Long total = getCount(jpql, searchParameter);
+		Page page = new PageImpl(list,pageable,total);
+		return page;
+	}
+
+	@Override
+	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql) {
+		return findNavigatorByNativeSql(pageable,sql,null,null);
+	}
+
+	@Override
+	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
+		List<?> list = (List<?>) executeSql(pageable, sql, searchParameter,returnType);
+		Long total = getCountByNativeSql(sql, searchParameter);
 		Page page = new PageImpl(list,pageable,total);
 		return page;
 	}
@@ -101,7 +119,23 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	 */
 	private List<?> executeJpql(Pageable lionPage, String jpql, Map<String, Object> searchParameter) {
 		Query query = entityManager.createQuery(jpql);
-		RepositoryParameter.setParameter(query, searchParameter);
+		query = RepositoryParameter.setParameter(query, searchParameter);
+		query.setFirstResult(lionPage.getPageNumber() * lionPage.getPageSize());
+		query.setMaxResults(lionPage.getPageSize());
+		return query.getResultList();
+	}
+
+	private List<?> executeSql(Pageable lionPage, String sql, Map<String, Object> searchParameter,Class<?> returnType) {
+		Query query = null;
+		if (Objects.nonNull(returnType) && (!Objects.equals(returnType,Map.class) || !Objects.equals(returnType,HashMap.class))) {
+			query = entityManager.createNativeQuery(sql, returnType);
+		}else {
+			query = entityManager.createNativeQuery(sql);
+		}
+		if (Objects.isNull(returnType) || Objects.equals(returnType,Map.class) || Objects.equals(returnType,HashMap.class)){
+			query = query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		}
+		query = RepositoryParameter.setParameter(query, searchParameter);
 		query.setFirstResult(lionPage.getPageNumber() * lionPage.getPageSize());
 		query.setMaxResults(lionPage.getPageSize());
 		return query.getResultList();
@@ -114,11 +148,15 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	 * @param searchParameter
 	 * @return
 	 */
-	private Long getCount(final String jpql, final Map<String, Object> searchParameter) {
+	private Long getCount(String jpql, Map<String, Object> searchParameter) {
 		Session session = entityManager.unwrap(Session.class);
 		SessionFactoryImplementor sessionFactoryImplementor = (SessionFactoryImplementor)session.getSessionFactory();
 		QueryTranslatorImpl queryTranslator=new QueryTranslatorImpl(jpql,jpql,searchParameter==null?Collections.EMPTY_MAP:searchParameter,sessionFactoryImplementor);
-		queryTranslator.compile(searchParameter==null?Collections.EMPTY_MAP:searchParameter, false);
+		if (jpql.indexOf("order")>-1 || jpql.indexOf("ORDER")>-1) {
+			queryTranslator.compile(searchParameter==null?Collections.EMPTY_MAP:searchParameter, false);
+		}else {
+			queryTranslator.compile(searchParameter==null?Collections.EMPTY_MAP:searchParameter, true);
+		}
 		String sql = queryTranslator.getSQLString();
 		List<ParameterSpecification> parameter = queryTranslator.getCollectedParameterSpecifications();
 		for(ParameterSpecification parameterSpecification : parameter){
@@ -136,41 +174,17 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		if (sql.indexOf("ORDER")>-1) {
 			sql = sql.substring(0, sql.indexOf("ORDER"));
 		}
+		return getCountByNativeSql(sql,searchParameter);
+	}
+
+	private Long getCountByNativeSql(String sql,Map<String, Object> searchParameter) {
 		StringBuffer countSql = new StringBuffer();
 		countSql.append(" select count(1) from (");
 		countSql.append(sql);
 		countSql.append(") tb");
 		Query query = entityManager.createNativeQuery(countSql.toString());
-		for(int i =1; i<=parameter.size(); i++){
-			String namedParameter = ((NamedParameterSpecification)parameter.get(i-1)).getName();
-			Object object = searchParameter.get(namedParameter);
-			if(object.getClass().isEnum() ) {
-				query.setParameter(namedParameter, ((IEnum)object).getKey());
-			}else {
-				query.setParameter(namedParameter,object);
-			}
-
-		}
+		query = RepositoryParameter.setParameter(query, searchParameter);
 		return Long.valueOf(query.getSingleResult().toString());
-	}
-
-	/**
-	 * 拼接sql中的参数
-	 * @param sb
-	 * @param parameter
-	 * @param i
-	 * @return
-	 */
-	private StringBuilder spliceSql(StringBuilder sb,List<ParameterSpecification> parameter ,Integer i){
-		if (!(parameter.size()>0)){
-			return sb;
-		}
-		String tmp = sb.toString().trim();
-		if (Objects.equals(tmp.substring((tmp.length()-1)<0?0:tmp.length()-1),"=")){
-			String namedParameter = ((NamedParameterSpecification)parameter.get(i)).getName();
-			sb.append(":").append(namedParameter);
-		}
-		return sb;
 	}
 
 	@Override
@@ -180,13 +194,8 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	@Override
 	public List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		return (List<T>) find(Integer.MAX_VALUE, 0, searchParameter, sortParameter).getContent();
+		return (List<T>) find(maxResults, 0, searchParameter, sortParameter).getContent();
 	}
-
-//	private PageResultData<?> convertPageResultData(List<?> list,Pageable pageable,Long total){
-//		PageResultData<?> pageResultData = new PageResultData(list,pageable,total);
-//		return pageResultData;
-//	}
 
 	private Page<?> find(Integer pageSize, Integer pageNumber, Map<String, Object> searchParameter,
 						 Map<String, Object> sortParameter) {

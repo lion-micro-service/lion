@@ -26,7 +26,7 @@ public class SaveRepositoryImpl<T>  implements SaveRepository<T> {
 	@Override
 	public int save(String jpql,Map<String, Object> parameter) {
 		Query query = entityManager.createQuery(jpql);
-		RepositoryParameter.setParameter(query, parameter);
+		query = RepositoryParameter.setParameter(query, parameter);
 		return query.executeUpdate(); 
 	}
 

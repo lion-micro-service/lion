@@ -14,15 +14,16 @@ public class RepositoryParameter {
 	/**
 	 * 设置参数
 	 * @param query
-	 * @param para
+	 * @param parameter
 	 */
-	public static void setParameter(final Query query, final Map<String, Object> parameter) {
+	public static Query setParameter(Query query, Map<String, Object> parameter) {
 		if(parameter==null || query==null){
-			return;
+			return query;
 		}
 		for (String key : parameter.keySet()) {
 			query.setParameter(key, parameter.get(key));
 		}
+		return query;
 	}
 	
 	

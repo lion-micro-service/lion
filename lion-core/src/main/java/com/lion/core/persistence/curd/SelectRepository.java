@@ -58,6 +58,23 @@ public interface SelectRepository<T> {
 	 */
 	Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter);
 
+	/**
+	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
+	 * @param pageable
+	 * @param sql
+	 * @return
+	 */
+	Page<?> findNavigatorByNativeSql(Pageable pageable, String sql);
+
+	/**
+	 *
+	 * @param pageable
+	 * @param sql
+	 * @param searchParameter
+	 * @param returnType
+	 * @return
+	 */
+	Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter,Class<?> returnType);
 
 	/**
 	 * 分页查询

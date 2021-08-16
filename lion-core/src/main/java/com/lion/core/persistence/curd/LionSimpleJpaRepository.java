@@ -114,6 +114,16 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 	}
 
 	@Override
+	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql) {
+		return selectRepository.findNavigatorByNativeSql(pageable, sql);
+	}
+
+	@Override
+	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
+		return selectRepository.findNavigatorByNativeSql(pageable, sql, searchParameter, returnType);
+	}
+
+	@Override
 	@Transactional(propagation= Propagation.REQUIRED)
 	public int update(String jpql) {
 		return updateRepository.update(jpql);
