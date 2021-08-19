@@ -33,6 +33,9 @@ public class PredicateBuilder {
 	public static List<Predicate> builder(final Root<?> root,
                                           final CriteriaBuilder criteriaBuilder, final Map<String, Object> searchParameter) {
 		List<Predicate> predicates = new ArrayList<>();
+		if (Objects.isNull(searchParameter) || searchParameter.isEmpty()) {
+			return predicates;
+		}
 		Iterator<Entry<String, Object>> iterator = searchParameter.entrySet().iterator();
 		Entry<String, Object> entry;
 		while (iterator.hasNext()) {
