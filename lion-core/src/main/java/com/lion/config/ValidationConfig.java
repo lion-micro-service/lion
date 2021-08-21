@@ -1,34 +1,62 @@
 package com.lion.config;
 
-import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration;
 import org.springframework.boot.validation.MessageInterpolatorFactory;
+import org.springframework.boot.validation.beanvalidation.FilteredMethodValidationPostProcessor;
+import org.springframework.boot.validation.beanvalidation.MethodValidationExcludeFilter;
 import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 
 import javax.validation.Validator;
+import javax.validation.executable.ExecutableValidator;
 
 @Configuration
-@ConditionalOnClass(ResourceBundleMessageSource.class)
+@ConditionalOnClass({ResourceBundleMessageSource.class, ExecutableValidator.class})
+@AutoConfigureAfter(MessageSourceAutoConfiguration.class)
+@AutoConfigureBefore(ValidationAutoConfiguration.class)
 public class ValidationConfig {
 
     @Bean
-    public MessageSource messageSource(){
-        ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setDefaultEncoding("utf-8");
-        source.setBasename("ValidationMessages");
-        return source;
+    @Primary
+    public MessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasenames("messages");
+        messageSource.setDefaultEncoding("utf-8");
+        return messageSource;
     }
 
     @Bean
-    public Validator validator(MessageSource messageSource){
-        LocalValidatorFactoryBean validatorFactoryBean = new LocalValidatorFactoryBean();
+    @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
+    @Primary
+    public LocalValidatorFactoryBean defaultValidator(MessageSource messageSource) {
+        LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
         MessageInterpolatorFactory interpolatorFactory = new MessageInterpolatorFactory();
-        validatorFactoryBean.setMessageInterpolator(interpolatorFactory.getObject());
-        validatorFactoryBean.setValidationMessageSource(messageSource);
-        return validatorFactoryBean;
+        factoryBean.setMessageInterpolator(interpolatorFactory.getObject());
+        factoryBean.setValidationMessageSource(messageSource);
+        return factoryBean;
+    }
+
+    @Bean
+    @Primary
+    @ConditionalOnMissingBean
+    public MethodValidationPostProcessor methodValidationPostProcessor(Environment environment,
+                                                                              @Lazy Validator validator, ObjectProvider<MethodValidationExcludeFilter> excludeFilters) {
+        FilteredMethodValidationPostProcessor processor = new FilteredMethodValidationPostProcessor(
+                excludeFilters.orderedStream());
+        boolean proxyTargetClass = environment.getProperty("spring.aop.proxy-target-class", Boolean.class, true);
+        processor.setProxyTargetClass(proxyTargetClass);
+        processor.setValidator(validator);
+        return processor;
     }
 }
