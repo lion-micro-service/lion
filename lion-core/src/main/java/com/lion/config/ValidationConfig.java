@@ -1,9 +1,11 @@
 package com.lion.config;
 
+import com.lion.utils.MessageI18nUtil;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration;
@@ -39,12 +41,19 @@ public class ValidationConfig {
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     @Primary
+    @ConditionalOnBean(MessageSource.class)
     public LocalValidatorFactoryBean defaultValidator(MessageSource messageSource) {
         LocalValidatorFactoryBean factoryBean = new LocalValidatorFactoryBean();
         MessageInterpolatorFactory interpolatorFactory = new MessageInterpolatorFactory();
         factoryBean.setMessageInterpolator(interpolatorFactory.getObject());
         factoryBean.setValidationMessageSource(messageSource);
         return factoryBean;
+    }
+    @Bean
+    @ConditionalOnBean(MessageSource.class)
+    public MessageI18nUtil messageI18nUtil(MessageSource messageSource){
+        MessageI18nUtil util = new MessageI18nUtil(messageSource);
+        return util;
     }
 
     @Bean
