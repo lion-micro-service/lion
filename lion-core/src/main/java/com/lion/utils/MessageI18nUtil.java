@@ -11,10 +11,6 @@ public class MessageI18nUtil {
         this.messageSource = messageSource;
     }
 
-    public MessageSource getMessageSource() {
-        return messageSource;
-    }
-
     public static String getMessage(String code){
         return getMessage(code, null);
     }
