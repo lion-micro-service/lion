@@ -114,11 +114,13 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql) {
 		return selectRepository.findNavigatorByNativeSql(pageable, sql);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
 		return selectRepository.findNavigatorByNativeSql(pageable, sql, searchParameter, returnType);
 	}
@@ -171,6 +173,9 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 		BaseEntity baseEntity = (BaseEntity)entity;
 		if (Objects.isNull(baseEntity.getId())){
 			baseEntity.setId(SnowflakeUtil.getId());
+		}
+		if (this.entityInformation.isNew(entity)) {
+			baseEntity.setVersion(0L);
 		}
 		return super.save(entity);
 	}

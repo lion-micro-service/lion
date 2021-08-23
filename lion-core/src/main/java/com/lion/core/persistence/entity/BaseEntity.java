@@ -68,8 +68,8 @@ public abstract class BaseEntity implements Serializable {
     private Long updateUserId;
 
     @Column(name = "version",nullable = false)
-    @NotNull(message="版本号不能为空",groups= {Validator.Update.class, Validator.Delete.class})
+    @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
     @ApiModelProperty(notes = "版本号（修改需要传version,新增不需要传）")
     @Version
-    private Long version = 0L;
+    private Long version;
 }
