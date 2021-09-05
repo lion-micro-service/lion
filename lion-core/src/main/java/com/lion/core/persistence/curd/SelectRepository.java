@@ -21,7 +21,7 @@ public interface SelectRepository<T> {
 	 *            jpql查询语句
 	 * @return T
 	 */
-	List<?> find(String jpql);
+	List<?> findAll(String jpql);
 
 	/**
 	 * 使用jpql语句查询数据返回单个对象
@@ -39,7 +39,7 @@ public interface SelectRepository<T> {
 	 *            jpql语句
 	 * @return T
 	 */
-	List<?> find(String jpql, Map<String, Object> searchParameter);
+	List<?> findAll(String jpql, Map<String, Object> searchParameter);
 
 	/**
 	 * 分页查询(Page中的searchParameter&sortParameter将不生效)

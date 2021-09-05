@@ -79,8 +79,8 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<?> find(String jpql) {
-		return selectRepository.find(jpql);
+	public List<?> findAll(String jpql) {
+		return selectRepository.findAll(jpql);
 	}
 
 	@Override
@@ -91,8 +91,8 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<?> find(String jpql, Map<String, Object> parameter) {
-		return selectRepository.find(jpql, parameter);
+	public List<?> findAll(String jpql, Map<String, Object> parameter) {
+		return selectRepository.findAll(jpql, parameter);
 	}
 
 	@Override

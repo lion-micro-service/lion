@@ -54,8 +54,8 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	}
 
 	@Override
-	public List<?> find(String jpql) {
-		return find(jpql, null);
+	public List<?> findAll(String jpql) {
+		return findAll(jpql, null);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	}
 
 	@Override
-	public List<?> find(String jpql,Map<String, Object> searchParameter) {
+	public List<?> findAll(String jpql,Map<String, Object> searchParameter) {
 		Query query = entityManager.createQuery(jpql);
 		query.setMaxResults(maxResults);
 		query = RepositoryParameter.setParameter(query, searchParameter);

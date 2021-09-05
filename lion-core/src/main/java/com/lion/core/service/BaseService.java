@@ -70,6 +70,69 @@ public interface BaseService<T extends BaseEntity>{
 	
 	List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 
+	/**
+	 * 使用jpql语句查询数据
+	 *
+	 * @param jpql
+	 *            jpql查询语句
+	 * @return T
+	 */
+	List<?> findAll(String jpql);
+
+	/**
+	 * 使用jpql语句查询数据返回单个对象
+	 *
+	 * @param jpql
+	 *            jpql查询语句
+	 * @return T
+	 */
+	Object findOne(String jpql);
+
+	/**
+	 * 使用jpql语句查询
+	 *
+	 * @param jpql
+	 *            jpql语句
+	 * @return T
+	 */
+	List<?> findAll(String jpql, Map<String, Object> searchParameter);
+
+	/**
+	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
+	 * @param pageable
+	 * @param jpql
+	 * @return
+	 */
+	Page<?> findNavigator(Pageable pageable, String jpql);
+
+	/**
+	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
+	 * @param jpql
+	 * @param pageable
+	 * @param searchParameter
+	 * @return
+	 */
+	Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter);
+
+	/**
+	 * 分页查询(Page中的searchParameter&sortParameter将不生效)
+	 * @param pageable
+	 * @param sql
+	 * @return
+	 */
+	Page<?> findNavigatorByNativeSql(Pageable pageable, String sql);
+
+	/**
+	 *
+	 * @param pageable
+	 * @param sql
+	 * @param searchParameter
+	 * @param returnType
+	 * @return
+	 */
+	Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter,Class<?> returnType);
+
+
 	public <S extends T> long count(Example<S> example);
 
 	public <S extends T> boolean exists(Example<S> example);
@@ -80,6 +143,8 @@ public interface BaseService<T extends BaseEntity>{
 	 * @return PageResultData<T>
 	 */
 	Page<T> findNavigator(LionPage lionPage);
-	
-	
+
+
+
+
 }

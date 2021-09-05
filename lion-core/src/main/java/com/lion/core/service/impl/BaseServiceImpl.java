@@ -189,4 +189,38 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         return baseDao.findNavigator(lionPage);
     }
 
+    @Override
+    public List<?> findAll(String jpql) {
+        return baseDao.findAll(jpql);
+    }
+
+    @Override
+    public Object findOne(String jpql) {
+        return baseDao.findOne(jpql);
+    }
+
+    @Override
+    public List<?> findAll(String jpql, Map<String, Object> searchParameter) {
+        return baseDao.findAll(jpql, searchParameter);
+    }
+
+    @Override
+    public Page<?> findNavigator(Pageable pageable, String jpql) {
+        return baseDao.findNavigator(pageable,jpql);
+    }
+
+    @Override
+    public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter) {
+        return baseDao.findNavigator(pageable, jpql, searchParameter);
+    }
+
+    @Override
+    public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql) {
+        return baseDao.findNavigatorByNativeSql(pageable, sql);
+    }
+
+    @Override
+    public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
+        return baseDao.findNavigatorByNativeSql(pageable, sql, searchParameter, returnType);
+    }
 }
