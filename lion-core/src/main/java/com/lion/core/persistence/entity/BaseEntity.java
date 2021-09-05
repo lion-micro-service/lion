@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId"})
 public abstract class BaseEntity implements Serializable {
 
-    private static final long serialVersionUID = -90000050L;
+    protected static final long serialVersionUID = -90000050L;
 
     @Id()
 //    @GeneratedValue(generator = "snow_flake_id")

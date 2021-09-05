@@ -15,7 +15,7 @@
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <lombok.version>1.18.12</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
         <hutool-all.version>5.4.0</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
         <dubbo.version>2.7.8</dubbo.version>
@@ -43,6 +43,8 @@
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <mariadb.verwsion>2.7.2</mariadb.verwsion>
         <mssql-jdbc.version>9.2.1.jre8</mssql-jdbc.version>
+        <querydsl.version>5.0.0</querydsl.version>
+        <modelmapper.version>2.4.4</modelmapper.version>
         <docker.repository>www.nexusdocker.com:8085</docker.repository>
     </properties>
     <modules>
@@ -286,6 +288,11 @@
                 <version>${lombok.version}</version>
                 <scope>provided</scope>
             </dependency>
+            <dependency>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
+            </dependency>
 
             <dependency>
                 <groupId>com.github.whvcse</groupId>
@@ -346,6 +353,22 @@
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>mssql-jdbc</artifactId>
                 <version>${mssql-jdbc.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-jpa</artifactId>
+                <version>${querydsl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.querydsl</groupId>
+                <artifactId>querydsl-apt</artifactId>
+                <scope>provided</scope>
+                <version>${querydsl.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>${apt-maven-plugin.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
