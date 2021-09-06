@@ -111,6 +111,22 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 				lionPage.getJpqlParameter().getSortParameter());
 	}
 
+	@Override
+	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
+		return findNavigator(LionPage,searchParameter,null);
+	}
+
+	@Override
+	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
+		if (Objects.nonNull(searchParameter) && searchParameter.size()>0) {
+			LionPage.getJpqlParameter().setSearchParameter(searchParameter);
+		}
+		if (Objects.nonNull(sortParameter) && sortParameter.size()>0) {
+			LionPage.getJpqlParameter().setSortParameter(sortParameter);
+		}
+		return findNavigator(LionPage);
+	}
+
 	/**
 	 * 分页查询
 	 * 

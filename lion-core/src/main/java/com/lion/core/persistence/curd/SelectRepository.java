@@ -82,6 +82,23 @@ public interface SelectRepository<T> {
 	 * @return
 	 */
 	Page<T> findNavigator(LionPage LionPage);
+
+	/**
+	 * 分页查询
+	 * @param LionPage
+	 * @param searchParameter
+	 * @return
+	 */
+	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter);
+
+	/**
+	 * 分页查询
+	 * @param LionPage
+	 * @param searchParameter
+	 * @param sortParameter
+	 * @return
+	 */
+	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 	/**
 	 *
 	 * @param searchParameter

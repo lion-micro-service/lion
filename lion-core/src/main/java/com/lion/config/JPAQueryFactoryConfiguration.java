@@ -3,6 +3,7 @@ package com.lion.config;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,6 +17,7 @@ import javax.persistence.EntityManagerFactory;
  * @createDateTime 2021/9/5 下午2:22
  */
 @Configuration
+@ConditionalOnClass({JPAQueryFactory.class})
 public class JPAQueryFactoryConfiguration {
 
     @Bean
