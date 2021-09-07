@@ -114,11 +114,13 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
 		return selectRepository.findNavigator(LionPage, searchParameter);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
 		return selectRepository.findNavigator(LionPage, searchParameter, sortParameter);
 	}
