@@ -190,6 +190,16 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
+    public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
+        return baseDao.findNavigator(LionPage, searchParameter);
+    }
+
+    @Override
+    public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
+        return baseDao.findNavigator(LionPage, searchParameter, sortParameter);
+    }
+
+    @Override
     public List<?> findAll(String jpql) {
         return baseDao.findAll(jpql);
     }

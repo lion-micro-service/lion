@@ -144,6 +144,23 @@ public interface BaseService<T extends BaseEntity>{
 	 */
 	Page<T> findNavigator(LionPage lionPage);
 
+	/**
+	 * 分页查询
+	 * @param LionPage
+	 * @param searchParameter
+	 * @return
+	 */
+	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter);
+
+	/**
+	 * 分页查询
+	 * @param LionPage
+	 * @param searchParameter
+	 * @param sortParameter
+	 * @return
+	 */
+	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter, Map<String, Object> sortParameter);
+
 
 
 
