@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  */
 @MappedSuperclass
 @Data
-@DynamicUpdate
+
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId"})
@@ -67,7 +67,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "update_user_id", insertable = false)
     private Long updateUserId;
 
-    @Column(name = "version",nullable = false)
+    @Column(name = "version")
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
     @ApiModelProperty(notes = "版本号（修改需要传version,新增不需要传）")
     @Version

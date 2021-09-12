@@ -7,9 +7,12 @@ import com.lion.core.persistence.curd.UpdateRepository;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.exception.BusinessException;
 import org.hibernate.Session;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -61,7 +64,16 @@ public class UpdateRepositoryImpl<T>  implements UpdateRepository<T> {
 		if (Objects.isNull(newEntity.getVersion())){
 			BusinessException.throwException("该数据版本号不能为空");
 		}
-		simpleJpaRepository.save(entity);
+		Serializable id = entityInformation.getId(entity);
+		Optional<T> optional = simpleJpaRepository.findById(id);
+		if (optional.isPresent()) {
+			BaseEntity oldEntity = (BaseEntity) optional.get();
+			if (!Objects.equals(newEntity.getVersion(),oldEntity.getVersion())) {
+				BusinessException.throwException("该数据发生变化,请重新获取");
+			}
+			BeanUtil.copyProperties(newEntity, oldEntity, CopyOptions.create().setIgnoreNullValue(true).setIgnoreError(true));
+			simpleJpaRepository.save((T) oldEntity);
+		}
 	}
 
 }
