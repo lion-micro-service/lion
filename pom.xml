@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.3</version>
+        <version>2.5.4</version>
     </parent>
     <groupId>com.lion</groupId>
     <artifactId>lion</artifactId>
@@ -18,20 +18,20 @@
         <lombok.version>1.18.20</lombok.version>
         <hutool-all.version>5.4.0</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <dubbo.version>2.7.8</dubbo.version>
+        <dubbo.version>3.0.2.1</dubbo.version>
         <spring-cloud-dependencies.version>2020.0.3</spring-cloud-dependencies.version>
         <aliyun-spring-boot-dependencies.version>1.0.0</aliyun-spring-boot-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.5.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
-        <seata.version>1.4.1</seata.version>
-        <nacos.version>1.4.2</nacos.version>
+        <seata.version>1.4.2</seata.version>
+        <nacos.version>2.0.3</nacos.version>
         <sentinel.version>1.8.1</sentinel.version>
         <fastjson.version>1.2.73</fastjson.version>
         <spring-retry.version>1.3.0</spring-retry.version>
         <springfox.version>3.0.0</springfox.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <arthas.version>3.4.3</arthas.version>
+        <arthas.version>3.5.4</arthas.version>
         <reflections.version>0.9.11</reflections.version>
         <minio.version>7.1.4</minio.version>
         <druid.version>1.2.1</druid.version>
@@ -39,7 +39,7 @@
         <curator.version>5.1.0</curator.version>
         <zookeeper.version>3.6.2</zookeeper.version>
         <knife4j.version>2.0.5</knife4j.version>
-        <spring-boot-admin.version>2.4.3</spring-boot-admin.version>
+        <spring-boot-admin.version>2.5.1</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
         <mariadb.verwsion>2.7.2</mariadb.verwsion>
         <mssql-jdbc.version>9.2.1.jre8</mssql-jdbc.version>
