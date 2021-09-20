@@ -3,6 +3,7 @@ package com.lion.aop.log;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.utils.CurrentUserUtil;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -21,9 +22,9 @@ public class SystemLogDataUtil {
                 systemLogData = systemLogDataThreadLocal.get();
                 if (Objects.isNull(systemLogData)) {
                     systemLogData = new SystemLogData();
-                    BaseEntity user = (BaseEntity) CurrentUserUtil.getCurrentUser(false);
-                    if(Objects.nonNull(user)){
-                        systemLogData.setCurrentUserId(Long.valueOf(user.getId()));
+                    Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
+                    if(Objects.nonNull(user) && user.containsKey("id")){
+                        systemLogData.setCurrentUserId(Long.valueOf(String.valueOf(user.get("id"))));
                     }
                     SystemLogDataUtil.set(systemLogData);
                 }
