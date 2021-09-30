@@ -102,14 +102,14 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public <S extends T> S save(S entity) {
-        if (Objects.isNull(entity)){
-            return entity;
+        if (Objects.nonNull(entity)){
+            if (Objects.nonNull( ((BaseEntity)entity).getId())){
+                this.update(entity);
+                return entity;
+            }
+            return baseDao.save(entity);
         }
-        if (Objects.nonNull( ((BaseEntity)entity).getId())){
-            this.update(entity);
-            return entity;
-        }
-        return baseDao.save(entity);
+        return entity;
     }
 
     @Override
