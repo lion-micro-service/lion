@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.4</version>
+        <version>2.5.5</version>
     </parent>
     <groupId>com.lion</groupId>
     <artifactId>lion</artifactId>
@@ -46,6 +46,7 @@
         <querydsl.version>5.0.0</querydsl.version>
         <modelmapper.version>2.4.4</modelmapper.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
+        <elasticsearch.version>7.15.0</elasticsearch.version>
         <docker.repository>www.nexusdocker.com:8085</docker.repository>
     </properties>
     <modules>
