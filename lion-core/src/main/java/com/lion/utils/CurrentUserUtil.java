@@ -36,7 +36,7 @@ public class CurrentUserUtil {
         if(isHttpWebRequest()){
             username = getUsername();
         }else if (isDubooRequest()){
-            RpcContext rpcContext = RpcContext.getContext();
+            RpcContext rpcContext = RpcContext.getServiceContext();
             username = String.valueOf(rpcContext.get(DubboConstant.USERNAME));
         }
         if(StringUtils.hasText(username)) {
@@ -68,7 +68,7 @@ public class CurrentUserUtil {
         if(isHttpWebRequest()){
             return getUsername();
         }else if (isDubooRequest()){
-            String username = String.valueOf(RpcContext.getContext().get(DubboConstant.USERNAME));
+            String username = String.valueOf(RpcContext.getServiceContext().get(DubboConstant.USERNAME));
             if(StringUtils.hasText(username)){
                 return username;
             }
@@ -130,7 +130,7 @@ public class CurrentUserUtil {
      * @return
      */
     private static boolean isDubooRequest(){
-        RpcContext rpcContext = RpcContext.getContext();
+        RpcContext rpcContext = RpcContext.getServiceContext();
         if(Objects.nonNull(rpcContext)){
             return true;
         }
