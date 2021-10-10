@@ -6,9 +6,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.lion.constant.ResultDataConstant;
 import com.lion.core.common.enums.ResultDataState;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,21 +30,21 @@ import java.util.Map;
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"content","pageable","sort","numberOfElements","empty","number","size"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@ApiModel()
+@Schema()
 public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>, Serializable {
 
     private static final long serialVersionUID = 8078379219201834984L;
 
-    @ApiModelProperty(value = "返回消息", dataType="string")
+    @Schema(description = "返回消息", type="string")
     private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-    @ApiModelProperty(value = "异常信息", dataType="string")
+    @Schema(description = "异常信息", type="string")
     private String exceptionMessage;
 
-    @ApiModelProperty(value = "状态编码", dataType="integer")
+    @Schema(description = "状态编码", type="integer")
     private Integer status = ResultDataState.SUCCESS.getKey();
 
-    @ApiModelProperty(value = "结果集", dataType="object")
+    @Schema(description = "结果集", type="object")
     private T data;
 
     public PageResultData(List content, Pageable pageable, long total) {

@@ -3,10 +3,9 @@ package com.lion.core.persistence.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.persistence.Validator;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -42,7 +41,7 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(generator="assigned")
     @Column(name = "id")
     @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
-    @ApiModelProperty(value = "ID")
+    @Schema(description = "ID")
     private Long id;
 
 //    @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")
@@ -69,7 +68,7 @@ public abstract class BaseEntity implements Serializable {
 
     @Column(name = "version")
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
-    @ApiModelProperty(notes = "版本号（修改需要传version,新增不需要传）")
+    @Schema(description = "版本号（修改需要传version,新增不需要传）")
     @Version
     private Long version;
 }

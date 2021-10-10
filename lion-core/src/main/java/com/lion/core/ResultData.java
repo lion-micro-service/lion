@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.lion.constant.ResultDataConstant;
 import com.lion.core.common.enums.ResultDataState;
 import com.lion.utils.BeanToMapUtil;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 import org.springframework.util.StringUtils;
 
@@ -25,21 +25,21 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(Include.NON_NULL)
 @Data
-@ApiModel()
+@Schema()
 public class ResultData<T> implements Serializable, IResultData<T> {
 
 	private static final long serialVersionUID = 981792735336739260L;
 
-	@ApiModelProperty(value = "返回消息", dataType="string")
+	@Schema(description = "返回消息", type="string")
 	private String message = ResultDataConstant.SUCCEED_MESSAGE;
 
-	@ApiModelProperty(value = "异常消息", dataType="string")
+	@Schema(description = "异常消息", type="string")
 	private String exceptionMessage;
 
-	@ApiModelProperty(value = "状态编码",dataType="integer")
+	@Schema(description = "状态编码",type="integer")
 	private Integer status = ResultDataState.SUCCESS.getKey();
 
-	@ApiModelProperty(value = "结果集", dataType="object")
+	@Schema(description = "结果集", type="object")
 	private T data;
 
 

@@ -1,7 +1,7 @@
 package com.lion.core.common.dto;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -12,9 +12,9 @@ import javax.validation.constraints.NotNull;
  * @date 2021/3/23上午11:37
  */
 @Data
-@ApiModel
+@Schema
 public class DeleteDto {
-    @ApiModelProperty("id")
+    @Schema(description = "id")
     @NotNull(message = "id不能未空")
     private Long id;
 }

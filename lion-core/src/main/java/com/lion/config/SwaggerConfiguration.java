@@ -2,8 +2,8 @@ package com.lion.config;
 
 import com.fasterxml.classmate.TypeResolver;
 import com.lion.core.LionPage;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -112,13 +112,13 @@ public class SwaggerConfiguration {
     }
 
 
-    @ApiModel
+    @Schema
     @Data
     static class Page {
-        @ApiModelProperty(value = "第几页,从0开始计数",example = "1")
+        @Schema(description = "第几页,从0开始计数",example = "1")
         private Integer pageNumber;
 
-        @ApiModelProperty(value = "每页数据数量",example = "10")
+        @Schema(description = "每页数据数量",example = "10")
         private Integer pageSize;
     }
 }
