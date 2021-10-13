@@ -1,7 +1,5 @@
 package com.lion.constant;
 
-import org.omg.PortableInterceptor.SUCCESSFUL;
-
 /**
  * @description: 返回结果集常量定义
  * @author: Mr.Liu
