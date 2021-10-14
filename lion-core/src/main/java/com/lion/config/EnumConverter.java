@@ -31,7 +31,7 @@ public class EnumConverter implements ConverterFactory<String, IEnum> {
 
         @Override
         public T convert(String source) {
-            if (StringUtils.isEmpty(source)) {
+            if (!StringUtils.hasText(source)) {
                 return null;
             }
             return (T) EnumConverter.getIEnum(this.targerType, source);

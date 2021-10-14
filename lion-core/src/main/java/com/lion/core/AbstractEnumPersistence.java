@@ -48,6 +48,9 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
     @Qualifier(RestTemplateConfiguration.REST_TAMPLATE_LOAD_BALANCED_BEAN_NAME)
     private RestTemplate restTemplate;
 
+    @Value("${spring.application.name:''}")
+    private String springApplicationName;
+
     private String packageName;
 
     public AbstractEnumPersistence(String packageName) {
@@ -69,10 +72,12 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
                 return;
             }
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_UTF8_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             LionObjectMapper objectMapper = new LionObjectMapper();
             HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
-            Thread.sleep(1000);
+            if (Objects.equals(springApplicationName,"lion-common-console-restful")) {
+                Thread.sleep(1000);
+            }
             ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/console/persistence", request, Object.class);
         }catch (Exception exception){
             exception.printStackTrace();
