@@ -1,36 +1,18 @@
 package com.lion.core;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lion.config.RestTemplateConfiguration;
-import com.lion.core.IResultData;
-import com.lion.core.LionObjectMapper;
 import com.lion.utils.EnumUtil;
-import lombok.Data;
-import org.aspectj.lang.annotation.After;
-import org.reflections.Reflections;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
-import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -53,6 +35,9 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
 
     private String packageName;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     public AbstractEnumPersistence(String packageName) {
         this.packageName = packageName;
     }
@@ -71,9 +56,8 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
             if (list.size()<=0){
                 return;
             }
-            org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
+            HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            LionObjectMapper objectMapper = new LionObjectMapper();
             HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
             if (Objects.equals(springApplicationName,"lion-common-console-restful")) {
                 Thread.sleep(1000);
