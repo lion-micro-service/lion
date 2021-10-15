@@ -6,19 +6,25 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnWebApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpMethod;
 import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.plugin.core.PluginRegistrySupport;
+import org.springframework.web.util.UriComponentsBuilder;
+import springfox.documentation.PathProvider;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.oas.annotations.EnableOpenApi;
 import springfox.documentation.schema.AlternateTypeRule;
 import springfox.documentation.schema.AlternateTypeRuleConvention;
 import springfox.documentation.service.ApiInfo;
@@ -26,6 +32,9 @@ import springfox.documentation.service.Contact;
 import springfox.documentation.service.Response;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.OperationBuilderPlugin;
+import springfox.documentation.spring.web.SpringfoxWebConfiguration;
+import springfox.documentation.spring.web.paths.DefaultPathProvider;
+import springfox.documentation.spring.web.paths.Paths;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.readers.operation.OpenApiResponseReader;
 import springfox.documentation.swagger2.configuration.Swagger2WebMvcConfiguration;
@@ -46,15 +55,18 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @ConditionalOnClass({Swagger2WebMvcConfiguration.class})
 @ConditionalOnMissingClass({"org.springframework.cloud.gateway.config.GatewayAutoConfiguration"})
 @ConditionalOnWebApplication
+@EnableOpenApi
+@AutoConfigureBefore({SpringfoxWebConfiguration.class})
 public class SwaggerConfiguration {
 
-
+    @Value("${spring.application.name:/}")
+    private String basePath;
 
     @Bean
     public Docket docket(ApplicationContext applicationContext){
         List<Response> responses = new ArrayList<Response>();
-        Response response = new Response("200","",true, Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST);
-        Docket docket = new Docket(DocumentationType.SWAGGER_2)
+//        Response response = new Response("200","",true, Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST,Collections.EMPTY_LIST);
+        Docket docket = new Docket(DocumentationType.OAS_30)
                 .apiInfo(apiInfo())
                 .useDefaultResponseMessages(false)
                 .globalResponses(HttpMethod.POST,responses)
@@ -71,6 +83,12 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.any())
                 .build();
         removeDefaultPlugin(applicationContext);
+//        docket.pathProvider(new DefaultPathProvider(){
+//            @Override
+//            protected String getDocumentationPath() {
+//                return "/test";
+//            }
+//        });
         return docket;
     }
 
@@ -120,5 +138,17 @@ public class SwaggerConfiguration {
 
         @Schema(description = "每页数据数量",example = "10")
         private Integer pageSize;
+    }
+
+    @Bean
+    @Primary
+    public PathProvider lionPathProvider() {
+        return new DefaultPathProvider() {
+            @Override
+            public String getOperationPath(String operationPath) {
+                UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.fromPath("/"+basePath+"/");
+                return Paths.removeAdjacentForwardSlashes(uriComponentsBuilder.path(operationPath).build().toString());
+            }
+        };
     }
 }
