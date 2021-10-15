@@ -59,7 +59,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 @AutoConfigureBefore({SpringfoxWebConfiguration.class})
 public class SwaggerConfiguration {
 
-    @Value("${spring.application.name:/}")
+    @Value("${spring.application.name}")
     private String basePath;
 
     @Bean
