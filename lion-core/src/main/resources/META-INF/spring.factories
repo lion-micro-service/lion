@@ -11,4 +11,5 @@ com.lion.config.MinioConfiguration,\
 com.lion.config.ZookeeperConfiguration,\
 com.lion.config.ValidationConfig,\
 com.lion.config.ModelMapperConfiguration,\
-com.lion.config.JPAQueryFactoryConfiguration
+com.lion.config.JPAQueryFactoryConfiguration,\
+com.lion.config.MongoConfiguration  

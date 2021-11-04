@@ -83,12 +83,6 @@ public class SwaggerConfiguration {
                 .paths(PathSelectors.any())
                 .build();
         removeDefaultPlugin(applicationContext);
-//        docket.pathProvider(new DefaultPathProvider(){
-//            @Override
-//            protected String getDocumentationPath() {
-//                return "/test";
-//            }
-//        });
         return docket;
     }
 
