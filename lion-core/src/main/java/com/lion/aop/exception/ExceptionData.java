@@ -36,11 +36,16 @@ public class ExceptionData {
         ResultData resultData = new ResultData();
         resultData.setMessage(e.getMessage());
         resultData.setStatus(ResultDataState.ERROR.getKey());
-        handle(e, resultData);
+        try {
+            handle(e, resultData);
+        } catch (Throwable ex) {
+            resultData.setMessage("程序开小差了！请与管理员联系！");
+            ex.printStackTrace();
+        }
         return resultData;
     }
 
-    private static void handle(final Throwable e,final ResultData resultData){
+    private static void handle(final Throwable e,final ResultData resultData) throws Throwable{
         if (e instanceof InvalidGrantException || e instanceof InternalAuthenticationServiceException){
             resultData.setMessage( "用户名/密码错误");
         }else if (e instanceof IllegalArgumentException){
