@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @description: 枚举转换器
@@ -18,7 +19,7 @@ public abstract class EnumConverter<T extends IEnum,K extends Serializable> impl
 
     @Override
     public K convertToDatabaseColumn(T t) {
-        return (K) ((IEnum)t).getKey();
+        return Objects.isNull(t)?null: (K) ((IEnum)t).getKey();
     }
 
     @Override
