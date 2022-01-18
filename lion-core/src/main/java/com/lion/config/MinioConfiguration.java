@@ -6,7 +6,6 @@ import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
 import io.minio.errors.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -32,7 +31,7 @@ public class MinioConfiguration {
     private MinioProperties minioProperties;
 
     @Bean
-    public MinioClient minioClient() throws IOException, InvalidKeyException, InvalidResponseException, RegionConflictException, InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, InvalidBucketNameException, ErrorResponseException {
+    public MinioClient minioClient() throws IOException, InvalidKeyException, InvalidResponseException,  InsufficientDataException, NoSuchAlgorithmException, ServerException, InternalException, XmlParserException, ErrorResponseException {
         MinioClient minioClient = MinioClient.builder()
                         .endpoint(minioProperties.getUrl())
                         .credentials(minioProperties.getAccessKey(), minioProperties.getSecretKey())
