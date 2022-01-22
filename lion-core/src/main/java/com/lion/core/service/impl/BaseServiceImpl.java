@@ -1,7 +1,6 @@
 package com.lion.core.service.impl;
 
 import com.lion.core.LionPage;
-import com.lion.core.PageResultData;
 import com.lion.core.persistence.curd.BaseDao;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.core.service.BaseService;
@@ -113,23 +112,18 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public T findById(Serializable id) {
+    public Optional<T> findById(Serializable id) {
         try {
             if (Objects.nonNull(id)) {
                 Optional<T> optional = baseDao.findById(id);
-                if (optional.isPresent()) {
-                    return optional.get();
-                } else {
-                    return null;
-                }
+                return optional;
             } else {
-                return null;
+                return Optional.empty();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        BusinessException.throwException("findById Exception");
-        return null;
+        return Optional.empty();
     }
 
     @Override

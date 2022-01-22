@@ -1,13 +1,11 @@
 package com.lion.core.service;
 
 import com.lion.core.LionPage;
-import com.lion.core.PageResultData;
 import com.lion.core.persistence.entity.BaseEntity;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
@@ -48,7 +46,7 @@ public interface BaseService<T extends BaseEntity>{
 
 	public <S extends T> S save(S entity);
 
-	public T findById(Serializable id);
+	public Optional<T> findById(Serializable id);
 
 	public boolean existsById(Serializable id);
 
