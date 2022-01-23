@@ -10,7 +10,7 @@ import org.springframework.data.domain.Sort;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import com.lion.core.Optional;
 
 /**
  * 
@@ -60,7 +60,7 @@ public interface BaseService<T extends BaseEntity>{
 
 	public void deleteAll();
 
-	public <S extends T> Optional<S> findOne(Example<S> example);
+	public <S extends T> java.util.Optional<S> findOne(Example<S> example);
 
 	public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable);
 	

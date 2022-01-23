@@ -4,7 +4,6 @@ import com.lion.core.LionPage;
 import com.lion.core.persistence.curd.BaseDao;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.core.service.BaseService;
-import com.lion.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -16,7 +15,6 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * @param <T>
@@ -112,18 +110,18 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public Optional<T> findById(Serializable id) {
+    public com.lion.core.Optional<T> findById(Serializable id) {
         try {
             if (Objects.nonNull(id)) {
-                Optional<T> optional = baseDao.findById(id);
-                return optional;
+                java.util.Optional<T> optional = baseDao.findById(id);
+                return new com.lion.core.Optional(optional);
             } else {
-                return Optional.empty();
+                return com.lion.core.Optional.empty();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return Optional.empty();
+        return com.lion.core.Optional.empty();
     }
 
     @Override
@@ -158,7 +156,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public <S extends T> Optional<S> findOne(Example<S> example) {
+    public <S extends T> java.util.Optional<S> findOne(Example<S> example) {
         return baseDao.findOne(example);
     }
 
