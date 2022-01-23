@@ -114,7 +114,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
         try {
             if (Objects.nonNull(id)) {
                 java.util.Optional<T> optional = baseDao.findById(id);
-                return new com.lion.core.Optional(optional);
+                return com.lion.core.Optional.of(optional.isPresent()?optional.get():null);
             } else {
                 return com.lion.core.Optional.empty();
             }
