@@ -23,7 +23,7 @@ public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
 
-    public static Object getCurrentUser(){
+    public static Map<String,Object> getCurrentUser(){
         return getCurrentUser(true);
     }
     /**
@@ -37,12 +37,12 @@ public class CurrentUserUtil {
             username = getUsername();
         }else if (isDubooRequest()){
             RpcContext rpcContext = RpcContext.getServiceContext();
-            username = String.valueOf(rpcContext.get(DubboConstant.USERNAME));
+            username = String.valueOf(rpcContext.getAttachment(DubboConstant.USERNAME));
         }
         if(StringUtils.hasText(username)) {
             user = getICurrentUser().findUserToMap(username);
         }
-        if(Objects.isNull(user) && isMustLogin){
+        if((Objects.isNull(user) || user.size() ==0) && isMustLogin){
             AuthorizationException.throwException("登陆异常，请重新登陆");
         }
         return user;
@@ -53,7 +53,7 @@ public class CurrentUserUtil {
      * @return
      */
     private static String getCurrentUserName(){
-        Map<String,Object> currentUser = getCurrentUserToMap();
+        Map<String,Object> currentUser = getCurrentUser();
         if(currentUser.containsKey("name")){
             return String.valueOf(currentUser.get("name"));
         }
@@ -97,20 +97,11 @@ public class CurrentUserUtil {
      * @return
      */
     public static Long getCurrentUserId(){
-        Map<String,Object> currentUser = getCurrentUserToMap();
+        Map<String,Object> currentUser = getCurrentUser();
         if(currentUser.containsKey("id")){
             return Long.valueOf(String.valueOf(currentUser.get("id")));
         }
         return null;
-    }
-
-    /**
-     * 获取当前用户
-     * @return
-     */
-    private static Map<String,Object> getCurrentUserToMap(){
-        Object currentUser = getCurrentUser();
-        return BeanToMapUtil.transBeanToMap(currentUser);
     }
 
     /**
