@@ -10,7 +10,11 @@ import org.springframework.boot.web.embedded.tomcat.TomcatEmbeddedWebappClassLoa
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
 
@@ -35,14 +39,14 @@ public class CurrentUserUtil {
         String username = null;
         if(isHttpWebRequest()){
             username = getUsername();
-        }else if (isDubooRequest()){
+        }else {
             RpcContext rpcContext = RpcContext.getServiceContext();
             username = String.valueOf(rpcContext.getAttachment(DubboConstant.USERNAME));
         }
         if(StringUtils.hasText(username)) {
             user = getICurrentUser().findUserToMap(username);
         }
-        if((Objects.isNull(user) || user.size() ==0) && isMustLogin){
+        if((Objects.isNull(user) || user.isEmpty() || user.size() ==0 || !user.containsKey("id")) && isMustLogin){
             AuthorizationException.throwException("登陆异常，请重新登陆");
         }
         return user;
@@ -67,9 +71,10 @@ public class CurrentUserUtil {
     public static String getCurrentUserUsername(){
         if(isHttpWebRequest()){
             return getUsername();
-        }else if (isDubooRequest()){
-            String username = String.valueOf(RpcContext.getServiceContext().get(DubboConstant.USERNAME));
-            if(StringUtils.hasText(username)){
+        }else{
+            Object obj = RpcContext.getServiceContext().getAttachment(DubboConstant.USERNAME);
+            if (Objects.nonNull(obj)) {
+                String username = String.valueOf(obj);
                 return username;
             }
         }
@@ -109,21 +114,12 @@ public class CurrentUserUtil {
      * @return
      */
     private static boolean isHttpWebRequest(){
-        Thread thread = Thread.currentThread();
-        if (thread.getContextClassLoader() instanceof TomcatEmbeddedWebappClassLoader){
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * 判断是不是dubbo调用
-     * @return
-     */
-    private static boolean isDubooRequest(){
-        RpcContext rpcContext = RpcContext.getServiceContext();
-        if(Objects.nonNull(rpcContext)){
-            return true;
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (Objects.nonNull(requestAttributes)) {
+            HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
+            if (Objects.nonNull(request)) {
+                return true;
+            }
         }
         return false;
     }

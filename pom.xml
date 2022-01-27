@@ -53,7 +53,7 @@
         <guava.version>31.0.1-jre</guava.version>
         <okhttp.version>4.9.3</okhttp.version>
         <commons-io.version>2.11.0</commons-io.version>
-        <docker.repository>www.nexusdocker.com:8085</docker.repository>
+        <docker.repository>docker.nexus.com:8085</docker.repository>
     </properties>
     <modules>
         <module>lion-core</module>

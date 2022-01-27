@@ -18,16 +18,14 @@ public class SystemLogDataUtil {
     public static SystemLogData get(){
         SystemLogData systemLogData = systemLogDataThreadLocal.get();
         if (Objects.isNull(systemLogData)) {
-            synchronized (SystemLogDataUtil.class) {
-                systemLogData = systemLogDataThreadLocal.get();
-                if (Objects.isNull(systemLogData)) {
-                    systemLogData = new SystemLogData();
-                    Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
-                    if(Objects.nonNull(user) && user.containsKey("id")){
-                        systemLogData.setCurrentUserId(Long.valueOf(String.valueOf(user.get("id"))));
-                    }
-                    SystemLogDataUtil.set(systemLogData);
+            systemLogData = systemLogDataThreadLocal.get();
+            if (Objects.isNull(systemLogData)) {
+                systemLogData = new SystemLogData();
+                Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
+                if(Objects.nonNull(user) && user.containsKey("id")){
+                    systemLogData.setCurrentUserId(Long.valueOf(String.valueOf(user.get("id"))));
                 }
+                SystemLogDataUtil.set(systemLogData);
             }
         }
         return systemLogData;
