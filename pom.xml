@@ -27,7 +27,7 @@
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
         <seata.version>1.4.2</seata.version>
-        <nacos.version>2.0.3</nacos.version>
+        <nacos.version>2.0.4</nacos.version>
         <sentinel.version>1.8.3</sentinel.version>
         <fastjson.version>1.2.79</fastjson.version>
         <spring-retry.version>1.3.1</spring-retry.version>
@@ -53,6 +53,7 @@
         <guava.version>31.0.1-jre</guava.version>
         <okhttp.version>4.9.3</okhttp.version>
         <commons-io.version>2.11.0</commons-io.version>
+        <oauth2.version>0.2.2</oauth2.version>
         <docker.repository>docker.nexus.com:8085</docker.repository>
     </properties>
     <modules>
@@ -62,9 +63,9 @@
     <dependencyManagement>
         <dependencies>
 <!--            <dependency>-->
-<!--                <groupId>org.springframework.security.experimental</groupId>-->
+<!--                <groupId>org.springframework.security</groupId>-->
 <!--                <artifactId>spring-security-oauth2-authorization-server</artifactId>-->
-<!--                <version>0.1.2</version>-->
+<!--                <version>${oauth2.version}</version>-->
 <!--            </dependency>-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>

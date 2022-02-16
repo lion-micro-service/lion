@@ -36,7 +36,7 @@ public class SystemLog {
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping) )" +
-            "&& execution(public * com.lion..*.*(..))")
+            "&& (execution(public * com.lion..*.*(..)) || execution(public * com.smartlinks..*.*(..)))")
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         LocalDateTime startDateTime = LocalDateTime.now();
         Signature signature = pjp.getSignature();

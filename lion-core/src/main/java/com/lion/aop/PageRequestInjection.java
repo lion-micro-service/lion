@@ -7,6 +7,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -33,13 +34,14 @@ import java.util.Objects;
 @ConditionalOnClass(Servlet.class)
 @Order(Ordered.LOWEST_PRECEDENCE)
 public class PageRequestInjection {
+
     @Around(value = "(@annotation(org.springframework.web.bind.annotation.RequestMapping) " +
             "|| @annotation(org.springframework.web.bind.annotation.GetMapping)" +
             "|| @annotation(org.springframework.web.bind.annotation.PostMapping)" +
             "|| @annotation(org.springframework.web.bind.annotation.PutMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.DeleteMapping)"+
             "|| @annotation(org.springframework.web.bind.annotation.PatchMapping))" +
-            "&& execution(public * com.lion..*.*(..))" )
+            "&& (execution(public * com.lion..*.*(..)) || execution(public * com.smartlinks..*.*(..)))" )
     public Object around(ProceedingJoinPoint pjp) throws Throwable {
         Object invokeResult = null;
         Object[] args = pjp.getArgs();
