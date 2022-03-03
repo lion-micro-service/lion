@@ -466,7 +466,7 @@
     <repositories>
         <repository>
             <id>public</id>
-            <name>smartlinks nexus</name>
+            <name>nexus</name>
             <url>http://mvn.nexus.com/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
