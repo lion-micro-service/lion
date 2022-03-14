@@ -14,9 +14,10 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
-        <java.version>17</java.version>
+        <jdk.version>17</jdk.version>
+        <maven.compiler.source>${jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk.version}</maven.compiler.target>
+        <java.version>${jdk.version}</java.version>
         <lombok.version>1.18.20</lombok.version>
         <hutool-all.version>5.4.0</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
