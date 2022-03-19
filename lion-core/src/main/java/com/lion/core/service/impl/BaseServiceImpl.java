@@ -4,6 +4,8 @@ import com.lion.core.LionPage;
 import com.lion.core.persistence.curd.BaseDao;
 import com.lion.core.persistence.entity.BaseEntity;
 import com.lion.core.service.BaseService;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -25,6 +27,9 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Autowired
     private BaseDao<T> baseDao;
+
+    @Autowired
+    JPAQueryFactory queryFactory;
 
     @Override
     public List<T> findAll() {
@@ -228,5 +233,10 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     @Override
     public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
         return baseDao.findNavigatorByNativeSql(pageable, sql, searchParameter, returnType);
+    }
+
+    @Override
+    public List<T> find(JPAQuery<T> jpaQuery) {
+        return jpaQuery.fetch();
     }
 }

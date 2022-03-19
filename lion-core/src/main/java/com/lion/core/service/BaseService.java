@@ -2,6 +2,7 @@ package com.lion.core.service;
 
 import com.lion.core.LionPage;
 import com.lion.core.persistence.entity.BaseEntity;
+import com.querydsl.jpa.impl.JPAQuery;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -159,7 +160,12 @@ public interface BaseService<T extends BaseEntity>{
 	 */
 	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 
-
+	/**
+	 * 查询
+	 * @param jpaQuery
+	 * @return
+	 */
+	List<T> find(JPAQuery<T> jpaQuery);
 
 
 }
