@@ -77,7 +77,8 @@ public class SwaggerConfiguration {
                 .globalResponses(HttpMethod.OPTIONS,responses)
                 .select()
                 //设置basePackage会将包下的所有被@Api标记类的所有方法作为api
-                .apis(RequestHandlerSelectors.basePackage("com.lion"))
+//                .apis(RequestHandlerSelectors.basePackage("com.lion"))
+//                .apis(RequestHandlerSelectors.basePackage("com.smartlinks"))
                 //只有标记了@ApiOperation的方法才会暴露出给swagger
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
