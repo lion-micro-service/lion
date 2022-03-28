@@ -40,7 +40,7 @@ public abstract class BaseEntity implements Serializable {
     @GenericGenerator(name="assigned", strategy="assigned")
     @GeneratedValue(generator="assigned")
     @Column(name = "id")
-    @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
+//    @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     @Schema(description = "ID")
     private Long id;
 
@@ -67,7 +67,7 @@ public abstract class BaseEntity implements Serializable {
     private Long updateUserId;
 
     @Column(name = "version")
-    @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
+//    @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
     @Schema(description = "版本号（修改需要传version,新增不需要传）")
     @Version
     private Long version;
