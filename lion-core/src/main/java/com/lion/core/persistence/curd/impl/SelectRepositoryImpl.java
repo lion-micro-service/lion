@@ -7,6 +7,8 @@ import com.lion.core.persistence.curd.PredicateBuilder;
 import com.lion.core.persistence.curd.RepositoryParameter;
 import com.lion.core.persistence.curd.SelectRepository;
 import com.lion.core.persistence.curd.SortBuilder;
+import com.lion.utils.TenantSqlUtil;
+import net.sf.jsqlparser.JSQLParserException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
@@ -197,7 +199,12 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		countSql.append(" select count(1) from (");
 		countSql.append(sql);
 		countSql.append(") tb");
-		Query query = entityManager.createNativeQuery(countSql.toString());
+		Query query = null;
+		try {
+			query = entityManager.createNativeQuery(TenantSqlUtil.sqlReplace(countSql.toString()));
+		} catch (JSQLParserException e) {
+			e.printStackTrace();
+		}
 		query = RepositoryParameter.setParameter(query, searchParameter);
 		return Long.valueOf(query.getSingleResult().toString());
 	}

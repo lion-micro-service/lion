@@ -56,6 +56,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <oauth2.version>0.2.2</oauth2.version>
         <jsqlparser.version>4.4</jsqlparser.version>
+        <commons-dbutils.version>1.7</commons-dbutils.version>
         <docker.repository>docker.nexus.com:8085</docker.repository>
     </properties>
     <modules>
@@ -314,7 +315,11 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
-
+            <dependency>
+                <groupId>commons-dbutils</groupId>
+                <artifactId>commons-dbutils</artifactId>
+                <version>${commons-dbutils.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.github.whvcse</groupId>
                 <artifactId>easy-captcha</artifactId>

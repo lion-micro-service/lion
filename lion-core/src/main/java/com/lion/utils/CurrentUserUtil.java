@@ -3,6 +3,7 @@ package com.lion.utils;
 import com.lion.constant.DubboConstant;
 import com.lion.core.ICurrentUser;
 import com.lion.exception.AuthorizationException;
+import com.lion.exception.BusinessException;
 import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.RpcContext;
 import org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import javax.naming.event.NamingListener;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
@@ -50,6 +52,17 @@ public class CurrentUserUtil {
             AuthorizationException.throwException("登陆异常，请重新登陆");
         }
         return user;
+    }
+
+    public static Long getCurrentUserTenantId(){
+        Map<String,Object> user = CurrentUserUtil.getCurrentUser(true);
+        if (user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
+            Object tenantId = user.get("tenantId");
+            return (Long)tenantId;
+        }else {
+            BusinessException.throwException("获取租户信息异常");
+        }
+        return null;
     }
 
     /**
