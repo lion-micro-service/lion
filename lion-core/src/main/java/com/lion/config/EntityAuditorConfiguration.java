@@ -31,7 +31,7 @@ public class EntityAuditorConfiguration  {
         @Override
         public Optional<Long> getCurrentAuditor() {
 //            Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
-            Long userId = CurrentUserUtil.getCurrentUserId();
+            Long userId = CurrentUserUtil.getCurrentUserId(false);
             return Optional.ofNullable(userId);
         }
     }
