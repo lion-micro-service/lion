@@ -40,7 +40,7 @@ public abstract class BaseEntity implements Serializable {
     @GenericGenerator(name="assigned", strategy="assigned")
     @GeneratedValue(generator="assigned")
     @Column(name = "id")
-//    @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
+    @NotNull(message="ID不能为空",groups= {Validator.Update.class, Validator.Delete.class})
     @Schema(description = "ID")
     protected Long id;
 
