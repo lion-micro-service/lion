@@ -54,15 +54,17 @@ public class CurrentUserUtil {
         return user;
     }
 
-    public static Long getCurrentUserTenantId(){
-        Map<String,Object> user = CurrentUserUtil.getCurrentUser(true);
-        if (user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
+    public static Long getCurrentUserTenantId(Boolean isMustLogin){
+        Map<String,Object> user = CurrentUserUtil.getCurrentUser(isMustLogin);
+        if (Objects.nonNull(user) && user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
             Object tenantId = user.get("tenantId");
             return (Long)tenantId;
-        }else {
-            BusinessException.throwException("获取租户信息异常");
         }
         return null;
+    }
+
+    public static Long getCurrentUserTenantId(){
+        return getCurrentUserTenantId(true);
     }
 
     /**

@@ -35,10 +35,10 @@ public class JpaTenantInterceptor extends EmptyInterceptor implements StatementI
 
     @Override
     public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-        Long tenantId = CurrentUserUtil.getCurrentUserTenantId();
+        Long tenantId = CurrentUserUtil.getCurrentUserTenantId(false);
         BaseEntity baseEntity = (BaseEntity)entity;
-        if (Objects.isNull(baseEntity.getId())) {
-            baseEntity.setTenantId(Long.valueOf(String.valueOf(tenantId)));
+        if (Objects.isNull(baseEntity.getId()) && Objects.nonNull(tenantId) ) {
+            baseEntity.setTenantId(tenantId);
         }
 //        return true;
         return super.onSave(entity, id, state, propertyNames, types);
