@@ -115,7 +115,11 @@ public class CurrentUserUtil {
      * @return
      */
     public static Long getCurrentUserId(){
-        Map<String,Object> currentUser = getCurrentUser();
+        return getCurrentUserId(false);
+    }
+
+    public static Long getCurrentUserId(Boolean isMustLogin){
+        Map<String,Object> currentUser = getCurrentUser(isMustLogin);
         if(currentUser.containsKey("id")){
             return Long.valueOf(String.valueOf(currentUser.get("id")));
         }
