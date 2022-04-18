@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @Data
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"createDateTime","updateDateTime","createUserId","updateUserId","tenantId"})
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId","tenantId"})
 public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
@@ -44,6 +44,7 @@ public abstract class BaseEntity implements Serializable {
     @Schema(description = "ID")
     protected Long id;
 
+    @JsonIgnore
     @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")
     @Convert(converter = Delete.DeleteConverter.class)
     private Delete isDelete = Delete.FALSE;

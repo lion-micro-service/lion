@@ -175,6 +175,11 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		QueryTranslatorImpl queryTranslator=new QueryTranslatorImpl(jpql,jpql,replacements,sessionFactoryImplementor);
 		queryTranslator.compile(replacements, !(jpql.indexOf("order")>-1 || jpql.indexOf("ORDER")>-1));
 		String sql = queryTranslator.getSQLString();
+		try {
+			sql = TenantSqlUtil.sqlReplace(sql);
+		} catch (JSQLParserException e) {
+			e.printStackTrace();
+		}
 		List<ParameterSpecification> parameter = queryTranslator.getCollectedParameterSpecifications();
 		for(ParameterSpecification parameterSpecification : parameter){
 			StringBuilder sb = new StringBuilder();

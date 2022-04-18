@@ -21,20 +21,44 @@ public class TenantSqlUtil {
 
     private static final String WHERE = "tenant_id = ";
 
+    private static final String PATTERN_TENANT = "((tenant_id){1}\\s*\\={1}\\s*\\?{1})";
+
+    private static final String PATTERN_WHERE = "((and)*\\s*1\\s*\\={1}\\s*1)";
+
+    private static final String PATTERN_WHERE1 = "((where)\\s*1\\s*\\={1}\\s*1\\s*(and))";
+
     public static String sqlReplace(String sql) throws JSQLParserException {
         Statements statements = CCJSqlParserUtil.parseStatements(sql);
         List<Statement> list = statements.getStatements();
         for (Statement statement : list){
             if (statement instanceof Select) {
-                Pattern pattern = Pattern.compile("(tenant_id\\s*\\={1}\\s*\\?{1})");
+                Pattern pattern = Pattern.compile(PATTERN_TENANT);
                 Matcher matcher = pattern.matcher(sql);
                 if (matcher.find() ) {
                     Long tenantId = CurrentUserUtil.getCurrentUserTenantId();
-                    sql = sql.replaceAll("(tenant_id\\s*\\={1}\\s*\\?{1})", WHERE + (Objects.isNull( tenantId)?" null " :tenantId));
-                    break;
+                    sql = sql.replaceAll(PATTERN_TENANT, WHERE + (Objects.isNull( tenantId)?" null " :tenantId));
                 }
+
+                pattern = Pattern.compile(PATTERN_WHERE1);
+                matcher = pattern.matcher(sql);
+                if (matcher.find() ) {
+                    sql = sql.replaceAll(PATTERN_WHERE1, " where ");
+                }
+
+                pattern = Pattern.compile(PATTERN_WHERE);
+                matcher = pattern.matcher(sql);
+                if (matcher.find() ) {
+                    sql = sql.replaceAll(PATTERN_WHERE, " ");
+                }
+
+                break;
             }
         }
         return sql;
+    }
+
+    public static void main(String agrs[]) throws JSQLParserException {
+        String sql = "select * from t_user where  1=1 and tenant_id=? and 1=1 ";
+        System.out.println(TenantSqlUtil.sqlReplace(sql));
     }
 }
