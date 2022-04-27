@@ -147,7 +147,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	private List<?> executeSql(Pageable lionPage, String sql, Map<String, Object> searchParameter,Class<?> returnType) {
 		Query query = null;
-		if (Objects.nonNull(returnType) && (!Objects.equals(returnType,Map.class) || !Objects.equals(returnType,HashMap.class))) {
+		if (Objects.nonNull(returnType) && !Objects.equals(returnType,Map.class) && !Objects.equals(returnType,HashMap.class)) {
 			query = entityManager.createNativeQuery(sql, returnType);
 		}else {
 			query = entityManager.createNativeQuery(sql);
