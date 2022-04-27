@@ -45,7 +45,7 @@ public abstract class BaseEntity implements Serializable {
     protected Long id;
 
     @JsonIgnore
-    @Column(name = "is_delete", nullable = false,  columnDefinition = " bit(1) default b'0' comment '是否删除（逻辑删除标记）'")
+    @Column(name = "is_delete")
     @Convert(converter = Delete.DeleteConverter.class)
     private Delete isDelete = Delete.FALSE;
 
@@ -70,7 +70,7 @@ public abstract class BaseEntity implements Serializable {
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
     @Schema(description = "版本号（修改需要传version,新增不需要传）")
     @Version
-    protected Long version;
+    protected Long version = 0L;
 
     @Schema(description = "租户id")
     @JsonIgnore
