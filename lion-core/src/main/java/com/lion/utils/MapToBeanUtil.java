@@ -8,9 +8,11 @@ import org.apache.commons.beanutils.converters.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
@@ -30,9 +32,11 @@ public class MapToBeanUtil {
 		try {
 			ConvertUtils.deregister(Date.class);
 			DateTimeConverter dtConverter = new DateTimeConverter();
-			ConvertUtilsBean convertUtilsBean = new ConvertUtilsBean();
+			LocalDateTimeConverter localDateTimeConverter = new LocalDateTimeConverter();
+//			ConvertUtilsBean convertUtilsBean = new ConvertUtilsBean();
 //			BeanUtilsBean beanUtilsBean = new BeanUtilsBean(convertUtilsBean, new PropertyUtilsBean());
-			convertUtilsBean.register(dtConverter, Date.class);
+			ConvertUtils.register(dtConverter, Date.class);
+			ConvertUtils.register(localDateTimeConverter, Timestamp.class);
 			ConvertUtils.register(new StringConverter(null), String.class);
 			ConvertUtils.register(new LongConverter(null), Long.class);
 			ConvertUtils.register(new BooleanConverter(null), Boolean.class);
@@ -86,5 +90,18 @@ class DateTimeConverter implements Converter {
 			}
 		}
 		return value;
+	}
+}
+
+
+class LocalDateTimeConverter implements Converter {
+	@Override
+	public Object convert(Class type, Object value) {
+		return toLocalDateTime(type, value);
+	}
+
+	public static LocalDateTime toLocalDateTime(Class type, Object value) {
+
+		return ((Timestamp)value).toLocalDateTime();
 	}
 }
