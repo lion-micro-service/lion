@@ -21,14 +21,14 @@
         <lombok.version>1.18.20</lombok.version>
         <hutool-all.version>5.4.0</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <dubbo.version>3.0.5</dubbo.version>
+        <dubbo.version>3.0.7</dubbo.version>
         <spring-cloud-dependencies.version>2020.0.5</spring-cloud-dependencies.version>
         <aliyun-spring-boot-dependencies.version>1.0.0</aliyun-spring-boot-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
         <seata.version>1.4.2</seata.version>
-        <nacos.version>2.0.4</nacos.version>
+        <nacos.version>2.1.0</nacos.version>
         <sentinel.version>1.8.3</sentinel.version>
         <fastjson.version>1.2.79</fastjson.version>
         <spring-retry.version>1.3.1</spring-retry.version>
@@ -462,6 +462,24 @@
                 <filtering>true</filtering>
             </resource>
         </resources>
+        <plugins>
+            <plugin>
+                <groupId>com.mysema.maven</groupId>
+                <artifactId>apt-maven-plugin</artifactId>
+                <version>1.1.3</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/generated-sources</outputDirectory>
+                            <processor>com.querydsl.apt.jpa.JPAAnnotationProcessor</processor>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
     </build>
 
     <repositories>
