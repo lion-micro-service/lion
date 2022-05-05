@@ -149,10 +149,8 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		Query query = null;
 		if (Objects.nonNull(returnType) && !Objects.equals(returnType,Map.class) && !Objects.equals(returnType,HashMap.class)) {
 			query = entityManager.createNativeQuery(sql, returnType);
-		}else {
+		}else if (Objects.isNull(returnType) || Objects.equals(returnType,Map.class) || Objects.equals(returnType,HashMap.class)){
 			query = entityManager.createNativeQuery(sql);
-		}
-		if (Objects.isNull(returnType) || Objects.equals(returnType,Map.class) || Objects.equals(returnType,HashMap.class)){
 			query = query.unwrap(NativeQueryImpl.class).setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		}
 		query = RepositoryParameter.setParameter(query, searchParameter);
