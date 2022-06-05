@@ -181,23 +181,29 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 			sb.append(sql.substring(index+1));
 			sql = sb.toString();
 		}
-		if (sql.indexOf("order")>-1) {
-			sql = sql.substring(0, sql.indexOf("order"));
-		}
-		if (sql.indexOf("ORDER")>-1) {
-			sql = sql.substring(0, sql.indexOf("ORDER"));
-		}
+		sql = handleSql(sql);
 		return getCountByNativeSql(sql,searchParameter);
 	}
 
 	private Long getCountByNativeSql(String sql,Map<String, Object> searchParameter) {
 		StringBuffer countSql = new StringBuffer();
+		sql = handleSql(sql);
 		countSql.append(" select count(1) from (");
 		countSql.append(sql);
 		countSql.append(") tb");
 		Query query = entityManager.createNativeQuery(countSql.toString());
 		query = RepositoryParameter.setParameter(query, searchParameter);
 		return Long.valueOf(query.getSingleResult().toString());
+	}
+
+	private String handleSql(String sql) {
+		if (sql.indexOf("order")>-1) {
+			sql = sql.substring(0, sql.indexOf("order"));
+		}
+		if (sql.indexOf("ORDER")>-1) {
+			sql = sql.substring(0, sql.indexOf("ORDER"));
+		}
+		return sql;
 	}
 
 	@Override
