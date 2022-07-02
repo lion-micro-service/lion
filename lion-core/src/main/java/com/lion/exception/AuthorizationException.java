@@ -1,11 +1,13 @@
 package com.lion.exception;
 
+import java.io.Serializable;
+
 /**
  * @description: 认证异常（登陆异常）
  * @author: Mr.Liu
  * @create: 2020-02-18 16:11
  */
-public class AuthorizationException extends  RuntimeException{
+public class AuthorizationException extends  RuntimeException implements Serializable {
 
     private static final long serialVersionUID = 7670720348542447805L;
 
