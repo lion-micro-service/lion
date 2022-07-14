@@ -18,41 +18,41 @@
         <maven.compiler.source>${jdk.version}</maven.compiler.source>
         <maven.compiler.target>${jdk.version}</maven.compiler.target>
         <java.version>${jdk.version}</java.version>
-        <lombok.version>1.18.20</lombok.version>
-        <hutool-all.version>5.4.0</hutool-all.version>
+        <lombok.version>1.18.24</lombok.version>
+        <hutool-all.version>5.8.4</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <dubbo.version>3.0.7</dubbo.version>
+        <dubbo.version>3.0.9</dubbo.version>
         <spring-cloud-dependencies.version>2020.0.5</spring-cloud-dependencies.version>
         <aliyun-spring-boot-dependencies.version>1.0.0</aliyun-spring-boot-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
-        <seata.version>1.4.2</seata.version>
+        <seata.version>1.5.2</seata.version>
         <nacos.version>2.1.0</nacos.version>
-        <sentinel.version>1.8.3</sentinel.version>
+        <sentinel.version>1.8.4</sentinel.version>
         <fastjson.version>1.2.79</fastjson.version>
-        <spring-retry.version>1.3.1</spring-retry.version>
+        <spring-retry.version>1.3.3</spring-retry.version>
         <springfox.version>3.0.0</springfox.version>
         <easy-captcha.version>1.6.2</easy-captcha.version>
-        <arthas.version>3.5.5</arthas.version>
+        <arthas.version>3.6.3</arthas.version>
         <reflections.version>0.10.2</reflections.version>
-        <minio.version>8.3.5</minio.version>
-        <druid.version>1.2.8</druid.version>
-        <rocketmq.version>2.2.1</rocketmq.version>
-        <curator.version>5.2.0</curator.version>
-        <zookeeper.version>3.7.0</zookeeper.version>
+        <minio.version>8.4.3</minio.version>
+        <druid.version>1.2.11</druid.version>
+        <rocketmq.version>2.2.2</rocketmq.version>
+        <curator.version>5.3.0</curator.version>
+        <zookeeper.version>3.8.0</zookeeper.version>
         <knife4j.version>3.0.3</knife4j.version>
         <spring-boot-admin.version>2.5.5</spring-boot-admin.version>
         <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
-        <mariadb.verwsion>2.7.4</mariadb.verwsion>
+        <mariadb.verwsion>3.0.6</mariadb.verwsion>
         <mssql-jdbc.version>9.4.1.jre8</mssql-jdbc.version>
         <querydsl.version>5.0.0</querydsl.version>
         <javax.annotation-api.version>1.3.2</javax.annotation-api.version>
-        <modelmapper.version>3.0.0</modelmapper.version>
-        <mapstruct.version>1.4.2.Final</mapstruct.version>
-        <elasticsearch.version>7.16.3</elasticsearch.version>
-        <guava.version>31.0.1-jre</guava.version>
-        <okhttp.version>4.9.3</okhttp.version>
+        <modelmapper.version>3.1.0</modelmapper.version>
+        <mapstruct.version>1.5.2.Final</mapstruct.version>
+        <elasticsearch.version>8.3.2</elasticsearch.version>
+        <guava.version>31.1-jre</guava.version>
+        <okhttp.version>4.10.0</okhttp.version>
         <commons-io.version>2.11.0</commons-io.version>
         <oauth2.version>0.2.2</oauth2.version>
         <jsqlparser.version>4.4</jsqlparser.version>
