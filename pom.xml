@@ -21,13 +21,13 @@
         <lombok.version>1.18.24</lombok.version>
         <hutool-all.version>5.8.4</hutool-all.version>
         <commons-beanutils.version>1.9.4</commons-beanutils.version>
-        <dubbo.version>3.0.9</dubbo.version>
+        <dubbo.version>3.0.7</dubbo.version>
         <spring-cloud-dependencies.version>2020.0.5</spring-cloud-dependencies.version>
         <aliyun-spring-boot-dependencies.version>1.0.0</aliyun-spring-boot-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
-        <seata.version>1.5.2</seata.version>
+        <seata.version>1.4.2</seata.version>
         <nacos.version>2.1.0</nacos.version>
         <sentinel.version>1.8.4</sentinel.version>
         <fastjson.version>1.2.79</fastjson.version>
