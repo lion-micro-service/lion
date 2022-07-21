@@ -51,12 +51,12 @@ public abstract class BaseEntity implements Serializable {
 
     @CreatedDate
     @Column(name = "create_date_time", updatable = false)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime createDateTime;
 
     @LastModifiedDate
     @Column(name = "update_date_time", insertable = false)
-    @JsonFormat(pattern = "YYYY-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     protected LocalDateTime updateDateTime;
 
     @CreatedBy
