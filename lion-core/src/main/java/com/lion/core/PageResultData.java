@@ -10,10 +10,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.*;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import springfox.documentation.annotations.ApiIgnore;
 
 import java.io.Serializable;
@@ -75,6 +73,10 @@ public class PageResultData<T> extends PageImpl<T> implements IPageResultData<T>
 
     public Integer getPageSize(){
         return this.getSize();
+    }
+
+    public static IPageResultData<?> convert(Page page) {
+        return new PageResultData(page.getContent(),new LionPage(page.getPageable().getPageNumber(),page.getPageable().getPageSize()),page.getTotalElements());
     }
 
 
