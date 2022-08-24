@@ -20,7 +20,6 @@ import java.util.*;
  * @Description:
  * @date 2020/9/16上午9:26
  */
-
 public abstract class AbstractEnumPersistence implements CommandLineRunner {
 
     @Value("${lion.enums.persistence.url:http://lion-common-serve}")
