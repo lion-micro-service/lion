@@ -59,9 +59,7 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
-            if (Objects.equals(springApplicationName,"lion-common-console-restful")) {
-                Thread.sleep(1000);
-            }
+            Thread.sleep(1000);
             ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/console/persistence", request, Object.class);
         }catch (Exception exception){
             exception.printStackTrace();
