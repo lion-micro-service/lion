@@ -23,9 +23,9 @@ public class TenantSqlUtil {
 
     private static final String PATTERN_TENANT = "((tenant_id){1}\\s*\\={1}\\s*\\?{1})";
 
-    private static final String PATTERN_WHERE = "((and)*\\s*1\\s*\\={1}\\s*1)";
+    private static final String PATTERN_WHERE = "((and){1}\\s*1\\s*\\={1}\\s*1)";
 
-    private static final String PATTERN_WHERE1 = "((where)\\s*1\\s*\\={1}\\s*1\\s*(and))";
+    private static final String PATTERN_WHERE1 = "((where){1}\\s*1\\s*\\={1}\\s*1\\s*(and){1})";
 
     public static String sqlReplace(String sql) throws JSQLParserException {
         Statements statements = CCJSqlParserUtil.parseStatements(sql);
@@ -58,7 +58,7 @@ public class TenantSqlUtil {
     }
 
     public static void main(String agrs[]) throws JSQLParserException {
-        String sql = "select * from t_user where  1=1 and tenant_id=? and 1=1 ";
+        String sql = "select * from t_user where  1 = 1  and y=1";
         System.out.println(TenantSqlUtil.sqlReplace(sql));
     }
 }
