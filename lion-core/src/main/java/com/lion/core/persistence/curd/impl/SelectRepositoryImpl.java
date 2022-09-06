@@ -7,6 +7,7 @@ import com.lion.core.persistence.curd.PredicateBuilder;
 import com.lion.core.persistence.curd.RepositoryParameter;
 import com.lion.core.persistence.curd.SelectRepository;
 import com.lion.core.persistence.curd.SortBuilder;
+import com.lion.utils.SqlUtil;
 import com.lion.utils.TenantSqlUtil;
 import net.sf.jsqlparser.JSQLParserException;
 import org.hibernate.SQLQuery;
@@ -171,13 +172,9 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		SessionFactoryImplementor sessionFactoryImplementor = (SessionFactoryImplementor)session.getSessionFactory();
 		Map replacements = Objects.isNull(searchParameter)?Collections.EMPTY_MAP:searchParameter;
 		QueryTranslatorImpl queryTranslator=new QueryTranslatorImpl(jpql,jpql,replacements,sessionFactoryImplementor);
-		queryTranslator.compile(replacements, !(jpql.indexOf("order")>-1 || jpql.indexOf("ORDER")>-1));
+//		queryTranslator.compile(replacements, !(jpql.indexOf("order")>-1 || jpql.indexOf("ORDER")>-1));
+		queryTranslator.compile(replacements,true);
 		String sql = queryTranslator.getSQLString();
-		try {
-			sql = TenantSqlUtil.sqlReplace(sql);
-		} catch (JSQLParserException e) {
-			e.printStackTrace();
-		}
 		List<ParameterSpecification> parameter = queryTranslator.getCollectedParameterSpecifications();
 		for(ParameterSpecification parameterSpecification : parameter){
 			StringBuilder sb = new StringBuilder();
@@ -188,7 +185,6 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 			sb.append(sql.substring(index+1));
 			sql = sb.toString();
 		}
-		sql = handleSql(sql);
 		Set<String> keys = searchParameter.keySet();
 		keys.forEach(key->{
 			Object o = searchParameter.get(key);
@@ -201,28 +197,23 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	private Long getCountByNativeSql(String sql,Map<String, Object> searchParameter) {
 		StringBuffer countSql = new StringBuffer();
-		sql = handleSql(sql);
+		try {
+			sql = TenantSqlUtil.sqlReplace(sql);
+		} catch (JSQLParserException e) {
+			throw new RuntimeException(e);
+		}
+		try {
+			sql = SqlUtil.sqlReplaceOrderBy(sql);
+		} catch (JSQLParserException e) {
+			throw new RuntimeException(e);
+		}
 		countSql.append(" select count(1) from (");
 		countSql.append(sql);
 		countSql.append(") tb");
 		Query query = null;
-		try {
-			query = entityManager.createNativeQuery(TenantSqlUtil.sqlReplace(countSql.toString()));
-		} catch (JSQLParserException e) {
-			e.printStackTrace();
-		}
+		query = entityManager.createNativeQuery(countSql.toString());
 		query = RepositoryParameter.setParameter(query, searchParameter);
 		return Long.valueOf(query.getSingleResult().toString());
-	}
-
-	private String handleSql(String sql) {
-		if (sql.indexOf("order")>-1) {
-			sql = sql.substring(0, sql.indexOf("order"));
-		}
-		if (sql.indexOf("ORDER")>-1) {
-			sql = sql.substring(0, sql.indexOf("ORDER"));
-		}
-		return sql;
 	}
 
 	@Override
