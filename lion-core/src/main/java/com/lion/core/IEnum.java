@@ -11,6 +11,10 @@ import java.util.Map;
  */
 public interface IEnum {
 
+	default String code(){
+		return "";
+	}
+
 	Integer getKey();
 
 	String getName();

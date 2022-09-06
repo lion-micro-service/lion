@@ -28,6 +28,11 @@ public enum Delete implements IEnum {
     }
 
     @Override
+    public String code() {
+        return "delete";
+    }
+
+    @Override
     public Integer getKey() {
         return key;
     }
@@ -79,6 +84,8 @@ public enum Delete implements IEnum {
         }
         return null;
     }
+
+
 
     public static class DeleteConverter extends EnumConverter<Delete,Integer> {
     }

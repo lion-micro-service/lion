@@ -84,7 +84,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	@Override
 	public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> searchParameter) {
-		searchParameter = (Objects.isNull(searchParameter) || searchParameter.isEmpty())?null:searchParameter;
+		searchParameter = (Objects.isNull(searchParameter) || searchParameter.isEmpty())?new HashMap<>():searchParameter;
 		List<?> list = (List<?>) executeJpql(pageable, jpql, searchParameter);
 		Long total = getCount(jpql, searchParameter);
 		Page page = new PageImpl(list,pageable,total);
@@ -98,7 +98,7 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 
 	@Override
 	public Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter, Class<?> returnType) {
-		searchParameter = (Objects.isNull(searchParameter) || searchParameter.isEmpty())?null:searchParameter;
+		searchParameter = (Objects.isNull(searchParameter) || searchParameter.isEmpty())?new HashMap<>():searchParameter;
 		List<?> list = (List<?>) executeSql(pageable, sql, searchParameter,returnType);
 		Long total = getCountByNativeSql(sql, searchParameter);
 		Page page = new PageImpl(list,pageable,total);
@@ -182,6 +182,13 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 			sql = sb.toString();
 		}
 		sql = handleSql(sql);
+		Set<String> keys = searchParameter.keySet();
+		keys.forEach(key->{
+			Object o = searchParameter.get(key);
+			if (o instanceof  IEnum){
+				searchParameter.put(key,((IEnum)o).getKey());
+			}
+		});
 		return getCountByNativeSql(sql,searchParameter);
 	}
 
