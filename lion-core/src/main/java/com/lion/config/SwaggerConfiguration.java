@@ -18,6 +18,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.Ordered;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpMethod;
 import org.springframework.plugin.core.PluginRegistry;
 import org.springframework.plugin.core.PluginRegistrySupport;
@@ -105,6 +107,7 @@ public class SwaggerConfiguration {
             public List<AlternateTypeRule> rules() {
                 List<AlternateTypeRule> list = new ArrayList<AlternateTypeRule>();
                 list.add(newRule(resolver.resolve(LionPage.class), resolver.resolve(Page.class)));
+                list.add(newRule(resolver.resolve(PageRequest.class), resolver.resolve(Page.class)));
                 return list;
             }
         };

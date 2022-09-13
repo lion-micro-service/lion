@@ -67,18 +67,6 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<T> find(Map<String, Object> searchParameter) {
-		return selectRepository.find(searchParameter);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		return selectRepository.find(searchParameter, sortParameter);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
 	public List<?> findAll(String jpql) {
 		return selectRepository.findAll(jpql);
 	}
@@ -105,24 +93,6 @@ public abstract class LionSimpleJpaRepository<T extends BaseEntity> extends Simp
 	@Transactional(readOnly=true)
 	public Page<?> findNavigator(Pageable pageable, String jpql, Map<String, Object> parameter) {
 		return selectRepository.findNavigator(pageable, jpql, parameter);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public Page<T> findNavigator(LionPage lionPage) {
-		return selectRepository.findNavigator(lionPage);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
-		return selectRepository.findNavigator(LionPage, searchParameter);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		return selectRepository.findNavigator(LionPage, searchParameter, sortParameter);
 	}
 
 	@Override

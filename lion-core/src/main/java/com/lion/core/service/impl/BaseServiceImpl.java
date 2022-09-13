@@ -87,16 +87,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public List<T> find(Map<String, Object> searchParameter) {
-        return baseDao.find(searchParameter);
-    }
-
-    @Override
-    public List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-        return baseDao.find(searchParameter, sortParameter);
-    }
-
-    @Override
     public Page<T> findAll(Pageable pageable) {
         Page<T> page = baseDao.findAll(pageable);
         return page;
@@ -183,21 +173,6 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     @Override
     public <S extends T> boolean exists(Example<S> example) {
         return baseDao.exists(example);
-    }
-
-    @Override
-    public Page<T> findNavigator(LionPage lionPage) {
-        return baseDao.findNavigator(lionPage);
-    }
-
-    @Override
-    public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
-        return baseDao.findNavigator(LionPage, searchParameter);
-    }
-
-    @Override
-    public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-        return baseDao.findNavigator(LionPage, searchParameter, sortParameter);
     }
 
     @Override

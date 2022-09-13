@@ -2,12 +2,10 @@ package com.lion.aop;
 
 import com.lion.constant.GlobalConstant;
 import com.lion.core.LionPage;
-import com.lion.core.persistence.JpqlParameter;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -20,7 +18,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
 import java.util.Objects;
 
 /**

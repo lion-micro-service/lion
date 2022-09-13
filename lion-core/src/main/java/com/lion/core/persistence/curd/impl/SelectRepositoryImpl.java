@@ -1,16 +1,12 @@
 package com.lion.core.persistence.curd.impl;
 
 import com.lion.core.IEnum;
-import com.lion.core.LionPage;
-import com.lion.core.PageResultData;
-import com.lion.core.persistence.curd.PredicateBuilder;
 import com.lion.core.persistence.curd.RepositoryParameter;
 import com.lion.core.persistence.curd.SelectRepository;
 import com.lion.core.persistence.curd.SortBuilder;
 import com.lion.utils.SqlUtil;
 import com.lion.utils.TenantSqlUtil;
 import net.sf.jsqlparser.JSQLParserException;
-import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.hql.internal.ast.QueryTranslatorImpl;
@@ -108,41 +104,19 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		return page;
 	}
 
-	@Override
-	public Page<T> findNavigator(LionPage lionPage) {
-		return (Page<T>) find(lionPage.getPageSize(), lionPage.getPageNumber(), lionPage.getJpqlParameter().getSearchParameter(),
-				lionPage.getJpqlParameter().getSortParameter());
-	}
-
-	@Override
-	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter) {
-		return findNavigator(LionPage,searchParameter,null);
-	}
-
-	@Override
-	public Page<T> findNavigator(LionPage LionPage, Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		if (Objects.nonNull(searchParameter) && searchParameter.size()>0) {
-			LionPage.getJpqlParameter().setSearchParameter(searchParameter);
-		}
-		if (Objects.nonNull(sortParameter) && sortParameter.size()>0) {
-			LionPage.getJpqlParameter().setSortParameter(sortParameter);
-		}
-		return findNavigator(LionPage);
-	}
-
 	/**
 	 * 分页查询
 	 * 
-	 * @param lionPage
+	 * @param pageable
 	 * @param jpql
 	 * @param searchParameter
 	 * @return
 	 */
-	private List<?> executeJpql(Pageable lionPage, String jpql, Map<String, Object> searchParameter) {
+	private List<?> executeJpql(Pageable pageable, String jpql, Map<String, Object> searchParameter) {
 		Query query = entityManager.createQuery(jpql);
 		query = RepositoryParameter.setParameter(query, searchParameter);
-		query.setFirstResult(lionPage.getPageNumber() * lionPage.getPageSize());
-		query.setMaxResults(lionPage.getPageSize());
+		query.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+		query.setMaxResults(pageable.getPageSize());
 		return query.getResultList();
 	}
 
@@ -214,34 +188,6 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 		query = entityManager.createNativeQuery(countSql.toString());
 		query = RepositoryParameter.setParameter(query, searchParameter);
 		return Long.valueOf(query.getSingleResult().toString());
-	}
-
-	@Override
-	public List<T> find(Map<String, Object> searchParameter) {
-		return find(searchParameter, null);
-	}
-
-	@Override
-	public List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter) {
-		return (List<T>) find(maxResults, 0, searchParameter, sortParameter).getContent();
-	}
-
-	private Page<?> find(Integer pageSize, Integer pageNumber, Map<String, Object> searchParameter,
-						 Map<String, Object> sortParameter) {
-		Specification<T> specification = new Specification<T>() {
-			private static final long serialVersionUID = 1L;
-			@Override
-			public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-				// 动态构建where条件
-				List<Predicate> list = PredicateBuilder.builder(root, criteriaBuilder, searchParameter);
-				return criteriaBuilder.and(list.toArray(new Predicate[list.size()]));
-			}
-		};
-		// 构建排序
-		Sort sort = SortBuilder.builder(sortParameter);
-		Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
-		org.springframework.data.domain.Page<T> page = simpleJpaRepository.findAll(specification, pageable);
-		return page;
 	}
 
 }

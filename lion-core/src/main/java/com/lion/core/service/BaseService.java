@@ -64,10 +64,6 @@ public interface BaseService<T extends BaseEntity>{
 	public <S extends T> java.util.Optional<S> findOne(Example<S> example);
 
 	public <S extends T> Page<S> findAll(Example<S> example, Pageable pageable);
-	
-	List<T> find(Map<String, Object> searchParameter);
-	
-	List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 
 	/**
 	 * 使用jpql语句查询数据
@@ -135,30 +131,6 @@ public interface BaseService<T extends BaseEntity>{
 	public <S extends T> long count(Example<S> example);
 
 	public <S extends T> boolean exists(Example<S> example);
-	
-	/**
-	 * 分页查询
-	 * @param lionPage
-	 * @return PageResultData<T>
-	 */
-	Page<T> findNavigator(LionPage lionPage);
-
-	/**
-	 * 分页查询
-	 * @param LionPage
-	 * @param searchParameter
-	 * @return
-	 */
-	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter);
-
-	/**
-	 * 分页查询
-	 * @param LionPage
-	 * @param searchParameter
-	 * @param sortParameter
-	 * @return
-	 */
-	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 
 	/**
 	 * 查询

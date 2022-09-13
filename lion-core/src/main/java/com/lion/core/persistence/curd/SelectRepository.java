@@ -76,42 +76,5 @@ public interface SelectRepository<T> {
 	 */
 	Page<?> findNavigatorByNativeSql(Pageable pageable, String sql, Map<String, Object> searchParameter,Class<?> returnType);
 
-	/**
-	 * 分页查询
-	 * @param LionPage
-	 * @return
-	 */
-	Page<T> findNavigator(LionPage LionPage);
-
-	/**
-	 * 分页查询
-	 * @param LionPage
-	 * @param searchParameter
-	 * @return
-	 */
-	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter);
-
-	/**
-	 * 分页查询
-	 * @param LionPage
-	 * @param searchParameter
-	 * @param sortParameter
-	 * @return
-	 */
-	Page<T> findNavigator(LionPage LionPage,Map<String, Object> searchParameter, Map<String, Object> sortParameter);
-	/**
-	 *
-	 * @param searchParameter
-	 * @return
-	 */
-	List<T> find(Map<String, Object> searchParameter);
-
-	/**
-	 *
-	 * @param searchParameter
-	 * @param sortParameter
-	 * @return
-	 */
-	List<T> find(Map<String, Object> searchParameter, Map<String, Object> sortParameter);
 
 }
