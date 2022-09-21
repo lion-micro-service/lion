@@ -36,7 +36,7 @@ public class AssertUtil {
      * @param isFalse
      * @param message
      */
-    public static void isFlase(@NotNull Boolean isFalse,@NotBlank String message) {
+    public static void isFalse(@NotNull Boolean isFalse,@NotBlank String message) {
         if (Objects.equals(isFalse,false)){
             BusinessException.throwException(message);
         }

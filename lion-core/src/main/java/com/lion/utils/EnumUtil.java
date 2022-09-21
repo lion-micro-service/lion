@@ -42,7 +42,8 @@ public class EnumUtil {
                     map.put("name", ienum.getName());
                     list.add(objectMapper.writeValueAsString(map));
                 }
-                result.put(t.getName(),list);
+//                String code = ((IEnum)t).code();
+//                result.put(ienum.code(),list);
             }catch (Exception exception){
 
             }
@@ -52,7 +53,8 @@ public class EnumUtil {
     }
 
     public static void main(String[] args) {
-        EnumUtil.getAllEnumsInPackage("com.lion.core.common.enum")
+        EnumUtil.getAllEnumsInPackage("com.lion.core.common.enums")
                 .forEach((k, v) -> System.out.println(k + "=" + v));
+        Reflections reflections = new Reflections("com.lion.core.common.enums");
     }
 }

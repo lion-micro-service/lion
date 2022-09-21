@@ -29,7 +29,7 @@ public enum Delete implements IEnum {
 
     @Override
     public String code() {
-        return "delete";
+        return "commonDelete";
     }
 
     @Override

@@ -48,11 +48,12 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
             List<Map<String, String>> list = new ArrayList<Map<String, String>>();
             map.forEach((k, v) ->{
                 Map<String, String> temp = new HashMap<String, String>();
-                temp.put("classs",k);
+                temp.put("code",k);
                 temp.put("value",String.valueOf(v));
+
                 list.add(temp);
             });
-            if (list.size()<=0){
+            if (list.size() == 0){
                 return;
             }
             HttpHeaders headers = new HttpHeaders();

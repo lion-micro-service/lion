@@ -14,12 +14,12 @@ import java.util.Map;
 public enum ResultDataState implements IEnum {
 
     URI_INVALID(-100, "uri无效"),
-                LOGIN_FAIL(403, "登录失败"),
-                NOT_FOUND_SERVER(404, "找不到服务"),
-                ERROR(-200, "错误"),
-                BLOCK_REQUEST(-300, "请求拒绝"),
-                SUCCESS(200, "成功"),
-                NO_PERMISSION(401, "无权限");
+    LOGIN_FAIL(403, "登录失败"),
+    NOT_FOUND_SERVER(404, "找不到服务"),
+    ERROR(-200, "错误"),
+    BLOCK_REQUEST(-300, "请求拒绝"),
+    SUCCESS(200, "成功"),
+    NO_PERMISSION(401, "无权限");
 
     private final int key;
 
@@ -29,6 +29,11 @@ public enum ResultDataState implements IEnum {
 
         this.key = key;
         this.desc = desc;
+    }
+
+    @Override
+    public String code() {
+        return "commonResultDataState";
     }
 
     @Override
@@ -53,6 +58,8 @@ public enum ResultDataState implements IEnum {
         map.put("name", getName());
         return map;
     }
+
+
 
 
 }

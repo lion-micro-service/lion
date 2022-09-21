@@ -3,6 +3,7 @@ package com.lion.core;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * 枚举接口
@@ -12,7 +13,11 @@ import java.util.Map;
 public interface IEnum {
 
 	default String code(){
-		return "";
+		return UUID.randomUUID().toString();
+	}
+
+	default String dataVersion(){
+		return "1";
 	}
 
 	Integer getKey();

@@ -26,6 +26,11 @@ public enum State implements IEnum {
     }
 
     @Override
+    public String code() {
+        return "commonState";
+    }
+
+    @Override
     public Integer getKey() {
         return key;
     }
