@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -27,9 +28,9 @@ public class EntityAuditorConfiguration  {
         return userAuditor;
     }
 
-    class UserAuditor implements AuditorAware<Long> {
+    class UserAuditor implements AuditorAware<Serializable> {
         @Override
-        public Optional<Long> getCurrentAuditor() {
+        public Optional<Serializable> getCurrentAuditor() {
 //            Map<String,Object> user = CurrentUserUtil.getCurrentUser(false);
             Long userId = CurrentUserUtil.getCurrentUserId(false);
             return Optional.ofNullable(userId);

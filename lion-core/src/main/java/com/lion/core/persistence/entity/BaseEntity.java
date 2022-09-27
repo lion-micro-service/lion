@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @Data
 @DynamicInsert
 @EntityListeners(AuditingEntityListener.class)
-@JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId","tenantId"})
+@JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId","tenantId","createUserName","updateUserName"})
 public abstract class BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -90000050L;
@@ -66,6 +66,15 @@ public abstract class BaseEntity implements Serializable {
     @LastModifiedBy
     @Column(name = "update_user_id", insertable = false)
     protected Long updateUserId;
+
+//    @CreatedBy
+//    @Column(name = "create_user_name", updatable = false)
+//    protected String createUserName;
+//
+//    @LastModifiedBy
+//    @Column(name = "update_user_name", insertable = false)
+//    protected String updateUserName;
+
 
     @NotNull(message="版本号不能为空",groups= {Validator.Update.class})
     @Schema(description = "版本号（修改需要传version,新增不需要传）")
