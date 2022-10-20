@@ -57,6 +57,7 @@
         <commons-io.version>2.11.0</commons-io.version>
         <jsqlparser.version>4.5</jsqlparser.version>
         <commons-dbutils.version>1.7</commons-dbutils.version>
+        <weixin-java-miniapp.version>4.4.2.B</weixin-java-miniapp.version>
 <!--        <docker.repository>docker.nexus.com:8085</docker.repository>-->
     </properties>
     <modules>
@@ -427,6 +428,12 @@
                 <groupId>com.github.jsqlparser</groupId>
                 <artifactId>jsqlparser</artifactId>
                 <version>${jsqlparser.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.binarywang</groupId>
+                <artifactId>weixin-java-miniapp</artifactId>
+                <version>${weixin-java-miniapp.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

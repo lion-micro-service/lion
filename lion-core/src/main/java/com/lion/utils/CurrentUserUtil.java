@@ -29,6 +29,7 @@ public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
 
+
     public static Map<String,Object> getCurrentUser(){
         return getCurrentUser(true);
     }
