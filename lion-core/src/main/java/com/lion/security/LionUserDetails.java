@@ -16,6 +16,8 @@ public class LionUserDetails extends User {
 
     private static final long serialVersionUID = -883666601L;
 
+    private Map<String,Object> extended = new HashMap<>();
+
     public LionUserDetails() {
         this(UUID.randomUUID().toString(),UUID.randomUUID().toString(), getGrantedAuthority());
     }
@@ -33,5 +35,17 @@ public class LionUserDetails extends User {
         List<GrantedAuthority> list = new ArrayList<GrantedAuthority>();
         list.add(grantedAuthority);
         return list;
+    }
+
+    public Map<String, Object> getExtended() {
+        return extended;
+    }
+
+    public Optional<Object> getExtended(String key) {
+        return (extended.containsKey(key) && Objects.nonNull(extended.get(key)))? Optional.of(extended.get(key)) : Optional.empty();
+    }
+
+    public void setExtended(Map<String, Object> extended) {
+        this.extended = extended;
     }
 }
