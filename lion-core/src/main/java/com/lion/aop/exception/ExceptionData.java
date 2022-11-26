@@ -47,7 +47,11 @@ public class ExceptionData {
 
     private static void handle(final Throwable e,final ResultData resultData) throws Throwable{
         if (e instanceof InvalidGrantException || e instanceof InternalAuthenticationServiceException){
-            resultData.setMessage( "用户名/密码错误");
+            if (e.getMessage().indexOf("该ip禁止登陆") > 0) {
+                resultData.setMessage( "该ip禁止登陆");
+            }else {
+                resultData.setMessage("用户名/密码错误");
+            }
         }else if (e instanceof IllegalArgumentException){
             resultData.setMessage( "参数错误");
         }else if (e instanceof HttpMessageNotReadableException){
