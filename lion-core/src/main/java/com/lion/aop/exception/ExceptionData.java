@@ -47,7 +47,7 @@ public class ExceptionData {
 
     private static void handle(final Throwable e,final ResultData resultData) throws Throwable{
         if (e instanceof InvalidGrantException || e instanceof InternalAuthenticationServiceException){
-            if (e.getMessage().indexOf("该ip禁止登陆") > 0) {
+            if (e.getMessage().indexOf("该ip禁止登陆") > -1) {
                 resultData.setMessage( "该ip禁止登陆");
             }else {
                 resultData.setMessage("用户名/密码错误");
