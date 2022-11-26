@@ -110,7 +110,7 @@ public class CurrentUserUtil {
                 username = String.valueOf(principal);
             }
         }
-        return username;
+        return Objects.equals(username,"anonymousUser")?null:username;
     }
 
     /**
