@@ -43,26 +43,30 @@ public abstract class AbstractEnumPersistence implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        try {
-            Map<String, Object> map = EnumUtil.getAllEnumsInPackage(this.packageName);
-            List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-            map.forEach((k, v) ->{
-                Map<String, String> temp = new HashMap<String, String>();
-                temp.put("classs",k);
-                temp.put("value",String.valueOf(v));
-                list.add(temp);
-            });
-            if (list.size()<=0){
-                return;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Map<String, Object> map = EnumUtil.getAllEnumsInPackage(packageName);
+                    List<Map<String, String>> list = new ArrayList<Map<String, String>>();
+                    map.forEach((k, v) ->{
+                        Map<String, String> temp = new HashMap<String, String>();
+                        temp.put("classs",k);
+                        temp.put("value",String.valueOf(v));
+                        list.add(temp);
+                    });
+                    if (list.size()==0){
+                        return;
+                    }
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+                    HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
+                    Thread.sleep(1000);
+                    ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/persistence", request, Object.class);
+                }catch (Exception exception){
+                    exception.printStackTrace();
+                }
             }
-            HttpHeaders headers = new HttpHeaders();
-            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-            HttpEntity<String> request = new HttpEntity<String>(objectMapper.writeValueAsString(list),headers);
-            Thread.sleep(1000);
-            ResponseEntity response = restTemplate.postForEntity(LB_URL+"/enum/persistence", request, Object.class);
-        }catch (Exception exception){
-            exception.printStackTrace();
-        }
-
+        }).start();
     }
 }
