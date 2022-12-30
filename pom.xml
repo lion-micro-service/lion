@@ -462,12 +462,12 @@
         <repository>
             <id>nexus3</id>
             <name>Nexus Release Repository</name>
-            <url>http://mvn.nexus.com/repository/maven-releases/</url>
+            <url>http://192.168.8.213:32129/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
             <id>nexus3</id>
             <name>Nexus Snapshot Repository</name>
-            <url>http://mvn.nexus.com/repository/maven-snapshots/</url>
+            <url>http://192.168.8.213:32129/repository/maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
 

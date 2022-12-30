@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.lion.core.common.enums.Delete;
+import com.lion.core.persistence.LionJpaInterceptor;
 import com.lion.core.persistence.Validator;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
@@ -27,7 +28,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Data
 @DynamicInsert
-@EntityListeners(AuditingEntityListener.class)
+@EntityListeners(LionJpaInterceptor.class)
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId","tenantId"})
 public abstract class BaseEntity implements Serializable {
 
@@ -75,5 +76,5 @@ public abstract class BaseEntity implements Serializable {
     @Schema(description = "租户id")
     @JsonIgnore
     @Column(name = "tenant_id", updatable = false)
-    protected Long tenantId = 10000L;
+    protected Long tenantId ;
 }
