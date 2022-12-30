@@ -1,6 +1,5 @@
 package com.lion.core;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 /**
@@ -19,9 +18,5 @@ public interface IEnum {
 	@JsonValue
 	Object jsonValue();
 
-	@JsonCreator
-	static IEnum instance(Object value) {
-		return null;
-	}
 
 }
