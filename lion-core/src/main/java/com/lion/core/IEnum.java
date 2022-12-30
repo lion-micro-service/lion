@@ -1,8 +1,7 @@
 package com.lion.core;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-
-import java.util.Map;
 
 /**
  * 枚举接口
@@ -19,5 +18,10 @@ public interface IEnum {
 
 	@JsonValue
 	Object jsonValue();
+
+	@JsonCreator
+	static IEnum instance(Object value) {
+		return null;
+	}
 
 }
