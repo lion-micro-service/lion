@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @Data
 @DynamicInsert
-@EntityListeners(LionJpaInterceptor.class)
+@EntityListeners({LionJpaInterceptor.class,AuditingEntityListener.class})
 @JsonIgnoreProperties(ignoreUnknown = true,value = {"isDelete","createDateTime","updateDateTime","createUserId","updateUserId","tenantId"})
 public abstract class BaseEntity implements Serializable {
 
