@@ -4,7 +4,6 @@ import com.lion.core.ResultData;
 import com.lion.core.common.enums.ResultDataState;
 import com.lion.exception.AuthorizationException;
 import com.lion.exception.BusinessException;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.security.access.AccessDeniedException;
