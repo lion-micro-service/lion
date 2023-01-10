@@ -27,7 +27,7 @@
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
-        <seata.version>1.4.2</seata.version>
+        <seata.version>1.6.1</seata.version>
         <nacos.version>2.1.1</nacos.version>
         <sentinel.version>1.8.5</sentinel.version>
         <fastjson.version>2.0.13</fastjson.version>
