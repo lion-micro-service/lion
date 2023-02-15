@@ -3,11 +3,7 @@ package com.lion.utils;
 import com.lion.constant.DubboConstant;
 import com.lion.core.ICurrentUser;
 import com.lion.exception.AuthorizationException;
-import com.lion.exception.BusinessException;
-import org.apache.dubbo.rpc.Invocation;
 import org.apache.dubbo.rpc.RpcContext;
-import org.apache.dubbo.rpc.protocol.dubbo.DecodeableRpcInvocation;
-import org.springframework.boot.web.embedded.tomcat.TomcatEmbeddedWebappClassLoader;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -15,7 +11,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.naming.event.NamingListener;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Objects;
@@ -28,6 +23,7 @@ import java.util.Objects;
 public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
+    public static ThreadLocal<Long> tenant = new ThreadLocal<Long>();
 
     public static Map<String,Object> getCurrentUser(){
         return getCurrentUser(true);
@@ -64,7 +60,12 @@ public class CurrentUserUtil {
     }
 
     public static Long getCurrentUserTenantId(){
-        return getCurrentUserTenantId(true);
+        if (Objects.nonNull(tenant.get())) {
+            return tenant.get();
+        }
+        Long id = getCurrentUserTenantId(true);
+        tenant.set(id);
+        return id;
     }
 
     /**
