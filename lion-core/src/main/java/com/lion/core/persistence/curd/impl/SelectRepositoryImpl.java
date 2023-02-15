@@ -188,7 +188,6 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 			sb.append(sql.substring(index+1));
 			sql = sb.toString();
 		}
-		sql = handleSql(sql);
 		return getCountByNativeSql(sql,searchParameter);
 	}
 
@@ -209,11 +208,11 @@ public class SelectRepositoryImpl<T> implements SelectRepository<T> {
 	}
 
 	private String handleSql(String sql) {
-		if (sql.indexOf("order")>-1) {
-			sql = sql.substring(0, sql.indexOf("order"));
+		if (sql.lastIndexOf("order")>-1) {
+			sql = sql.substring(0, sql.lastIndexOf("order"));
 		}
-		if (sql.indexOf("ORDER")>-1) {
-			sql = sql.substring(0, sql.indexOf("ORDER"));
+		if (sql.lastIndexOf("ORDER")>-1) {
+			sql = sql.substring(0, sql.lastIndexOf("ORDER"));
 		}
 		return sql;
 	}

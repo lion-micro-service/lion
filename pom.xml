@@ -28,7 +28,7 @@
         <spring-cloud-alibaba-dependencies.version>2021.1</spring-cloud-alibaba-dependencies.version>
         <spring-security-oauth2-autoconfigure.version>2.6.2</spring-security-oauth2-autoconfigure.version>
         <spring-security-oauth2.version>2.5.1.RELEASE</spring-security-oauth2.version>
-        <seata.version>1.4.2</seata.version>
+        <seata.version>1.6.1</seata.version>
         <nacos.version>2.1.0</nacos.version>
         <sentinel.version>1.8.4</sentinel.version>
         <fastjson.version>1.2.79</fastjson.version>
@@ -533,7 +533,7 @@
         <repository>
             <id>public</id>
             <name>nexus</name>
-            <url>http://mvn.nexus.com/repository/maven-public/</url>
+            <url>http://192.168.8.213:32129/repository/maven-public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
