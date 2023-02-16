@@ -56,4 +56,9 @@ public class DubboConstant {
      * duboo 调用调用链追踪id
      */
     public static final String TRACE_ID = "trace_id";
+
+    /**
+     * 租户id
+     */
+    public static final String TENANT_ID = "tenant_id";
 }
