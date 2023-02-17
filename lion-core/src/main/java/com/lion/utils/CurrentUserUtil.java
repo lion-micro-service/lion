@@ -39,7 +39,7 @@ public class CurrentUserUtil {
             username = getUsername();
         }else {
             RpcContext rpcContext = RpcContext.getServiceContext();
-            username = String.valueOf(rpcContext.getAttachment(DubboConstant.USERNAME));
+            username = String.valueOf(rpcContext.getObjectAttachments().get(DubboConstant.USERNAME));
 
         }
         if(StringUtils.hasText(username)) {
@@ -67,7 +67,10 @@ public class CurrentUserUtil {
         // 如果RPC请求，直接从请求中获取租户id，否则从当前线程中获取
         if(!isHttpWebRequest()){
             RpcContext rpcContext = RpcContext.getServiceContext();
-            Long id = Long.valueOf(rpcContext.getAttachment(DubboConstant.TENANT_ID));
+            if (Objects.isNull(rpcContext.getObjectAttachments().get(DubboConstant.TENANT_ID))) {
+                String ss = "";
+            }
+            Long id = (Long)rpcContext.getObjectAttachments().get(DubboConstant.TENANT_ID);
             tenant.set(id);
             return id;
         }
@@ -96,7 +99,7 @@ public class CurrentUserUtil {
         if(isHttpWebRequest()){
             return getUsername();
         }else{
-            Object obj = RpcContext.getServiceContext().getAttachment(DubboConstant.USERNAME);
+            Object obj = RpcContext.getServiceContext().getObjectAttachments().get(DubboConstant.USERNAME);
             if (Objects.nonNull(obj)) {
                 String username = String.valueOf(obj);
                 return username;
