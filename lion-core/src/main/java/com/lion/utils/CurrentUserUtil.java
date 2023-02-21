@@ -4,6 +4,7 @@ import com.lion.constant.DubboConstant;
 import com.lion.core.ICurrentUser;
 import com.lion.exception.AuthorizationException;
 import org.apache.dubbo.rpc.RpcContext;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.StringUtils;
@@ -23,6 +24,7 @@ import java.util.Objects;
 public class CurrentUserUtil {
 
     private static volatile ICurrentUser iCurrentUser;
+    private static volatile RedisTemplate redisTemplate;
     public static ThreadLocal<Long> tenant = new ThreadLocal<Long>();
 
     public static Map<String,Object> getCurrentUser(){
@@ -52,11 +54,15 @@ public class CurrentUserUtil {
     }
 
     public static Long getCurrentUserTenantId(Boolean isMustLogin){
-        Map<String,Object> user = CurrentUserUtil.getCurrentUser(isMustLogin);
-        if (Objects.nonNull(user) && user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
-            Object tenantId = user.get("tenantId");
-            return (Long)tenantId;
+        Object obj = getRedisTemplate().opsForValue().get(getUsername()+"_tenantId");
+        if (Objects.nonNull(obj)) {
+            return (Long) obj;
         }
+//        Map<String,Object> user = CurrentUserUtil.getCurrentUser(isMustLogin);
+//        if (Objects.nonNull(user) && user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
+//            Object tenantId = user.get("tenantId");
+//            return (Long)tenantId;
+//        }
         return null;
     }
 
@@ -167,6 +173,17 @@ public class CurrentUserUtil {
             }
         }
         return iCurrentUser;
+    }
+
+    private static RedisTemplate getRedisTemplate(){
+        if(Objects.isNull(redisTemplate)){
+            synchronized(CurrentUserUtil.class){
+                if(Objects.isNull(redisTemplate)){
+                    redisTemplate = (RedisTemplate) SpringContextUtil.getBean("redisTemplate");
+                }
+            }
+        }
+        return redisTemplate;
     }
 
 }
