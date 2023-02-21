@@ -54,7 +54,7 @@ public class CurrentUserUtil {
     }
 
     public static Long getCurrentUserTenantId(Boolean isMustLogin){
-        Object obj = getRedisTemplate().opsForValue().get(getUsername()+"_tenantId");
+        Object obj = getRedisTemplate().opsForValue().get(getCurrentUserUsername()+"_tenantId");
         if (Objects.nonNull(obj)) {
             return (Long) obj;
         }
