@@ -67,12 +67,11 @@ public class CurrentUserUtil {
         // 如果RPC请求，直接从请求中获取租户id，否则从当前线程中获取
         if(!isHttpWebRequest()){
             RpcContext rpcContext = RpcContext.getServiceContext();
-            if (Objects.isNull(rpcContext.getObjectAttachments().get(DubboConstant.TENANT_ID))) {
-                String ss = "";
-            }
             Long id = (Long)rpcContext.getObjectAttachments().get(DubboConstant.TENANT_ID);
-            tenant.set(id);
-            return id;
+            if (Objects.nonNull(id)) {
+                tenant.set(id);
+                return id;
+            }
         }
         Long id = getCurrentUserTenantId(true);
         tenant.set(id);
