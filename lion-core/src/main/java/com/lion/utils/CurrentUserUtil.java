@@ -54,10 +54,15 @@ public class CurrentUserUtil {
     }
 
     public static Long getCurrentUserTenantId(Boolean isMustLogin){
-        Object obj = getRedisTemplate().opsForValue().get(getCurrentUserUsername()+"_tenantId");
+        Object obj = tenant.get();
         if (Objects.nonNull(obj)) {
             return (Long) obj;
         }
+        obj = getRedisTemplate().opsForValue().get(getCurrentUserUsername()+"_tenantId");
+        if (Objects.nonNull(obj)) {
+            return (Long) obj;
+        }
+
 //        Map<String,Object> user = CurrentUserUtil.getCurrentUser(isMustLogin);
 //        if (Objects.nonNull(user) && user.containsKey("tenantId") && Objects.nonNull(user.containsKey("tenantId"))) {
 //            Object tenantId = user.get("tenantId");
