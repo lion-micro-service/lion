@@ -115,11 +115,14 @@ public class CurrentUserUtil {
      */
     private static String getUsername(){
         String username = null;
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(Objects.nonNull(authentication)){
-            Object principal = authentication.getPrincipal();
-            if(Objects.nonNull(principal) && principal instanceof String){
-                username = String.valueOf(principal);
+        username = usernameThreadLocal.get();
+        if (!StringUtils.hasText(username)) {
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            if (Objects.nonNull(authentication)) {
+                Object principal = authentication.getPrincipal();
+                if (Objects.nonNull(principal) && principal instanceof String) {
+                    username = String.valueOf(principal);
+                }
             }
         }
         return username;
