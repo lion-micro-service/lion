@@ -27,6 +27,8 @@ public class CurrentUserUtil {
     private static volatile RedisTemplate redisTemplate;
     public static ThreadLocal<Long> tenant = new ThreadLocal<Long>();
 
+    public static ThreadLocal<String> usernameThreadLocal = new ThreadLocal<String>();
+
     public static Map<String,Object> getCurrentUser(){
         return getCurrentUser(true);
     }
@@ -37,12 +39,14 @@ public class CurrentUserUtil {
     public static Map<String,Object> getCurrentUser(Boolean isMustLogin){
         Map<String,Object> user = null;
         String username = null;
-        if(isHttpWebRequest()){
-            username = getUsername();
-        }else {
-            RpcContext rpcContext = RpcContext.getServiceContext();
-            username = String.valueOf(rpcContext.getObjectAttachments().get(DubboConstant.USERNAME));
-
+        username = usernameThreadLocal.get();
+        if (!StringUtils.hasText(username)) {
+            if (isHttpWebRequest()) {
+                username = getUsername();
+            } else {
+                RpcContext rpcContext = RpcContext.getServiceContext();
+                username = String.valueOf(rpcContext.getObjectAttachments().get(DubboConstant.USERNAME));
+            }
         }
         if(StringUtils.hasText(username)) {
             user = getICurrentUser().findUserToMap(username);
