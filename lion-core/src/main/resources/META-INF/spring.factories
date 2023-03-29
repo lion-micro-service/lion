@@ -1,6 +1,5 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 com.lion.config.EntityAuditorConfiguration,\
-com.lion.config.FilterConfiguration,\
 com.lion.config.JsonLongToString,\
 com.lion.config.PasswordConfiguration,\
 com.lion.config.RestTemplateConfiguration,\

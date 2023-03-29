@@ -20,8 +20,8 @@ import java.io.IOException;
  * @Description:
  * @date 2020/8/26下午2:36
  */
-@Configuration
-@ConditionalOnClass({WebMvcAutoConfiguration.class,Filter.class})
+//@Configuration
+//@ConditionalOnClass({WebMvcAutoConfiguration.class,Filter.class})
 public class FilterConfiguration {
 
     @Autowired
@@ -40,9 +40,9 @@ public class FilterConfiguration {
 
 }
 
-@Component
-@ConditionalOnClass({WebMvcAutoConfiguration.class,Filter.class})
-@Order(Ordered.LOWEST_PRECEDENCE)
+//@Component
+//@ConditionalOnClass({WebMvcAutoConfiguration.class,Filter.class})
+//@Order(Ordered.LOWEST_PRECEDENCE)
 class RequestBodyFilter implements Filter {
 
     @Override
