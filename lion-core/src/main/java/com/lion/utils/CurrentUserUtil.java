@@ -13,6 +13,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -142,6 +143,15 @@ public class CurrentUserUtil {
             return Long.valueOf(String.valueOf(currentUser.get("id")));
         }
         return null;
+    }
+
+    /**
+     * 获取数据权限
+     * @return
+     */
+    public static List<Long> getDataAuthority() {
+        Long userId = getCurrentUserId();
+        return getICurrentUser().getDataAuthority(userId);
     }
 
     /**

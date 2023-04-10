@@ -1,5 +1,6 @@
 package com.lion.core;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,4 +16,11 @@ public interface ICurrentUser<T> {
      * @return
      */
     Map<String,Object> findUserToMap(String username);
+
+    /**
+     * 获取数据权限
+     * @param userId
+     * @return
+     */
+    List<Long> getDataAuthority(Long userId);
 }
