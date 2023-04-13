@@ -57,7 +57,7 @@ public class TenantSqlUtil {
                 pattern = Pattern.compile(PATTERN_WHERE2);
                 matcher = pattern.matcher(sql);
                 if (matcher.find() ) {
-                    sql = sql.replaceAll(PATTERN_WHERE2, " create_user_id in ("+ CurrentUserUtil.getDataAuthority().stream().map(String::valueOf).collect(Collectors.joining(","))+") ");
+                    sql = sql.replaceAll(PATTERN_WHERE2, "create_user_id in ("+ CurrentUserUtil.getDataAuthority().stream().map(String::valueOf).collect(Collectors.joining(","))+") ");
                 }
 
                 break;

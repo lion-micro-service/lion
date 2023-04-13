@@ -5,6 +5,7 @@ import com.lion.core.ICurrentUser;
 import org.apache.dubbo.config.annotation.DubboReference;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,5 +28,10 @@ public class CurrentUser implements ICurrentUser {
         }catch (Exception ex){
             return null;
         }
+    }
+
+    @Override
+    public List<Long> getDataAuthority(Long userId) {
+        return iCurrentUser.getDataAuthority(userId);
     }
 }
