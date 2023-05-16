@@ -96,11 +96,7 @@ public class SearchConstant {
 	 * 小于等于当前时间
 	 */
 	public static final String LESS_THAN_OR_EQUAL_TO = "LESSTHANOREQUALTO";
-	
-	/**
-	 * 未现实禁止使用
-	 */
-	@Deprecated
+
 	public static final String BETWEEN ="BETWEEN";
 	
 	/**

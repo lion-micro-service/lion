@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.*;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -191,6 +192,36 @@ public class PredicateBuilder {
 			break;
 		case SearchConstant.RIGHT_JOIN:
 
+			break;
+		case SearchConstant.BETWEEN:
+			Object obj1 = null;
+			Object obj2 = null;
+			if (Objects.nonNull(value) && value.getClass().isArray()) {
+				Object[] values = (Object[]) value;
+				obj1 = values[0];
+				obj2 = values[1];
+			}else if (Objects.nonNull(value) && value instanceof List<?>) {
+				List<?> values = (List<?>) value;
+				obj1 = values.get(0);
+				obj2 = values.get(1);
+			}
+			if (Objects.nonNull(obj1) & Objects.nonNull(obj2)) {
+				if (value instanceof Date) {
+					predicate = criteriaBuilder.between((Expression<Date>) path.get(0),(Date)  obj1, (Date) obj2);
+				}else if (value instanceof LocalDateTime){
+					predicate = criteriaBuilder.between((Expression<LocalDateTime>) path.get(0),(LocalDateTime)  obj1, (LocalDateTime) obj2);
+				}else if (value instanceof LocalDate){
+					predicate = criteriaBuilder.between((Expression<LocalDate>) path.get(0),(LocalDate)  obj1, (LocalDate) obj2);
+				}else if (value instanceof Integer){
+					predicate = criteriaBuilder.between((Expression<Integer>) path.get(0),(Integer)  obj1, (Integer) obj2);
+				}else if (value instanceof Long){
+					predicate = criteriaBuilder.between((Expression<Long>) path.get(0),(Long)  obj1, (Long) obj2);
+				}else if (value instanceof Double){
+					predicate = criteriaBuilder.between((Expression<Double>) path.get(0),(Double)  obj1, (Double) obj2);
+				}else if (value instanceof Float){
+					predicate = criteriaBuilder.between((Expression<Float>) path.get(0),(Float)  obj1, (Float) obj2);
+				}
+			}
 			break;
 		default:
 			break;
