@@ -15,7 +15,7 @@ import java.io.IOException;
  * @author Mr.Liu
  * @date 2023/5/17 上午10:29
  */
-@Component
+//@Component
 public class CachingRequestBodyFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain)

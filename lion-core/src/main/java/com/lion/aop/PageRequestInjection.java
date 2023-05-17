@@ -74,12 +74,13 @@ public class PageRequestInjection {
             if (NumberUtils.isDigits(pageNumber)) {
                 return Integer.valueOf(pageNumber);
             }
-        }else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-            Integer pageNumber = getPageInfo(GlobalConstant.PAGE_NUMBER);
-            if (Objects.nonNull(pageNumber)) {
-                return pageNumber;
-            }
         }
+//        else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
+//            Integer pageNumber = getPageInfo(GlobalConstant.PAGE_NUMBER);
+//            if (Objects.nonNull(pageNumber)) {
+//                return pageNumber;
+//            }
+//        }
         return 0;
     }
 
@@ -97,12 +98,13 @@ public class PageRequestInjection {
             if (NumberUtils.isDigits(pageSize)) {
                 return Integer.valueOf(pageSize);
             }
-        }else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-            Integer pageSize = getPageInfo(GlobalConstant.PAGE_SIZE);
-            if (Objects.nonNull(pageSize)) {
-                return pageSize;
-            }
         }
+//        else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
+//            Integer pageSize = getPageInfo(GlobalConstant.PAGE_SIZE);
+//            if (Objects.nonNull(pageSize)) {
+//                return pageSize;
+//            }
+//        }
         return 30;
     }
 
