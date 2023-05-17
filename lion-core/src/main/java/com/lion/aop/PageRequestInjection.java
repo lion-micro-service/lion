@@ -20,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 import javax.servlet.Servlet;
 import javax.servlet.http.HttpServletRequest;
@@ -106,26 +107,14 @@ public class PageRequestInjection {
     }
 
     private Integer getPageInfo(String key) {
-        try {
-            HttpServletRequest request = getHttpServletRequest();
-            BufferedReader reader = null;
-            reader = request.getReader();
-            StringBuilder builder = new StringBuilder();
-            String line = reader.readLine();
-            while(StringUtils.hasText(line)){
-                builder.append(line);
-                line = reader.readLine();
+        HttpServletRequest request = getHttpServletRequest();
+        ContentCachingRequestWrapper requestWrapper = (ContentCachingRequestWrapper) request;
+        String requestBody = new String(requestWrapper.getContentAsByteArray());
+        if (StringUtils.hasText(requestBody)) {
+            JSONObject json = JSONObject.parseObject(requestBody);
+            if (json.containsKey(key)) {
+                return json.getInteger(key);
             }
-            reader.close();
-            String reqBody = builder.toString();
-            if (StringUtils.hasText(reqBody)) {
-                JSONObject json = JSONObject.parseObject(reqBody);
-                if (json.containsKey(key)) {
-                    return json.getInteger(key);
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
         return null;
     }
