@@ -69,18 +69,10 @@ public class PageRequestInjection {
         if (Objects.isNull(request)){
             return 0;
         }
-        if (Objects.equals(HttpMethod.GET,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-            String pageNumber = request.getParameter(GlobalConstant.PAGE_NUMBER);
-            if (NumberUtils.isDigits(pageNumber)) {
-                return Integer.valueOf(pageNumber);
-            }
+        String pageNumber = request.getParameter(GlobalConstant.PAGE_NUMBER);
+        if (NumberUtils.isDigits(pageNumber)) {
+            return Integer.valueOf(pageNumber) -1;
         }
-//        else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-//            Integer pageNumber = getPageInfo(GlobalConstant.PAGE_NUMBER);
-//            if (Objects.nonNull(pageNumber)) {
-//                return pageNumber;
-//            }
-//        }
         return 0;
     }
 
@@ -93,18 +85,10 @@ public class PageRequestInjection {
         if (Objects.isNull(request)){
             return 30;
         }
-        if (Objects.equals(HttpMethod.GET,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-            String pageSize = request.getParameter(GlobalConstant.PAGE_SIZE);
-            if (NumberUtils.isDigits(pageSize)) {
-                return Integer.valueOf(pageSize);
-            }
+        String pageSize = request.getParameter(GlobalConstant.PAGE_SIZE);
+        if (NumberUtils.isDigits(pageSize)) {
+            return Integer.valueOf(pageSize);
         }
-//        else if (Objects.equals(HttpMethod.POST,HttpMethod.valueOf(request.getMethod().toUpperCase()) )) {
-//            Integer pageSize = getPageInfo(GlobalConstant.PAGE_SIZE);
-//            if (Objects.nonNull(pageSize)) {
-//                return pageSize;
-//            }
-//        }
         return 30;
     }
 
